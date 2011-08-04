@@ -5,6 +5,8 @@ Port of [Patrik Åkerfeldt][1]'s paging indicators that are compatible with the
 ViewPager from the [Android Compatibility Library][2] and
 [ActionBarSherlock][3].
 
+![ViewPagerIndicator Sample Screenshots][[9]
+
 
 
 
@@ -110,3 +112,4 @@ License
  [6]: https://gist.github.com/1122947
  [7]: http://developer.android.com/guide/developing/projects/projects-eclipse.html
  [8]: http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject
+ [9]: https://raw.github.com/JakeWharton/Android-ViewPagerIndicator/master/sample/screens.png
