@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res/com.jakewharton.android.viewtitlepager"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+		android:gravity="center_horizontal"
+		android:id="@+id/header_layout"
+		android:orientation="vertical"
+		android:layout_height="wrap_content">
+		<com.jakewharton.android.viewpagerindicator.TitlePageIndicator
+			android:id="@+id/titles"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:layout_marginTop="5dip" />
+	</LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_titles"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+		android:gravity="center_horizontal"
+		android:id="@+id/header_layout"
+		android:orientation="vertical"
+		android:layout_height="wrap_content">
+		<com.jakewharton.android.viewpagerindicator.CirclePageIndicator
+			android:id="@+id/circles"
+			android:padding="10dip"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:background="#00000000" />
+	</LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_circles"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>
