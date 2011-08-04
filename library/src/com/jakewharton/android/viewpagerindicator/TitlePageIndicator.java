@@ -90,7 +90,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         mFooterLineHeight = a.getDimension(R.styleable.TitleFlowIndicator_footerLineHeight, DEFAULT_FOOTER_LINE_HEIGHT);
         mFooterTriangleHeight = a.getDimension(R.styleable.TitleFlowIndicator_footerTriangleHeight, DEFAULT_FOOTER_TRIANGLE_HEIGHT);
         final int selectedColor = a.getColor(R.styleable.TitleFlowIndicator_selectedColor, DEFAULT_SELECTED_COLOR);
-        final boolean selectedBold = a.getBoolean(R.styleable.TitleFlowIndicator_selectedColor, DEFAULT_SELECTED_BOLD);
+        final boolean selectedBold = a.getBoolean(R.styleable.TitleFlowIndicator_selectedBold, DEFAULT_SELECTED_BOLD);
         final int textColor = a.getColor(R.styleable.TitleFlowIndicator_textColor, DEFAULT_TEXT_COLOR);
         final float textSize = a.getDimension(R.styleable.TitleFlowIndicator_textSize, defaultTextSize);
         mTitlePadding = a.getDimension(R.styleable.TitleFlowIndicator_titlePadding, defaultTitlePadding);
