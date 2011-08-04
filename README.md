@@ -32,6 +32,9 @@ Usage
          TitlePageIndicator titleIndicator = (TitlePageIndicator)findViewById(R.id.titles);
          titleIndicator.setViewPager(pager);
 
+     *Note*: If you are using `TitlePageIndicator` your adapter must implement
+     `TitleProvider`.
+
   3. *(Optional)* If you use an `OnPageChangeListener` with your view pager
      you should set it in the indicator rather than on the pager directly.
 
