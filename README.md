@@ -65,7 +65,7 @@ Credits
 License
 =======
 
-    Copyright 2011 Patrik kerfeldt
+    Copyright 2011 Patrik Åkerfeldt
     Copyright 2011 Francisco Figueiredo Jr.
     Copyright 2011 Jake Wharton
 
