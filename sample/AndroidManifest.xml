@@ -7,11 +7,49 @@
     <uses-sdk android:minSdkVersion="4" />
 
     <application android:label="ViewPagerIndicator Sample">
-        <activity android:name=".SampleActivity">
+    
+        <activity android:name=".ListSamples">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".SampleSimpleCircles"
+            android:label="Simple Circles">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".SampleSimpleTitles"
+            android:label="Simple Titles">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".SampleListenerCircles"
+            android:label="Listener Circles">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".SampleListenerTitles"
+            android:label="Listener Titles">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+    
     </application>
 </manifest>
