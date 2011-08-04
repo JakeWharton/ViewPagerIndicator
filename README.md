@@ -17,7 +17,7 @@ Usage
      adjacent to the `ViewPager` it represents.
 
         <com.jakewharton.android.viewpagerindicator.TitlePageIndicator
-            android:id="@+id/title_indicator"
+            android:id="@+id/titles"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent" />
 
