@@ -43,7 +43,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private final Paint mPaintFill;
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
-    private int mCurrentScroll;
+    private int mCurrentPage;
+    private int mCurrentOffset;
     private int mFlowWidth;
     private boolean mCentered;
 
@@ -93,26 +94,26 @@ public class CirclePageIndicator extends View implements PageIndicator {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int count = (mViewPager != null && mViewPager.getAdapter() != null) ? mViewPager.getAdapter().getCount() : 1;
-        float leftOffset = getPaddingLeft();
+
+        final int count = mViewPager.getAdapter().getCount();
+        final float threeRadius = mRadius * 3;
+        final float topOffset = getPaddingTop() + mRadius;
+        float leftOffset = getPaddingLeft() + mRadius;
         if (mCentered) {
-            leftOffset += ((getWidth() - getPaddingLeft() - getPaddingRight()) / 2.0f) - ((count * mRadius * 3) / 2.0f);
+            leftOffset += ((getWidth() - getPaddingLeft() - getPaddingRight()) / 2.0f) - ((count * threeRadius) / 2.0f);
         }
+
         // Draw stroked circles
         for (int iLoop = 0; iLoop < count; iLoop++) {
-            canvas.drawCircle(leftOffset + mRadius
-                    + (iLoop * (2 * mRadius + mRadius)),
-                    getPaddingTop() + mRadius, mRadius, mPaintStroke);
+            canvas.drawCircle(leftOffset + (iLoop * threeRadius), topOffset, mRadius, mPaintStroke);
         }
-        float cx = 0;
-        if (mFlowWidth != 0) {
-            // Draw the filled circle according to the current scroll
-            cx = (mCurrentScroll * (2 * mRadius + mRadius)) / mFlowWidth;
-        }
-        // The flow width has been updated yet. Draw the default position
-        canvas.drawCircle(leftOffset + mRadius + cx,
-                    getPaddingTop() + mRadius, mRadius, mPaintFill);
 
+        // Draw the filled circle according to the current scroll
+        float cx = mCurrentPage * threeRadius;
+        if (mFlowWidth != 0) {
+            cx += (mCurrentOffset * 1.0f / mFlowWidth) * threeRadius;
+        }
+        canvas.drawCircle(leftOffset + cx, topOffset, mRadius, mPaintFill);
     }
 
     @Override
@@ -135,7 +136,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        mCurrentScroll = (position * mViewPager.getWidth()) + positionOffsetPixels;
+        mCurrentPage = position;
+        mCurrentOffset = positionOffsetPixels;
         mFlowWidth = mViewPager.getWidth();
         invalidate();
 
@@ -163,8 +165,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(measureWidth(widthMeasureSpec),
-                measureHeight(heightMeasureSpec));
+        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
     }
 
     /**
@@ -185,11 +186,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
         // Calculate the width according the views count
         else {
-            int count = (mViewPager != null && mViewPager.getAdapter() != null) ? mViewPager.getAdapter().getCount() : 1;
+            final int count = mViewPager.getAdapter().getCount();
             result = (int)(getPaddingLeft() + getPaddingRight()
                     + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
-            // Respect AT_MOST value if that was what is called for by
-            // measureSpec
+            // Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }
@@ -216,8 +216,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         // Measure the height
         else {
             result = (int)(2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
-            // Respect AT_MOST value if that was what is called for by
-            // measureSpec
+            // Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }
@@ -251,7 +250,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     public void onRestoreInstanceState(Parcelable state) {
         SavedState savedState = (SavedState)state;
         super.onRestoreInstanceState(savedState.getSuperState());
-        mCurrentScroll = savedState.currentScroll;
+        mCurrentPage = savedState.currentPage;
         requestLayout();
     }
 
@@ -259,12 +258,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
         SavedState savedState = new SavedState(superState);
-        savedState.currentScroll = mCurrentScroll;
+        savedState.currentPage = mCurrentPage;
         return savedState;
     }
 
     static class SavedState extends BaseSavedState {
-        int currentScroll;
+        int currentPage;
 
         public SavedState(Parcelable superState) {
             super(superState);
@@ -272,13 +271,13 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         private SavedState(Parcel in) {
             super(in);
-            currentScroll = in.readInt();
+            currentPage = in.readInt();
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
-            dest.writeInt(currentScroll);
+            dest.writeInt(currentPage);
         }
 
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
