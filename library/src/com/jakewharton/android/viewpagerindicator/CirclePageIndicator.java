@@ -44,6 +44,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
     private int mCurrentPage;
+    private int mSnapPage;
     private int mCurrentOffset;
     private int mPageWidth;
     private boolean mCentered;
@@ -154,7 +155,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         //Draw the filled circle according to the current scroll
-        float cx = mCurrentPage * threeRadius;
+        float cx = (mSnap ? mSnapPage : mCurrentPage) * threeRadius;
         if (!mSnap && (mPageWidth != 0)) {
             cx += (mCurrentOffset * 1.0f / mPageWidth) * threeRadius;
         }
@@ -203,6 +204,10 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onPageSelected(int position) {
+        mCurrentPage = position;
+        mSnapPage = position;
+        invalidate();
+
         if (mListener != null) {
             mListener.onPageSelected(position);
         }
@@ -284,6 +289,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         SavedState savedState = (SavedState)state;
         super.onRestoreInstanceState(savedState.getSuperState());
         mCurrentPage = savedState.currentPage;
+        mSnapPage = savedState.currentPage;
         requestLayout();
     }
 
