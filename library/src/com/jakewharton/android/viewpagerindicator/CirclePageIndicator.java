@@ -70,19 +70,16 @@ public class CirclePageIndicator extends View implements PageIndicator {
         //Retrieve styles attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CirclePageIndicator, defStyle, R.style.Widget_CirclePageIndicator);
 
-        final int fillColor = a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor);
-        final int strokeColor = a.getColor(R.styleable.CirclePageIndicator_strokeColor, defaultStrokeColor);
-        mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
         mCentered = a.getBoolean(R.styleable.CirclePageIndicator_centered, defaultCentered);
-
-        a.recycle();
-
         mPaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintStroke.setStyle(Style.STROKE);
-        mPaintStroke.setColor(strokeColor);
+        mPaintStroke.setColor(a.getColor(R.styleable.CirclePageIndicator_strokeColor, defaultStrokeColor));
         mPaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintFill.setStyle(Style.FILL);
-        mPaintFill.setColor(fillColor);
+        mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
+        mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
+
+        a.recycle();
     }
 
 
@@ -103,12 +100,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
             leftOffset += ((getWidth() - getPaddingLeft() - getPaddingRight()) / 2.0f) - ((count * threeRadius) / 2.0f);
         }
 
-        // Draw stroked circles
+        //Draw stroked circles
         for (int iLoop = 0; iLoop < count; iLoop++) {
             canvas.drawCircle(leftOffset + (iLoop * threeRadius), topOffset, mRadius, mPaintStroke);
         }
 
-        // Draw the filled circle according to the current scroll
+        //Draw the filled circle according to the current scroll
         float cx = mCurrentPage * threeRadius;
         if (mPageWidth != 0) {
             cx += (mCurrentOffset * 1.0f / mPageWidth) * threeRadius;
@@ -180,16 +177,16 @@ public class CirclePageIndicator extends View implements PageIndicator {
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
-        // We were told how big to be
+        //We were told how big to be
         if (specMode == MeasureSpec.EXACTLY) {
             result = specSize;
         }
-        // Calculate the width according the views count
+        //Calculate the width according the views count
         else {
             final int count = mViewPager.getAdapter().getCount();
             result = (int)(getPaddingLeft() + getPaddingRight()
                     + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
-            // Respect AT_MOST value if that was what is called for by measureSpec
+            //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }
@@ -209,14 +206,14 @@ public class CirclePageIndicator extends View implements PageIndicator {
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
-        // We were told how big to be
+        //We were told how big to be
         if (specMode == MeasureSpec.EXACTLY) {
             result = specSize;
         }
-        // Measure the height
+        //Measure the height
         else {
             result = (int)(2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
-            // Respect AT_MOST value if that was what is called for by measureSpec
+            //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }

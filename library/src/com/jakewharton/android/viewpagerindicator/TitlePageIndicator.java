@@ -78,30 +78,25 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         final float defaultTitlePadding = res.getDimension(R.dimen.default_title_indicator_title_padding);
         final float defaultClipPadding = res.getDimension(R.dimen.default_title_indicator_clip_padding);
 
-        // Retrieve styles attributes
+        //Retrieve styles attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TitlePageIndicator, defStyle, R.style.Widget_TitlePageIndicator);
 
-        // Retrieve the colors to be used for this view and apply them.
-        final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
+        //Retrieve the colors to be used for this view and apply them.
         mFooterLineHeight = a.getDimension(R.styleable.TitlePageIndicator_footerLineHeight, defaultFooterLineHeight);
         mFooterTriangleHeight = a.getDimension(R.styleable.TitlePageIndicator_footerTriangleHeight, defaultFooterTriangleHeight);
-        final int selectedColor = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
-        final boolean selectedBold = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
-        final int textColor = a.getColor(R.styleable.TitlePageIndicator_textColor, defaultTextColor);
-        final float textSize = a.getDimension(R.styleable.TitlePageIndicator_textSize, defaultTextSize);
         mTitlePadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
 
-        a.recycle();
-
+        final float textSize = a.getDimension(R.styleable.TitlePageIndicator_textSize, defaultTextSize);
+        final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
         mPaintText = new Paint();
-        mPaintText.setColor(textColor);
+        mPaintText.setColor(a.getColor(R.styleable.TitlePageIndicator_textColor, defaultTextColor));
         mPaintText.setTextSize(textSize);
         mPaintText.setAntiAlias(true);
         mPaintSelected = new Paint();
-        mPaintSelected.setColor(selectedColor);
+        mPaintSelected.setColor(a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor));
         mPaintSelected.setTextSize(textSize);
-        mPaintSelected.setFakeBoldText(selectedBold);
+        mPaintSelected.setFakeBoldText(a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold));
         mPaintSelected.setAntiAlias(true);
         mPaintFooterLine = new Paint();
         mPaintFooterLine.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -110,6 +105,8 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         mPaintFooterTriangle = new Paint();
         mPaintFooterTriangle.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterTriangle.setColor(footerColor);
+
+        a.recycle();
     }
 
 
@@ -122,36 +119,37 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        // Calculate views bounds
+        //Calculate views bounds
         ArrayList<Rect> bounds = calculateAllBounds(mPaintText);
 
         final int count = mViewPager.getAdapter().getCount();
+        final int halfWidth = getWidth() / 2;
 
-        // Verify if the current view must be clipped to the screen
+        //Verify if the current view must be clipped to the screen
         Rect curViewBound = bounds.get(mCurrentPage);
         int curViewWidth = curViewBound.right - curViewBound.left;
         if (curViewBound.left < 0) {
-            // Try to clip to the screen (left side)
+            //Try to clip to the screen (left side)
             clipViewOnTheLeft(curViewBound, curViewWidth);
         }
         if (curViewBound.right > getLeft() + getWidth()) {
-            // Try to clip to the screen (right side)
+            //Try to clip to the screen (right side)
             clipViewOnTheRight(curViewBound, curViewWidth);
         }
 
-        // Left views starting from the current position
+        //Left views starting from the current position
         if (mCurrentPage > 0) {
-            for (int iLoop = mCurrentPage - 1; iLoop >= 0; iLoop--) {
-                Rect bound = bounds.get(iLoop);
+            for (int i = mCurrentPage - 1; i >= 0; i--) {
+                Rect bound = bounds.get(i);
                 int w = bound.right - bound.left;
-                // Si left side is outside the screen
+                //Is left side is outside the screen
                 if (bound.left < 0) {
-                    // Try to clip to the screen (left side)
+                    //Try to clip to the screen (left side)
                      clipViewOnTheLeft(bound, w);
-                    // Except if there's an intersection with the right view
-                    if (iLoop < count - 1 && mCurrentPage != iLoop) {
-                        Rect rightBound = bounds.get(iLoop + 1);
-                        // Intersection
+                    //Except if there's an intersection with the right view
+                    if (i < count - 1 && mCurrentPage != i) {
+                        Rect rightBound = bounds.get(i + 1);
+                        //Intersection
                         if (bound.right + (int)mTitlePadding > rightBound.left) {
                             bound.left = rightBound.left - (w + (int)mTitlePadding);
                         }
@@ -159,19 +157,19 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
                 }
             }
         }
-        // Right views starting from the current position
+        //Right views starting from the current position
         if (mCurrentPage < count - 1) {
-            for (int iLoop = mCurrentPage + 1 ; iLoop < count; iLoop++) {
-                Rect bound = bounds.get(iLoop);
+            for (int i = mCurrentPage + 1 ; i < count; i++) {
+                Rect bound = bounds.get(i);
                 int w = bound.right - bound.left;
-                // If right side is outside the screen
+                //If right side is outside the screen
                 if (bound.right > getLeft() + getWidth()) {
-                    // Try to clip to the screen (right side)
+                    //Try to clip to the screen (right side)
                     clipViewOnTheRight(bound, w);
-                    // Except if there's an intersection with the left view
-                    if (iLoop > 0 && mCurrentPage != iLoop) {
-                        Rect leftBound = bounds.get(iLoop - 1);
-                        // Intersection
+                    //Except if there's an intersection with the left view
+                    if (i > 0 && mCurrentPage != i) {
+                        Rect leftBound = bounds.get(i - 1);
+                        //Intersection
                         if (bound.left - (int)mTitlePadding < leftBound.right) {
                             bound.left = leftBound.right + (int)mTitlePadding;
                         }
@@ -180,34 +178,33 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
             }
         }
 
-        // Now draw views
-        for (int iLoop = 0; iLoop < count; iLoop++) {
-            // Get the title
-            String title = getTitle(iLoop);
-            Rect bound = bounds.get(iLoop);
-            // Only if one side is visible
+        //Now draw views
+        for (int i = 0; i < count; i++) {
+            //Get the title
+            Rect bound = bounds.get(i);
+            //Only if one side is visible
             if ((bound.left > getLeft() && bound.left < getLeft() + getWidth()) || (bound.right > getLeft() && bound.right < getLeft() + getWidth())) {
                 Paint paint = mPaintText;
-                // Change the color is the title is closed to the center
+                //Change the color is the title is closed to the center
                 int middle = (bound.left + bound.right) / 2;
-                if (Math.abs(middle - (getWidth() / 2)) < 20) {
+                if (Math.abs(middle - halfWidth) < 20) {
                     paint = mPaintSelected;
                 }
-                canvas.drawText(title, bound.left, bound.bottom, paint);
+                canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom, paint);
             }
         }
 
-        // Draw the footer line
+        //Draw the footer line
         mPath = new Path();
-        mPath.moveTo(0, getHeight()-mFooterLineHeight);
-        mPath.lineTo(getWidth(), getHeight()-mFooterLineHeight);
+        mPath.moveTo(0, getHeight() - mFooterLineHeight);
+        mPath.lineTo(getWidth(), getHeight() - mFooterLineHeight);
         mPath.close();
         canvas.drawPath(mPath, mPaintFooterLine);
-        // Draw the footer triangle
+        //Draw the footer triangle
         mPath = new Path();
-        mPath.moveTo(getWidth() / 2, getHeight()-mFooterLineHeight-mFooterTriangleHeight);
-        mPath.lineTo(getWidth() / 2 + mFooterTriangleHeight, getHeight()-mFooterLineHeight);
-        mPath.lineTo(getWidth() / 2 - mFooterTriangleHeight, getHeight()-mFooterLineHeight);
+        mPath.moveTo(halfWidth, getHeight() - mFooterLineHeight - mFooterTriangleHeight);
+        mPath.lineTo(halfWidth + mFooterTriangleHeight, getHeight() - mFooterLineHeight);
+        mPath.lineTo(halfWidth - mFooterTriangleHeight, getHeight() - mFooterLineHeight);
         mPath.close();
         canvas.drawPath(mPath, mPaintFooterTriangle);
     }
@@ -247,13 +244,14 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
      */
     private ArrayList<Rect> calculateAllBounds(Paint paint) {
         ArrayList<Rect> list = new ArrayList<Rect>();
-        // For each views (If no values then add a fake one)
+        //For each views (If no values then add a fake one)
         int count = mViewPager.getAdapter().getCount();
-        for (int iLoop = 0; iLoop < count; iLoop++) {
-            Rect bounds = calcBounds(iLoop, paint);
+        final int halfWidth = getWidth() / 2;
+        for (int i = 0; i < count; i++) {
+            Rect bounds = calcBounds(i, paint);
             int w = (bounds.right - bounds.left);
             int h = (bounds.bottom - bounds.top);
-            bounds.left = (getWidth() / 2) - (w / 2) - mCurrentOffset + ((iLoop - mCurrentPage) * getWidth());
+            bounds.left = (halfWidth) - (w / 2) - mCurrentOffset + ((i - mCurrentPage) * getWidth());
             bounds.right = bounds.left + w;
             bounds.top = 0;
             bounds.bottom = h;
@@ -271,28 +269,11 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
      * @return
      */
     private Rect calcBounds(int index, Paint paint) {
-        // Get the title
-        String title = getTitle(index);
-        // Calculate the text bounds
+        //Calculate the text bounds
         Rect bounds = new Rect();
-        bounds.right = (int) paint.measureText(title);
-        bounds.bottom = (int) (paint.descent()-paint.ascent());
+        bounds.right = (int)paint.measureText(mTitleProvider.getTitle(index));
+        bounds.bottom = (int)(paint.descent() - paint.ascent());
         return bounds;
-    }
-
-    /**
-     * Returns the title
-     *
-     * @param pos
-     * @return
-     */
-    private String getTitle(int pos) {
-        // If the TitleProvider exist
-        if (mTitleProvider != null) {
-            return mTitleProvider.getTitle(pos);
-        }
-        // Set the default title
-        return "Page " + (pos + 1);
     }
 
     @Override
@@ -385,13 +366,13 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
-        // We were told how big to be
+        //We were told how big to be
         if (specMode == MeasureSpec.EXACTLY) {
             result = specSize;
         }
-        // Measure the height
+        //Measure the height
         else {
-            // Calculate the text bounds
+            //Calculate the text bounds
             Rect bounds = new Rect();
             bounds.bottom = (int) (mPaintText.descent()-mPaintText.ascent());
             result = bounds.bottom - bounds.top + (int)mFooterTriangleHeight + (int)mFooterLineHeight + 10;
