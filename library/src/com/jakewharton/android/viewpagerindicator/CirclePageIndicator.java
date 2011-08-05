@@ -17,6 +17,7 @@
 package com.jakewharton.android.viewpagerindicator;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -56,13 +57,14 @@ public class CirclePageIndicator extends View implements PageIndicator {
     public CirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        //TODO move defaults to resources and load here
-        final int defaultFillColor = 0;//TODO
-        final int defaultStrokeColor = 0;//TODO
-        final float defaultRadius = 0;//TODO
-        final boolean defaultCentered = false;//TODO
+        //Load defaults from resources
+        final Resources res = getResources();
+        final int defaultFillColor = res.getColor(R.color.default_circle_indicator_fill_color);
+        final int defaultStrokeColor = res.getColor(R.color.default_circle_indicator_stroke_color);
+        final float defaultRadius = res.getDimension(R.dimen.default_circle_indicator_radius);
+        final boolean defaultCentered = res.getBoolean(R.bool.default_circle_indicator_centered);
 
-        // Retrieve styles attributs
+        //Retrieve styles attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CirclePageIndicator, defStyle, R.style.Widget_CirclePageIndicator);
 
         final int fillColor = a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor);

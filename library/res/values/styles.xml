@@ -21,21 +21,21 @@
     </style>
 
     <style name="Widget.CirclePageIndicator" parent="@android:style/Widget">
-        <item name="centered">true</item>
-        <item name="fillColor">#FFFFFFFF</item>
-        <item name="radius">3dp</item>
-        <item name="strokeColor">#FFDDDDDD</item>
+        <item name="centered">@bool/default_circle_indicator_centered</item>
+        <item name="fillColor">@color/default_circle_indicator_fill_color</item>
+        <item name="radius">@dimen/default_circle_indicator_radius</item>
+        <item name="strokeColor">@color/default_circle_indicator_stroke_color</item>
     </style>
 
     <style name="Widget.TitlePageIndicator" parent="@android:style/Widget">
-        <item name="clipPadding">0dp</item>
-        <item name="footerColor">#FF6899FF</item>
-        <item name="footerLineHeight">1px</item>
-        <item name="footerTriangleHeight">7dp</item>
-        <item name="selectedColor">#FFFFFFFF</item>
-        <item name="selectedBold">true</item>
-        <item name="textColor">#FFAAAAAA</item>
-        <item name="textSize">18dp</item>
-        <item name="titlePadding">5dp</item>
+        <item name="clipPadding">@dimen/default_title_indicator_clip_padding</item>
+        <item name="footerColor">@color/default_title_indicator_footer_color</item>
+        <item name="footerLineHeight">@dimen/default_title_indicator_footer_line_height</item>
+        <item name="footerTriangleHeight">@dimen/default_title_indicator_footer_triangle_height</item>
+        <item name="selectedColor">@color/default_title_indicator_selected_color</item>
+        <item name="selectedBold">@bool/default_title_indicator_selected_bold</item>
+        <item name="textColor">@color/default_title_indicator_text_color</item>
+        <item name="textSize">@dimen/default_title_indicator_text_size</item>
+        <item name="titlePadding">@dimen/default_title_indicator_title_padding</item>
     </style>
 </resources>

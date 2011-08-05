@@ -19,6 +19,7 @@ package com.jakewharton.android.viewpagerindicator;
 
 import java.util.ArrayList;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -63,16 +64,17 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
     public TitlePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        //TODO move defaults to resources and load here
-        final int defaultFooterColor = 0;//TODO
-        final float defaultFooterLineHeight = 0;//TODO
-        final float defaultFooterTriangleHeight = 0;//TODO
-        final int defaultSelectedColor = 0;//TODO
-        final boolean defaultSelectedBold = false;//TODO
-        final int defaultTextColor = 0;//TODO
-        final float defaultTextSize = 0;//TODO
-        final float defaultTitlePadding = 0;//TODO
-        final float defaultClipPadding = 0;//TODO
+        //Load defaults from resources
+        final Resources res = getResources();
+        final int defaultFooterColor = res.getColor(R.color.default_title_indicator_footer_color);
+        final float defaultFooterLineHeight = res.getDimension(R.dimen.default_title_indicator_footer_line_height);
+        final float defaultFooterTriangleHeight = res.getDimension(R.dimen.default_title_indicator_footer_triangle_height);
+        final int defaultSelectedColor = res.getColor(R.color.default_title_indicator_selected_color);
+        final boolean defaultSelectedBold = res.getBoolean(R.bool.default_title_indicator_selected_bold);
+        final int defaultTextColor = res.getColor(R.color.default_title_indicator_text_color);
+        final float defaultTextSize = res.getDimension(R.dimen.default_title_indicator_text_size);
+        final float defaultTitlePadding = res.getDimension(R.dimen.default_title_indicator_title_padding);
+        final float defaultClipPadding = res.getDimension(R.dimen.default_title_indicator_clip_padding);
 
         // Retrieve styles attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TitlePageIndicator, defStyle, R.style.Widget_TitlePageIndicator);
