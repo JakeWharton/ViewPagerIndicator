@@ -45,7 +45,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private ViewPager.OnPageChangeListener mListener;
     private int mCurrentPage;
     private int mCurrentOffset;
-    private int mFlowWidth;
+    private int mPageWidth;
     private boolean mCentered;
 
 
@@ -110,8 +110,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         // Draw the filled circle according to the current scroll
         float cx = mCurrentPage * threeRadius;
-        if (mFlowWidth != 0) {
-            cx += (mCurrentOffset * 1.0f / mFlowWidth) * threeRadius;
+        if (mPageWidth != 0) {
+            cx += (mCurrentOffset * 1.0f / mPageWidth) * threeRadius;
         }
         canvas.drawCircle(leftOffset + cx, topOffset, mRadius, mPaintFill);
     }
@@ -123,7 +123,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
         mViewPager = view;
         mViewPager.setOnPageChangeListener(this);
-        mFlowWidth = mViewPager.getWidth();
+        mPageWidth = mViewPager.getWidth();
         invalidate();
     }
 
@@ -138,7 +138,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         mCurrentPage = position;
         mCurrentOffset = positionOffsetPixels;
-        mFlowWidth = mViewPager.getWidth();
+        mPageWidth = mViewPager.getWidth();
         invalidate();
 
         if (mListener != null) {
