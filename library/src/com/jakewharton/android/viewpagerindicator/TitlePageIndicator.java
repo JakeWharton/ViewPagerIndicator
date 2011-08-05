@@ -40,9 +40,9 @@ import android.widget.TextView;
 public class TitlePageIndicator extends TextView implements PageIndicator {
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
-    private int mCurrentScroll;
     private TitleProvider mTitleProvider;
-    private int mCurrentPosition;
+    private int mCurrentPage;
+    private int mCurrentOffset;
     private final Paint mPaintText;
     private final Paint mPaintSelected;
     private Path mPath;
@@ -125,11 +125,10 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         // Calculate views bounds
         ArrayList<Rect> bounds = calculateAllBounds(mPaintText);
 
-        // If no value then add a fake one
-        int count = (mViewPager != null && mViewPager.getAdapter() != null) ? mViewPager.getAdapter().getCount() : 1;
+        final int count = mViewPager.getAdapter().getCount();
 
         // Verify if the current view must be clipped to the screen
-        Rect curViewBound = bounds.get(mCurrentPosition);
+        Rect curViewBound = bounds.get(mCurrentPage);
         int curViewWidth = curViewBound.right - curViewBound.left;
         if (curViewBound.left < 0) {
             // Try to clip to the screen (left side)
@@ -141,8 +140,8 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         }
 
         // Left views starting from the current position
-        if (mCurrentPosition > 0) {
-            for (int iLoop = mCurrentPosition - 1; iLoop >= 0; iLoop--) {
+        if (mCurrentPage > 0) {
+            for (int iLoop = mCurrentPage - 1; iLoop >= 0; iLoop--) {
                 Rect bound = bounds.get(iLoop);
                 int w = bound.right - bound.left;
                 // Si left side is outside the screen
@@ -150,7 +149,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
                     // Try to clip to the screen (left side)
                      clipViewOnTheLeft(bound, w);
                     // Except if there's an intersection with the right view
-                    if (iLoop < count - 1 && mCurrentPosition != iLoop) {
+                    if (iLoop < count - 1 && mCurrentPage != iLoop) {
                         Rect rightBound = bounds.get(iLoop + 1);
                         // Intersection
                         if (bound.right + (int)mTitlePadding > rightBound.left) {
@@ -161,8 +160,8 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
             }
         }
         // Right views starting from the current position
-        if (mCurrentPosition < count - 1) {
-            for (int iLoop = mCurrentPosition + 1 ; iLoop < count; iLoop++) {
+        if (mCurrentPage < count - 1) {
+            for (int iLoop = mCurrentPage + 1 ; iLoop < count; iLoop++) {
                 Rect bound = bounds.get(iLoop);
                 int w = bound.right - bound.left;
                 // If right side is outside the screen
@@ -170,7 +169,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
                     // Try to clip to the screen (right side)
                     clipViewOnTheRight(bound, w);
                     // Except if there's an intersection with the left view
-                    if (iLoop > 0 && mCurrentPosition != iLoop) {
+                    if (iLoop > 0 && mCurrentPage != iLoop) {
                         Rect leftBound = bounds.get(iLoop - 1);
                         // Intersection
                         if (bound.left - (int)mTitlePadding < leftBound.right) {
@@ -211,7 +210,6 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         mPath.lineTo(getWidth() / 2 - mFooterTriangleHeight, getHeight()-mFooterLineHeight);
         mPath.close();
         canvas.drawPath(mPath, mPaintFooterTriangle);
-
     }
 
     /**
@@ -250,12 +248,12 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
     private ArrayList<Rect> calculateAllBounds(Paint paint) {
         ArrayList<Rect> list = new ArrayList<Rect>();
         // For each views (If no values then add a fake one)
-        int count = (mViewPager != null && mViewPager.getAdapter() != null) ? mViewPager.getAdapter().getCount() : 1;
+        int count = mViewPager.getAdapter().getCount();
         for (int iLoop = 0; iLoop < count; iLoop++) {
             Rect bounds = calcBounds(iLoop, paint);
             int w = (bounds.right - bounds.left);
             int h = (bounds.bottom - bounds.top);
-            bounds.left = (getWidth() / 2) - (w / 2) - mCurrentScroll + (iLoop * getWidth());
+            bounds.left = (getWidth() / 2) - (w / 2) - mCurrentOffset + ((iLoop - mCurrentPage) * getWidth());
             bounds.right = bounds.left + w;
             bounds.top = 0;
             bounds.bottom = h;
@@ -320,7 +318,8 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        mCurrentScroll = (position * mViewPager.getWidth()) + positionOffsetPixels;
+        mCurrentPage = position;
+        mCurrentOffset = positionOffsetPixels;
         invalidate();
 
         if (mListener != null) {
@@ -330,7 +329,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
 
     @Override
     public void onPageSelected(int position) {
-        mCurrentPosition = position;
+        mCurrentPage = position;
         invalidate();
 
         if (mListener != null) {
@@ -405,7 +404,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
     public void onRestoreInstanceState(Parcelable state) {
         SavedState savedState = (SavedState)state;
         super.onRestoreInstanceState(savedState.getSuperState());
-        mCurrentScroll = savedState.currentScroll;
+        mCurrentPage = savedState.currentPage;
         requestLayout();
     }
 
@@ -414,12 +413,12 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         setFreezesText(true);
         Parcelable superState = super.onSaveInstanceState();
         SavedState savedState = new SavedState(superState);
-        savedState.currentScroll = mCurrentScroll;
+        savedState.currentPage = mCurrentPage;
         return savedState;
     }
 
     static class SavedState extends BaseSavedState {
-        int currentScroll;
+        int currentPage;
 
         public SavedState(Parcelable superState) {
             super(superState);
@@ -427,13 +426,13 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
 
         private SavedState(Parcel in) {
             super(in);
-            currentScroll = in.readInt();
+            currentPage = in.readInt();
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
-            dest.writeInt(currentScroll);
+            dest.writeInt(currentPage);
         }
 
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
