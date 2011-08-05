@@ -19,5 +19,7 @@ public class SampleTitlesInitialPage extends FragmentActivity {
 		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
 		indicator.setViewPager(pager);
 		indicator.setCurrentItem(adapter.getCount() - 1);
+		
+		//You can also do: indicator.setViewPager(pager, initialPage);
 	}
 }

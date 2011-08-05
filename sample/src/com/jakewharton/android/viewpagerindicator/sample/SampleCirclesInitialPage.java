@@ -19,5 +19,7 @@ public class SampleCirclesInitialPage extends FragmentActivity {
 		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
 		indicator.setViewPager(pager);
 		indicator.setCurrentItem(adapter.getCount() - 1);
+		
+		//You can also do: indicator.setViewPager(pager, initialPage);
 	}
 }

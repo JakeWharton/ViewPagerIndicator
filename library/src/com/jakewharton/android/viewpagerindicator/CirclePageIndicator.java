@@ -174,6 +174,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
     }
 
     @Override
+    public void setViewPager(ViewPager view, int initialPosition) {
+        setViewPager(view);
+        setCurrentItem(initialPosition);
+    }
+
+    @Override
     public void setCurrentItem(int item) {
         if (mViewPager == null) {
             throw new IllegalStateException("ViewPager has not been bound.");
