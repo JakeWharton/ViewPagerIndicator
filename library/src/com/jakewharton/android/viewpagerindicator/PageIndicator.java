@@ -14,27 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.jakewharton.android.viewpagerindicator;
 
 import android.support.v4.view.ViewPager;
 
-
 /**
- * An interface which defines the contract between a ViewFlow and a
- * PageIndicator.<br/>
  * A PageIndicator is responsible to show an visual indicator on the total views
- * number and the current visible view.<br/>
- *
+ * number and the current visible view.
  */
 public interface PageIndicator extends ViewPager.OnPageChangeListener {
-
     /**
-     * Set the current ViewFlow. This method is called by the ViewFlow when the
-     * PageIndicator is attached to it.
+     * Bind the indicator to a ViewPager.
      *
      * @param view
      */
     public void setViewPager(ViewPager view);
+
+    /**
+     * <p>Set the current page of both the ViewPager and indicator.</p>
+     * 
+     * <p>This <strong>must</strong> be used if you need to set the page before
+     * the views are drawn on screen (e.g., default start page).</p>
+     * 
+     * @param item
+     */
+    public void setCurrentItem(int item);
 
     /**
      * Set a page change listener which will receive forwarded events.

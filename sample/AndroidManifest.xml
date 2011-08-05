@@ -26,6 +26,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SampleCirclesInitialPage"
+            android:label="Circles/Initial Page">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".SampleCirclesStyledLayout"
             android:label="Circles/Styled (via layout)"
             android:theme="@android:style/Theme.Light">
@@ -58,6 +66,14 @@
         <activity
             android:name=".SampleTitlesDefault"
             android:label="Titles/Default">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SampleTitlesInitialPage"
+            android:label="Titles/Initial Page">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
