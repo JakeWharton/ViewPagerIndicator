@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import com.jakewharton.android.viewpagerindicator.TitlePageIndicator;
 
-public class SampleThemedTitlesStyle extends FragmentActivity {
+public class SampleTitlesStyledTheme extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -3,18 +3,18 @@ package com.jakewharton.android.viewpagerindicator.sample;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import com.jakewharton.android.viewpagerindicator.CirclePageIndicator;
+import com.jakewharton.android.viewpagerindicator.TitlePageIndicator;
 
-public class SampleSimpleCircles extends FragmentActivity {
+public class SampleTitlesStyledLayout extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.simple_circles);
+		setContentView(R.layout.themed_titles);
 		
 		ViewPager pager = (ViewPager)findViewById(R.id.pager);
-		pager.setAdapter(new TestFragmentAdapter(getSupportFragmentManager()));
+		pager.setAdapter(new TestTitleFragmentAdapter(getSupportFragmentManager()));
 		
-		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
+		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
 		indicator.setViewPager(pager);
 	}
 }

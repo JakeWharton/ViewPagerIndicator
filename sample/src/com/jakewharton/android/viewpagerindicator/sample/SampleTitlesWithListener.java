@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 import com.jakewharton.android.viewpagerindicator.TitlePageIndicator;
 
-public class SampleListenerTitles extends FragmentActivity {
+public class SampleTitlesWithListener extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,7 +22,7 @@ public class SampleListenerTitles extends FragmentActivity {
 		indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
-				Toast.makeText(SampleListenerTitles.this, "Changed to page " + position, Toast.LENGTH_SHORT).show();
+				Toast.makeText(SampleTitlesWithListener.this, "Changed to page " + position, Toast.LENGTH_SHORT).show();
 			}
 			
 			@Override

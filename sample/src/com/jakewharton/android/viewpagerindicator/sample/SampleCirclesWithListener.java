@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 import com.jakewharton.android.viewpagerindicator.CirclePageIndicator;
 
-public class SampleListenerCircles extends FragmentActivity {
+public class SampleCirclesWithListener extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,7 +22,7 @@ public class SampleListenerCircles extends FragmentActivity {
 		indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
-				Toast.makeText(SampleListenerCircles.this, "Changed to page " + position, Toast.LENGTH_SHORT).show();
+				Toast.makeText(SampleCirclesWithListener.this, "Changed to page " + position, Toast.LENGTH_SHORT).show();
 			}
 			
 			@Override

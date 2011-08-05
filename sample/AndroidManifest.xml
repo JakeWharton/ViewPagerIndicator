@@ -7,7 +7,6 @@
     <uses-sdk android:minSdkVersion="4" />
 
     <application android:label="ViewPagerIndicator Sample">
-    
         <activity android:name=".ListSamples">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -15,81 +14,81 @@
             </intent-filter>
         </activity>
         
+        
+        
+        <!-- CIRCLE INDICATOR -->
         <activity
-            android:name=".SampleSimpleCircles"
-            android:label="Simple Circles">
+            android:name=".SampleCirclesDefault"
+            android:label="Circles/Default">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
-        
         <activity
-            android:name=".SampleSimpleTitles"
-            android:label="Simple Titles">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
-        
-        <activity
-            android:name=".SampleListenerCircles"
-            android:label="Listener Circles">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
-        
-        <activity
-            android:name=".SampleListenerTitles"
-            android:label="Listener Titles">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-            </intent-filter>
-        </activity>
-        
-        <activity
-            android:name=".SampleThemedCirclesLayout"
-            android:label="Themed Circles (Layout)"
+            android:name=".SampleCirclesStyledLayout"
+            android:label="Circles/Styled (via layout)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
-        
         <activity
-            android:name=".SampleThemedTitlesLayout"
-            android:label="Themed Titles (Layout)"
+            android:name=".SampleCirclesStyledTheme"
+            android:label="Circles/Styled (via theme)"
+            android:theme="@style/StyledIndicators">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SampleCirclesWithListener"
+            android:label="Circles/With Listener">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        
+        
+        
+        <!-- TITLE INDICATOR -->
+        <activity
+            android:name=".SampleTitlesDefault"
+            android:label="Titles/Default">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SampleTitlesStyledLayout"
+            android:label="Titles/Styled (via layout)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
-        
         <activity
-            android:name=".SampleThemedCirclesStyle"
-            android:label="Themed Circles (Style)"
+            android:name=".SampleTitlesStyledTheme"
+            android:label="Titles/Styled (via theme)"
             android:theme="@style/StyledIndicators">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
-        
         <activity
-            android:name=".SampleThemedTitlesStyle"
-            android:label="Themed Titles (Style)"
-            android:theme="@style/StyledIndicators">
+            android:name=".SampleTitlesWithListener"
+            android:label="Titles/With Listener">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
-    
+        
     </application>
 </manifest>
