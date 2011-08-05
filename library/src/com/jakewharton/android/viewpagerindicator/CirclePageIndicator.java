@@ -47,6 +47,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private int mCurrentOffset;
     private int mPageWidth;
     private boolean mCentered;
+    private boolean mSnap;
 
 
     public CirclePageIndicator(Context context) {
@@ -66,6 +67,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         final int defaultStrokeColor = res.getColor(R.color.default_circle_indicator_stroke_color);
         final float defaultRadius = res.getDimension(R.dimen.default_circle_indicator_radius);
         final boolean defaultCentered = res.getBoolean(R.bool.default_circle_indicator_centered);
+        final boolean defaultSnap = res.getBoolean(R.bool.default_circle_indicator_snap);
 
         //Retrieve styles attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CirclePageIndicator, defStyle, R.style.Widget_CirclePageIndicator);
@@ -78,6 +80,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mPaintFill.setStyle(Style.FILL);
         mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
         mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
+        mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
 
         a.recycle();
     }
@@ -107,7 +110,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         //Draw the filled circle according to the current scroll
         float cx = mCurrentPage * threeRadius;
-        if (mPageWidth != 0) {
+        if (!mSnap && (mPageWidth != 0)) {
             cx += (mCurrentOffset * 1.0f / mPageWidth) * threeRadius;
         }
         canvas.drawCircle(leftOffset + cx, topOffset, mRadius, mPaintFill);

@@ -25,6 +25,7 @@
         <attr name="centered" format="boolean" />
         <attr name="fillColor" format="color" />
         <attr name="radius" format="dimension" />
+        <attr name="snap" format="boolean" />
         <attr name="strokeColor" format="color" />
     </declare-styleable>
 

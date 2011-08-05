@@ -24,6 +24,7 @@
         <item name="centered">@bool/default_circle_indicator_centered</item>
         <item name="fillColor">@color/default_circle_indicator_fill_color</item>
         <item name="radius">@dimen/default_circle_indicator_radius</item>
+        <item name="snap">@bool/default_circle_indicator_snap</item>
         <item name="strokeColor">@color/default_circle_indicator_stroke_color</item>
     </style>
 
