@@ -13,21 +13,15 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         />
-    
-    <LinearLayout
-        android:layout_width="fill_parent"
-		android:gravity="center_horizontal"
-		android:orientation="vertical"
+	<com.jakewharton.android.viewpagerindicator.CirclePageIndicator
+		android:id="@+id/indicator"
+		android:padding="10dip"
 		android:layout_height="wrap_content"
-		android:background="#FFCCCCCC">
-		<com.jakewharton.android.viewpagerindicator.CirclePageIndicator
-			android:id="@+id/indicator"
-			android:padding="10dip"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			app:radius="10dp"
-			app:fillColor="#FF888888"
-			app:strokeColor="#FF000000"
-			/>
-	</LinearLayout>
+		android:layout_width="fill_parent"
+		android:background="#FFCCCCCC"
+		app:radius="10dp"
+		app:fillColor="#FF888888"
+		app:strokeColor="#FF000000"
+		/>
+
 </LinearLayout>

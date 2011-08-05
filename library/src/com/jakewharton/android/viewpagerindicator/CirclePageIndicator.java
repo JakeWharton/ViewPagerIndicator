@@ -38,6 +38,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private static final float DEFAULT_RADIUS_DP = 3;
     private static final int DEFAULT_FILL_COLOR = 0xFFFFFFFF;
     private static final int DEFAULT_STROKE_COLOR = 0xFFDDDDDD;
+    private static final boolean DEFAULT_CENTERED = true;
 
     private final float mRadius;
     private final Paint mPaintStroke;
@@ -46,6 +47,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private ViewPager.OnPageChangeListener mListener;
     private int mCurrentScroll;
     private int mFlowWidth;
+    private boolean mCentered;
 
     /**
      * Default constructor
@@ -76,6 +78,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         final int strokeColor = a.getColor(R.styleable.CircleFlowIndicator_strokeColor, DEFAULT_STROKE_COLOR);
         // Retrieve the mRadius
         mRadius = a.getDimension(R.styleable.CircleFlowIndicator_radius, defaultRadius);
+        mCentered = a.getBoolean(R.styleable.CircleFlowIndicator_centered, DEFAULT_CENTERED);
 
         a.recycle();
 
@@ -96,9 +99,13 @@ public class CirclePageIndicator extends View implements PageIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         int count = (mViewPager != null && mViewPager.getAdapter() != null) ? mViewPager.getAdapter().getCount() : 1;
+        float leftOffset = getPaddingLeft();
+        if (mCentered) {
+            leftOffset += ((getWidth() - getPaddingLeft() - getPaddingRight()) / 2.0f) - ((count * mRadius * 3) / 2.0f);
+        }
         // Draw stroked circles
         for (int iLoop = 0; iLoop < count; iLoop++) {
-            canvas.drawCircle(getPaddingLeft() + mRadius
+            canvas.drawCircle(leftOffset + mRadius
                     + (iLoop * (2 * mRadius + mRadius)),
                     getPaddingTop() + mRadius, mRadius, mPaintStroke);
         }
@@ -108,7 +115,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             cx = (mCurrentScroll * (2 * mRadius + mRadius)) / mFlowWidth;
         }
         // The flow width has been updated yet. Draw the default position
-        canvas.drawCircle(getPaddingLeft() + mRadius + cx,
+        canvas.drawCircle(leftOffset + mRadius + cx,
                     getPaddingTop() + mRadius, mRadius, mPaintFill);
 
     }

@@ -6,19 +6,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     
-    <LinearLayout
-        android:layout_width="fill_parent"
-		android:gravity="center_horizontal"
-		android:orientation="vertical"
-		android:layout_height="wrap_content">
-		<com.jakewharton.android.viewpagerindicator.CirclePageIndicator
-			android:id="@+id/indicator"
-			android:padding="10dip"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			/>
-	</LinearLayout>
-
+	<com.jakewharton.android.viewpagerindicator.CirclePageIndicator
+		android:id="@+id/indicator"
+		android:padding="10dip"
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		/>
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="fill_parent"
