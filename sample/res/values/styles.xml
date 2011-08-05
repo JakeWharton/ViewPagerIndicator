@@ -24,7 +24,7 @@
         <item name="android:background">#FFDDDDDD</item>
         <item name="footerColor">#FFEE3333</item>
         <item name="footerLineHeight">2dp</item>
-        <item name="footerTriangleHeight">0dp</item>
+        <item name="footerIndicatorStyle">none</item>
         <item name="textColor">#FF999999</item>
         <item name="selectedColor">#FF000000</item>
         <item name="selectedBold">false</item>

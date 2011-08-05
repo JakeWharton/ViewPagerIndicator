@@ -33,7 +33,12 @@
         <attr name="clipPadding" format="dimension" />
         <attr name="footerColor" format="color" />
         <attr name="footerLineHeight" format="dimension" />
-        <attr name="footerTriangleHeight" format="dimension" />
+        <attr name="footerIndicatorStyle">
+        	<enum name="none" value="0" />
+        	<enum name="triangle" value="1" />
+        	<enum name="underline" value="2" />
+        </attr>
+        <attr name="footerIndicatorHeight" format="dimension" />
         <attr name="selectedColor" format="color" />
         <attr name="selectedBold" format="boolean" />
         <attr name="textColor" format="color" />

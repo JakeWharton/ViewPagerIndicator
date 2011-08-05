@@ -32,7 +32,8 @@
         <item name="clipPadding">@dimen/default_title_indicator_clip_padding</item>
         <item name="footerColor">@color/default_title_indicator_footer_color</item>
         <item name="footerLineHeight">@dimen/default_title_indicator_footer_line_height</item>
-        <item name="footerTriangleHeight">@dimen/default_title_indicator_footer_triangle_height</item>
+        <item name="footerIndicatorStyle">@integer/default_title_indicator_footer_indicator_style</item>
+        <item name="footerIndicatorHeight">@dimen/default_title_indicator_footer_indicator_height</item>
         <item name="selectedColor">@color/default_title_indicator_selected_color</item>
         <item name="selectedBold">@bool/default_title_indicator_selected_bold</item>
         <item name="textColor">@color/default_title_indicator_text_color</item>

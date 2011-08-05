@@ -18,6 +18,7 @@
 package com.jakewharton.android.viewpagerindicator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -38,6 +39,27 @@ import android.widget.TextView;
  * also scrolled.
  */
 public class TitlePageIndicator extends TextView implements PageIndicator {
+    public enum IndicatorStyle {
+        None(0), Triangle(1), Underline(2);
+
+        public final int value;
+
+        private IndicatorStyle(int value) {
+            this.value = value;
+        }
+
+        private static final HashMap<Integer, IndicatorStyle> MAP = new HashMap<Integer, IndicatorStyle>();
+        static {
+            for (IndicatorStyle style : IndicatorStyle.values()) {
+                MAP.put(style.value, style);
+            }
+        }
+
+        public static IndicatorStyle fromValue(int value) {
+            return MAP.get(value);
+        }
+    }
+
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
     private TitleProvider mTitleProvider;
@@ -47,8 +69,9 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
     private final Paint mPaintSelected;
     private Path mPath;
     private final Paint mPaintFooterLine;
-    private final Paint mPaintFooterTriangle;
-    private float mFooterTriangleHeight;
+    private IndicatorStyle mFooterIndicatorStyle;
+    private final Paint mPaintFooterIndicator;
+    private float mFooterIndicatorHeight;
     private float mTitlePadding;
     /** Left and right side padding for not active view titles. */
     private float mClipPadding;
@@ -70,7 +93,8 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         final Resources res = getResources();
         final int defaultFooterColor = res.getColor(R.color.default_title_indicator_footer_color);
         final float defaultFooterLineHeight = res.getDimension(R.dimen.default_title_indicator_footer_line_height);
-        final float defaultFooterTriangleHeight = res.getDimension(R.dimen.default_title_indicator_footer_triangle_height);
+        final int defaultFooterIndicatorStyle = res.getInteger(R.integer.default_title_indicator_footer_indicator_style);
+        final float defaultFooterIndicatorHeight = res.getDimension(R.dimen.default_title_indicator_footer_indicator_height);
         final int defaultSelectedColor = res.getColor(R.color.default_title_indicator_selected_color);
         final boolean defaultSelectedBold = res.getBoolean(R.bool.default_title_indicator_selected_bold);
         final int defaultTextColor = res.getColor(R.color.default_title_indicator_text_color);
@@ -83,7 +107,8 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
 
         //Retrieve the colors to be used for this view and apply them.
         mFooterLineHeight = a.getDimension(R.styleable.TitlePageIndicator_footerLineHeight, defaultFooterLineHeight);
-        mFooterTriangleHeight = a.getDimension(R.styleable.TitlePageIndicator_footerTriangleHeight, defaultFooterTriangleHeight);
+        mFooterIndicatorStyle = IndicatorStyle.fromValue(a.getInteger(R.styleable.TitlePageIndicator_footerIndicatorStyle, defaultFooterIndicatorStyle));
+        mFooterIndicatorHeight = a.getDimension(R.styleable.TitlePageIndicator_footerIndicatorHeight, defaultFooterIndicatorHeight);
         mTitlePadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
 
@@ -102,9 +127,9 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         mPaintFooterLine.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterLine.setStrokeWidth(mFooterLineHeight);
         mPaintFooterLine.setColor(footerColor);
-        mPaintFooterTriangle = new Paint();
-        mPaintFooterTriangle.setStyle(Paint.Style.FILL_AND_STROKE);
-        mPaintFooterTriangle.setColor(footerColor);
+        mPaintFooterIndicator = new Paint();
+        mPaintFooterIndicator.setStyle(Paint.Style.FILL_AND_STROKE);
+        mPaintFooterIndicator.setColor(footerColor);
 
         a.recycle();
     }
@@ -120,7 +145,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
     }
 
     public float getFooterLineHeight() {
-        return this.mFooterLineHeight;
+        return mFooterLineHeight;
     }
 
     public void setFooterLineHeight(float footerLineHeight) {
@@ -128,12 +153,21 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         invalidate();
     }
 
-    public float getFooterTriangleHeight() {
-        return this.mFooterTriangleHeight;
+    public float getFooterIndicatorHeight() {
+        return mFooterIndicatorHeight;
     }
 
-    public void setFooterTriangleHeight(float footerTriangleHeight) {
-        mFooterTriangleHeight = footerTriangleHeight;
+    public void setFooterIndicatorHeight(float footerTriangleHeight) {
+        mFooterIndicatorHeight = footerTriangleHeight;
+        invalidate();
+    }
+
+    public IndicatorStyle getFooterIndicatorStyle() {
+        return mFooterIndicatorStyle;
+    }
+
+    public void setFooterIndicatorStyle(IndicatorStyle indicatorStyle) {
+        mFooterIndicatorStyle = indicatorStyle;
         invalidate();
     }
 
@@ -281,13 +315,41 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         mPath.lineTo(getWidth(), getHeight() - mFooterLineHeight);
         mPath.close();
         canvas.drawPath(mPath, mPaintFooterLine);
-        //Draw the footer triangle
-        mPath = new Path();
-        mPath.moveTo(halfWidth, getHeight() - mFooterLineHeight - mFooterTriangleHeight);
-        mPath.lineTo(halfWidth + mFooterTriangleHeight, getHeight() - mFooterLineHeight);
-        mPath.lineTo(halfWidth - mFooterTriangleHeight, getHeight() - mFooterLineHeight);
-        mPath.close();
-        canvas.drawPath(mPath, mPaintFooterTriangle);
+
+        switch (mFooterIndicatorStyle) {
+            case Triangle:
+                mPath = new Path();
+                mPath.moveTo(halfWidth, getHeight() - mFooterLineHeight - mFooterIndicatorHeight);
+                mPath.lineTo(halfWidth + mFooterIndicatorHeight, getHeight() - mFooterLineHeight);
+                mPath.lineTo(halfWidth - mFooterIndicatorHeight, getHeight() - mFooterLineHeight);
+                mPath.close();
+                canvas.drawPath(mPath, mPaintFooterIndicator);
+                break;
+
+            case Underline:
+                float deltaPercentage = mCurrentOffset * 1.0f / getWidth();
+                int alpha = 0xFF;
+                int page = mCurrentPage;
+                if (deltaPercentage <= 10) {
+                    alpha = (int)(0xFF * (deltaPercentage / 10));
+                } else if (deltaPercentage >= 90) {
+                    alpha = (int)(0xFF * ((100 - deltaPercentage) / 10));
+                    page += 1; //If we are >90% we are coming into the next page
+                } else if (mCurrentOffset != 0) {
+                    break; //Not in underline scope
+                }
+
+                Rect underlineBounds = bounds.get(page);
+                mPath = new Path();
+                mPath.moveTo(underlineBounds.left, getHeight() - mFooterLineHeight - mFooterIndicatorHeight);
+                mPath.lineTo(underlineBounds.right, getHeight() - mFooterLineHeight - mFooterIndicatorHeight);
+                mPath.close();
+
+                mPaintFooterIndicator.setAlpha(alpha);
+                canvas.drawPath(mPath, mPaintFooterIndicator);
+                mPaintFooterIndicator.setAlpha(0xFF);
+                break;
+        }
     }
 
     /**
@@ -466,7 +528,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
             //Calculate the text bounds
             Rect bounds = new Rect();
             bounds.bottom = (int) (mPaintText.descent()-mPaintText.ascent());
-            result = bounds.bottom - bounds.top + (int)mFooterTriangleHeight + (int)mFooterLineHeight + 10;
+            result = bounds.bottom - bounds.top + (int)mFooterIndicatorHeight + (int)mFooterLineHeight + 10;
             return result;
         }
         return result;

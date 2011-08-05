@@ -29,7 +29,7 @@
         android:background="#FFDDDDDD"
         app:footerColor="#FFEE3333"
         app:footerLineHeight="2dp"
-        app:footerTriangleHeight="0dp"
+        app:footerIndicatorStyle="none"
         app:textColor="#FF999999"
         app:selectedColor="#FF000000"
         app:selectedBold="false"
