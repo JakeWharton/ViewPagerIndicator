@@ -35,16 +35,6 @@ import android.widget.TextView;
  * also scrolled.
  */
 public class TitlePageIndicator extends TextView implements PageIndicator {
-    private static final float DEFAULT_TITLE_PADDING_DP = 5;
-    private static final float DEFAULT_CLIP_PADDING_DP = 0;
-    private static final int DEFAULT_SELECTED_COLOR = 0xFFFFFFFF;
-    private static final boolean DEFAULT_SELECTED_BOLD = true;
-    private static final int DEFAULT_TEXT_COLOR = 0xFFAAAAAA;
-    private static final int DEFAULT_TEXT_SIZE_DP = 18;
-    private static final float DEFAULT_FOOTER_LINE_HEIGHT = 1;
-    private static final int DEFAULT_FOOTER_COLOR = 0xFF6899FF;
-    private static final float DEFAULT_FOOTER_TRIANGLE_HEIGHT = 7;
-
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
     private int mCurrentScroll;
@@ -61,40 +51,42 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
     private final float mClipPadding;
     private final float mFooterLineHeight;
 
-    /**
-     * Default constructor
-     */
+
     public TitlePageIndicator(Context context) {
         this(context, null);
     }
 
-    /**
-     * The constructor used with an inflater
-     *
-     * @param context
-     * @param attrs
-     */
     public TitlePageIndicator(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, R.attr.titlePageIndicatorStyle);
+    }
 
-        final float density = getResources().getDisplayMetrics().density;
-        final float defaultTextSize = DEFAULT_TEXT_SIZE_DP * density;
-        final float defaultTitlePadding = DEFAULT_TITLE_PADDING_DP * density;
-        final float defaultClipPadding = DEFAULT_CLIP_PADDING_DP * density;
+    public TitlePageIndicator(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+
+        //TODO move defaults to resources and load here
+        final int defaultFooterColor = 0;//TODO
+        final float defaultFooterLineHeight = 0;//TODO
+        final float defaultFooterTriangleHeight = 0;//TODO
+        final int defaultSelectedColor = 0;//TODO
+        final boolean defaultSelectedBold = false;//TODO
+        final int defaultTextColor = 0;//TODO
+        final float defaultTextSize = 0;//TODO
+        final float defaultTitlePadding = 0;//TODO
+        final float defaultClipPadding = 0;//TODO
 
         // Retrieve styles attributes
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TitleFlowIndicator);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TitlePageIndicator, defStyle, R.style.Widget_TitlePageIndicator);
 
         // Retrieve the colors to be used for this view and apply them.
-        final int footerColor = a.getColor(R.styleable.TitleFlowIndicator_footerColor, DEFAULT_FOOTER_COLOR);
-        mFooterLineHeight = a.getDimension(R.styleable.TitleFlowIndicator_footerLineHeight, DEFAULT_FOOTER_LINE_HEIGHT);
-        mFooterTriangleHeight = a.getDimension(R.styleable.TitleFlowIndicator_footerTriangleHeight, DEFAULT_FOOTER_TRIANGLE_HEIGHT);
-        final int selectedColor = a.getColor(R.styleable.TitleFlowIndicator_selectedColor, DEFAULT_SELECTED_COLOR);
-        final boolean selectedBold = a.getBoolean(R.styleable.TitleFlowIndicator_selectedBold, DEFAULT_SELECTED_BOLD);
-        final int textColor = a.getColor(R.styleable.TitleFlowIndicator_textColor, DEFAULT_TEXT_COLOR);
-        final float textSize = a.getDimension(R.styleable.TitleFlowIndicator_textSize, defaultTextSize);
-        mTitlePadding = a.getDimension(R.styleable.TitleFlowIndicator_titlePadding, defaultTitlePadding);
-        mClipPadding = a.getDimension(R.styleable.TitleFlowIndicator_clipPadding, defaultClipPadding);
+        final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
+        mFooterLineHeight = a.getDimension(R.styleable.TitlePageIndicator_footerLineHeight, defaultFooterLineHeight);
+        mFooterTriangleHeight = a.getDimension(R.styleable.TitlePageIndicator_footerTriangleHeight, defaultFooterTriangleHeight);
+        final int selectedColor = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
+        final boolean selectedBold = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
+        final int textColor = a.getColor(R.styleable.TitlePageIndicator_textColor, defaultTextColor);
+        final float textSize = a.getDimension(R.styleable.TitlePageIndicator_textSize, defaultTextSize);
+        mTitlePadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
+        mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
 
         a.recycle();
 
@@ -115,6 +107,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         mPaintFooterTriangle.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterTriangle.setColor(footerColor);
     }
+
 
     /*
      * (non-Javadoc)

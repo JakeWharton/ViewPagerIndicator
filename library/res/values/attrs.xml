@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2011 Patrik Åkerfeldt
+     Copyright (C) 2011 Jake Wharton
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
-  
+
           http://www.apache.org/licenses/LICENSE-2.0
-  
+
      Unless required by applicable law or agreed to in writing, software
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,22 +16,27 @@
 -->
 
 <resources>
-    <declare-styleable name="CircleFlowIndicator">
+    <declare-styleable name="ViewPagerIndicator">
+        <attr name="circlePageIndicatorStyle" format="reference"/>
+        <attr name="titlePageIndicatorStyle" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="CirclePageIndicator">
+        <attr name="centered" format="boolean" />
         <attr name="fillColor" format="color" />
-        <attr name="strokeColor" format="color" />
         <attr name="radius" format="dimension" />
-		<attr name="centered" format="boolean" />
-    </declare-styleable>    
-    <declare-styleable name="TitleFlowIndicator">
-        <attr name="titlePadding" format="dimension" />
-        <!-- Left/right padding of not active view titles. -->
+        <attr name="strokeColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="TitlePageIndicator">
         <attr name="clipPadding" format="dimension" />
+        <attr name="footerColor" format="color" />
+        <attr name="footerLineHeight" format="dimension" />
+        <attr name="footerTriangleHeight" format="dimension" />
         <attr name="selectedColor" format="color" />
         <attr name="selectedBold" format="boolean" />
         <attr name="textColor" format="color" />
         <attr name="textSize" format="dimension" />
-        <attr name="footerLineHeight" format="dimension" />
-        <attr name="footerColor" format="color" />
-        <attr name="footerTriangleHeight" format="dimension" />
-    </declare-styleable>    
+        <attr name="titlePadding" format="dimension" />
+    </declare-styleable>
 </resources>

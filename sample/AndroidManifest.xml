@@ -52,8 +52,8 @@
         </activity>
         
         <activity
-            android:name=".SampleThemedCircles"
-            android:label="Themed Circles"
+            android:name=".SampleThemedCirclesLayout"
+            android:label="Themed Circles (Layout)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,9 +62,29 @@
         </activity>
         
         <activity
-            android:name=".SampleThemedTitles"
-            android:label="Themed Titles"
+            android:name=".SampleThemedTitlesLayout"
+            android:label="Themed Titles (Layout)"
             android:theme="@android:style/Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".SampleThemedCirclesStyle"
+            android:label="Themed Circles (Style)"
+            android:theme="@style/StyledIndicators">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".SampleThemedTitlesStyle"
+            android:label="Themed Titles (Style)"
+            android:theme="@style/StyledIndicators">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />

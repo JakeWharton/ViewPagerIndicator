@@ -35,11 +35,6 @@ import android.view.View;
  * <ul>mRadius: Define the circle mRadius (default to 4.0)</ul>
  */
 public class CirclePageIndicator extends View implements PageIndicator {
-    private static final float DEFAULT_RADIUS_DP = 3;
-    private static final int DEFAULT_FILL_COLOR = 0xFFFFFFFF;
-    private static final int DEFAULT_STROKE_COLOR = 0xFFDDDDDD;
-    private static final boolean DEFAULT_CENTERED = true;
-
     private final float mRadius;
     private final Paint mPaintStroke;
     private final Paint mPaintFill;
@@ -49,36 +44,31 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private int mFlowWidth;
     private boolean mCentered;
 
-    /**
-     * Default constructor
-     *
-     * @param context
-     */
+
     public CirclePageIndicator(Context context) {
         this(context, null);
     }
 
-    /**
-     * The constructor used with an inflater
-     *
-     * @param context
-     * @param attrs
-     */
     public CirclePageIndicator(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, R.attr.circlePageIndicatorStyle);
+    }
 
-        final float density = getResources().getDisplayMetrics().density;
-        final float defaultRadius = DEFAULT_RADIUS_DP * density;
+    public CirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+
+        //TODO move defaults to resources and load here
+        final int defaultFillColor = 0;//TODO
+        final int defaultStrokeColor = 0;//TODO
+        final float defaultRadius = 0;//TODO
+        final boolean defaultCentered = false;//TODO
 
         // Retrieve styles attributs
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleFlowIndicator);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CirclePageIndicator, defStyle, R.style.Widget_CirclePageIndicator);
 
-        // Retrieve the colors to be used for this view and apply them.
-        final int fillColor = a.getColor(R.styleable.CircleFlowIndicator_fillColor, DEFAULT_FILL_COLOR);
-        final int strokeColor = a.getColor(R.styleable.CircleFlowIndicator_strokeColor, DEFAULT_STROKE_COLOR);
-        // Retrieve the mRadius
-        mRadius = a.getDimension(R.styleable.CircleFlowIndicator_radius, defaultRadius);
-        mCentered = a.getBoolean(R.styleable.CircleFlowIndicator_centered, DEFAULT_CENTERED);
+        final int fillColor = a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor);
+        final int strokeColor = a.getColor(R.styleable.CirclePageIndicator_strokeColor, defaultStrokeColor);
+        mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
+        mCentered = a.getBoolean(R.styleable.CirclePageIndicator_centered, defaultCentered);
 
         a.recycle();
 
@@ -89,6 +79,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mPaintFill.setStyle(Style.FILL);
         mPaintFill.setColor(fillColor);
     }
+
 
     /*
      * (non-Javadoc)

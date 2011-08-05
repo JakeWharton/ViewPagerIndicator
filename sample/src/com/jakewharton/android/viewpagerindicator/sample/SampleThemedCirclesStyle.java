@@ -5,11 +5,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import com.jakewharton.android.viewpagerindicator.CirclePageIndicator;
 
-public class SampleThemedCircles extends FragmentActivity {
+public class SampleThemedCirclesStyle extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.themed_circles);
+		
+		//The look of this sample is set via a style in the manifest
+		setContentView(R.layout.simple_circles);
 		
 		ViewPager pager = (ViewPager)findViewById(R.id.pager);
 		pager.setAdapter(new TestFragmentAdapter(getSupportFragmentManager()));
