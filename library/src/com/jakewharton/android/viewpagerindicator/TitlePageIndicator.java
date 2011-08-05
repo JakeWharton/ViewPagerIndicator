@@ -39,6 +39,8 @@ import android.widget.TextView;
  * also scrolled.
  */
 public class TitlePageIndicator extends TextView implements PageIndicator {
+    private static final float UNDERLINE_FADE_PERCENTAGE = 0.25f;
+
     public enum IndicatorStyle {
         None(0), Triangle(1), Underline(2);
 
@@ -72,6 +74,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
     private IndicatorStyle mFooterIndicatorStyle;
     private final Paint mPaintFooterIndicator;
     private float mFooterIndicatorHeight;
+    private float mFooterIndicatorUnderlinePadding;
     private float mTitlePadding;
     /** Left and right side padding for not active view titles. */
     private float mClipPadding;
@@ -95,6 +98,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         final float defaultFooterLineHeight = res.getDimension(R.dimen.default_title_indicator_footer_line_height);
         final int defaultFooterIndicatorStyle = res.getInteger(R.integer.default_title_indicator_footer_indicator_style);
         final float defaultFooterIndicatorHeight = res.getDimension(R.dimen.default_title_indicator_footer_indicator_height);
+        final float defaultFooterIndicatorUnderlinePadding = res.getDimension(R.dimen.default_title_indicator_footer_indicator_underline_padding);
         final int defaultSelectedColor = res.getColor(R.color.default_title_indicator_selected_color);
         final boolean defaultSelectedBold = res.getBoolean(R.bool.default_title_indicator_selected_bold);
         final int defaultTextColor = res.getColor(R.color.default_title_indicator_text_color);
@@ -109,6 +113,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         mFooterLineHeight = a.getDimension(R.styleable.TitlePageIndicator_footerLineHeight, defaultFooterLineHeight);
         mFooterIndicatorStyle = IndicatorStyle.fromValue(a.getInteger(R.styleable.TitlePageIndicator_footerIndicatorStyle, defaultFooterIndicatorStyle));
         mFooterIndicatorHeight = a.getDimension(R.styleable.TitlePageIndicator_footerIndicatorHeight, defaultFooterIndicatorHeight);
+        mFooterIndicatorUnderlinePadding = a.getDimension(R.styleable.TitlePageIndicator_footerIndicatorUnderlinePadding, defaultFooterIndicatorUnderlinePadding);
         mTitlePadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
 
@@ -330,19 +335,21 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
                 float deltaPercentage = mCurrentOffset * 1.0f / getWidth();
                 int alpha = 0xFF;
                 int page = mCurrentPage;
-                if (deltaPercentage <= 10) {
-                    alpha = (int)(0xFF * (deltaPercentage / 10));
-                } else if (deltaPercentage >= 90) {
-                    alpha = (int)(0xFF * ((100 - deltaPercentage) / 10));
-                    page += 1; //If we are >90% we are coming into the next page
+                if (deltaPercentage <= UNDERLINE_FADE_PERCENTAGE) {
+                    alpha = (int)(0xFF * ((UNDERLINE_FADE_PERCENTAGE - deltaPercentage) / UNDERLINE_FADE_PERCENTAGE));
+                } else if (deltaPercentage >= (1 - UNDERLINE_FADE_PERCENTAGE)) {
+                    alpha = (int)(0xFF * ((deltaPercentage - (1 - UNDERLINE_FADE_PERCENTAGE)) / UNDERLINE_FADE_PERCENTAGE));
+                    page += 1; //We are coming into the next page
                 } else if (mCurrentOffset != 0) {
                     break; //Not in underline scope
                 }
 
                 Rect underlineBounds = bounds.get(page);
                 mPath = new Path();
-                mPath.moveTo(underlineBounds.left, getHeight() - mFooterLineHeight - mFooterIndicatorHeight);
-                mPath.lineTo(underlineBounds.right, getHeight() - mFooterLineHeight - mFooterIndicatorHeight);
+                mPath.moveTo(underlineBounds.left  - mFooterIndicatorUnderlinePadding, getHeight() - mFooterLineHeight);
+                mPath.lineTo(underlineBounds.right + mFooterIndicatorUnderlinePadding, getHeight() - mFooterLineHeight);
+                mPath.lineTo(underlineBounds.right + mFooterIndicatorUnderlinePadding, getHeight() - mFooterLineHeight - mFooterIndicatorHeight);
+                mPath.lineTo(underlineBounds.left  - mFooterIndicatorUnderlinePadding, getHeight() - mFooterLineHeight - mFooterIndicatorHeight);
                 mPath.close();
 
                 mPaintFooterIndicator.setAlpha(alpha);

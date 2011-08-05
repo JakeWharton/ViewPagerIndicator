@@ -26,6 +26,7 @@
     <dimen name="default_title_indicator_footer_line_height">1px</dimen>
     <integer name="default_title_indicator_footer_indicator_style">1</integer>
     <dimen name="default_title_indicator_footer_indicator_height">7dp</dimen>
+    <dimen name="default_title_indicator_footer_indicator_underline_padding">10dp</dimen>
     <color name="default_title_indicator_selected_color">#FFFFFFFF</color>
     <bool name="default_title_indicator_selected_bold">true</bool>
     <color name="default_title_indicator_text_color">#FFAAAAAA</color>

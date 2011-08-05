@@ -34,6 +34,7 @@
         <item name="footerLineHeight">@dimen/default_title_indicator_footer_line_height</item>
         <item name="footerIndicatorStyle">@integer/default_title_indicator_footer_indicator_style</item>
         <item name="footerIndicatorHeight">@dimen/default_title_indicator_footer_indicator_height</item>
+        <item name="footerIndicatorUnderlinePadding">@dimen/default_title_indicator_footer_indicator_underline_padding</item>
         <item name="selectedColor">@color/default_title_indicator_selected_color</item>
         <item name="selectedBold">@bool/default_title_indicator_selected_bold</item>
         <item name="textColor">@color/default_title_indicator_text_color</item>
