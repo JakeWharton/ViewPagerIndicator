@@ -23,7 +23,7 @@
     <style name="Widget.CirclePageIndicator" parent="@android:style/Widget">
         <item name="centered">true</item>
         <item name="fillColor">#FFFFFFFF</item>
-        <item name="radius">5dp</item>
+        <item name="radius">3dp</item>
         <item name="strokeColor">#FFDDDDDD</item>
     </style>
 
