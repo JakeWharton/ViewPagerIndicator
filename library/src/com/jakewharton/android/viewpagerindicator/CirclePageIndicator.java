@@ -25,8 +25,8 @@ import android.graphics.Paint.Style;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 /**
@@ -37,7 +37,7 @@ import android.view.View;
  * <ul>strokeColor: Define the color used to stroke a circle (default to white)</ul>
  * <ul>mRadius: Define the circle mRadius (default to 4.0)</ul>
  */
-public class CirclePageIndicator extends View implements PageIndicator {
+public class CirclePageIndicator extends View implements PageIndicator, View.OnTouchListener {
     private float mRadius;
     private final Paint mPaintStroke;
     private final Paint mPaintFill;
@@ -61,6 +61,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     public CirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        super.setOnTouchListener(this);
 
         //Load defaults from resources
         final Resources res = getResources();
@@ -163,6 +164,32 @@ public class CirclePageIndicator extends View implements PageIndicator {
     }
 
     @Override
+    public final boolean onTouch(View view, MotionEvent event) {
+        if ((view != this) || (event.getAction() != MotionEvent.ACTION_DOWN)) {
+            return false;
+        }
+
+        final int count = mViewPager.getAdapter().getCount();
+        final float halfWidth = getWidth() / 2;
+        final float halfCircleWidth = (count * 3 * mRadius) / 2;
+
+        if ((mCurrentPage > 0) && (event.getX() < halfWidth - halfCircleWidth)) {
+            setCurrentItem(mCurrentPage - 1);
+            return true;
+        } else if ((mCurrentPage < count - 1) && (event.getX() > halfWidth + halfCircleWidth)) {
+            setCurrentItem(mCurrentPage + 1);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public final void setOnTouchListener(OnTouchListener listener) {
+        throw new UnsupportedOperationException("This view does not support listening to its touch events.");
+    }
+
+    @Override
     public void setViewPager(ViewPager view) {
         if (view.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
@@ -220,7 +247,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     }
 
     @Override
-    public void setOnPageChangeListener(OnPageChangeListener listener) {
+    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
         mListener = listener;
     }
 
