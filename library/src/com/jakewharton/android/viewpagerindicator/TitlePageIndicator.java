@@ -48,11 +48,11 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
     private Path mPath;
     private final Paint mPaintFooterLine;
     private final Paint mPaintFooterTriangle;
-    private final float mFooterTriangleHeight;
-    private final float mTitlePadding;
+    private float mFooterTriangleHeight;
+    private float mTitlePadding;
     /** Left and right side padding for not active view titles. */
-    private final float mClipPadding;
-    private final float mFooterLineHeight;
+    private float mClipPadding;
+    private float mFooterLineHeight;
 
 
     public TitlePageIndicator(Context context) {
@@ -109,6 +109,87 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
         a.recycle();
     }
 
+
+    public int getFooterColor() {
+        return mPaintFooterLine.getColor();
+    }
+
+    public void setFooterColor(int footerColor) {
+        mPaintFooterLine.setColor(footerColor);
+        invalidate();
+    }
+
+    public float getFooterLineHeight() {
+        return this.mFooterLineHeight;
+    }
+
+    public void setFooterLineHeight(float footerLineHeight) {
+        mFooterLineHeight = footerLineHeight;
+        invalidate();
+    }
+
+    public float getFooterTriangleHeight() {
+        return this.mFooterTriangleHeight;
+    }
+
+    public void setFooterTriangleHeight(float footerTriangleHeight) {
+        mFooterTriangleHeight = footerTriangleHeight;
+        invalidate();
+    }
+
+    public int getSelectedColor() {
+        return mPaintSelected.getColor();
+    }
+
+    public void setSelectedColor(int selectedColor) {
+        mPaintSelected.setColor(selectedColor);
+        invalidate();
+    }
+
+    public boolean isSelectedBold() {
+        return mPaintSelected.isFakeBoldText();
+    }
+
+    public void setSelectedBold(boolean selectedBold) {
+        mPaintSelected.setFakeBoldText(selectedBold);
+        invalidate();
+    }
+
+    public int getTextColor() {
+        return mPaintText.getColor();
+    }
+
+    public void setTextColor(int textColor) {
+        mPaintText.setColor(textColor);
+        invalidate();
+    }
+
+    public float getTextSize() {
+        return mPaintText.getTextSize();
+    }
+
+    public void setTextSize(float textSize) {
+        mPaintText.setTextSize(textSize);
+        invalidate();
+    }
+
+    public float getTitlePadding() {
+        return this.mTitlePadding;
+    }
+
+    public void setTitlePadding(float titlePadding) {
+        mTitlePadding = titlePadding;
+        invalidate();
+    }
+
+    public float getClipPadding() {
+        return this.mClipPadding;
+    }
+
+    public void setClipPadding(float clipPadding) {
+        mClipPadding = clipPadding;
+        invalidate();
+    }
 
     /*
      * (non-Javadoc)

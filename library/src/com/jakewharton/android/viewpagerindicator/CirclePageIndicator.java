@@ -38,7 +38,7 @@ import android.view.View;
  * <ul>mRadius: Define the circle mRadius (default to 4.0)</ul>
  */
 public class CirclePageIndicator extends View implements PageIndicator {
-    private final float mRadius;
+    private float mRadius;
     private final Paint mPaintStroke;
     private final Paint mPaintFill;
     private ViewPager mViewPager;
@@ -85,6 +85,51 @@ public class CirclePageIndicator extends View implements PageIndicator {
         a.recycle();
     }
 
+
+    public void setCentered(boolean centered) {
+        mCentered = centered;
+        invalidate();
+    }
+
+    public boolean isCentered() {
+        return mCentered;
+    }
+
+    public void setFillColor(int fillColor) {
+        mPaintFill.setColor(fillColor);
+        invalidate();
+    }
+
+    public int getFillColor() {
+        return mPaintFill.getColor();
+    }
+
+    public void setStrokeColor(int strokeColor) {
+        mPaintStroke.setColor(strokeColor);
+        invalidate();
+    }
+
+    public int getStrokeColor() {
+        return mPaintStroke.getColor();
+    }
+
+    public void setRadius(float radius) {
+        mRadius = radius;
+        invalidate();
+    }
+
+    public float getRadius() {
+        return mRadius;
+    }
+
+    public void setSnap(boolean snap) {
+        mSnap = snap;
+        invalidate();
+    }
+
+    public boolean isSnap() {
+        return mSnap;
+    }
 
     /*
      * (non-Javadoc)
@@ -222,28 +267,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
             }
         }
         return result;
-    }
-
-    /**
-     * Sets the fill color
-     *
-     * @param color
-     *            ARGB value for the text
-     */
-    public void setFillColor(int color) {
-        mPaintFill.setColor(color);
-        invalidate();
-    }
-
-    /**
-     * Sets the stroke color
-     *
-     * @param color
-     *            ARGB value for the text
-     */
-    public void setStrokeColor(int color) {
-        mPaintStroke.setColor(color);
-        invalidate();
     }
 
     @Override
