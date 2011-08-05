@@ -30,6 +30,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -38,7 +40,7 @@ import android.widget.TextView;
  * the right view (if exist). When the user scrolls the ViewFlow then titles are
  * also scrolled.
  */
-public class TitlePageIndicator extends TextView implements PageIndicator {
+public class TitlePageIndicator extends TextView implements PageIndicator, View.OnTouchListener {
     private static final float UNDERLINE_FADE_PERCENTAGE = 0.25f;
 
     public enum IndicatorStyle {
@@ -91,6 +93,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
 
     public TitlePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        super.setOnTouchListener(this);
 
         //Load defaults from resources
         final Resources res = getResources();
@@ -357,6 +360,32 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
                 mPaintFooterIndicator.setAlpha(0xFF);
                 break;
         }
+    }
+
+    @Override
+    public final boolean onTouch(View view, MotionEvent event) {
+        if ((view != this) || (event.getAction() != MotionEvent.ACTION_DOWN)) {
+            return false;
+        }
+
+        final int count = mViewPager.getAdapter().getCount();
+        final float halfWidth = getWidth() / 2;
+        final float sixthWidth = getWidth() / 6;
+
+        if ((mCurrentPage > 0) && (event.getX() < halfWidth - sixthWidth)) {
+            setCurrentItem(mCurrentPage - 1);
+            return true;
+        } else if ((mCurrentPage < count - 1) && (event.getX() > halfWidth + sixthWidth)) {
+            setCurrentItem(mCurrentPage + 1);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public final void setOnTouchListener(OnTouchListener listener) {
+        throw new UnsupportedOperationException("This view does not support listening to its touch events.");
     }
 
     /**
