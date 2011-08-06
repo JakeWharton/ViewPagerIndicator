@@ -373,10 +373,10 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
         final float sixthWidth = getWidth() / 6;
 
         if ((mCurrentPage > 0) && (event.getX() < halfWidth - sixthWidth)) {
-            setCurrentItem(mCurrentPage - 1);
+            mViewPager.setCurrentItem(mCurrentPage - 1);
             return true;
         } else if ((mCurrentPage < count - 1) && (event.getX() > halfWidth + sixthWidth)) {
-            setCurrentItem(mCurrentPage + 1);
+            mViewPager.setCurrentItem(mCurrentPage + 1);
             return true;
         }
 
@@ -505,9 +505,6 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
 
     @Override
     public void onPageSelected(int position) {
-        mCurrentPage = position;
-        invalidate();
-
         if (mListener != null) {
             mListener.onPageSelected(position);
         }
