@@ -566,8 +566,10 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
             //Calculate the text bounds
             Rect bounds = new Rect();
             bounds.bottom = (int) (mPaintText.descent()-mPaintText.ascent());
-            result = bounds.bottom - bounds.top + (int)mFooterIndicatorHeight + (int)mFooterLineHeight + 10;
-            return result;
+            result = bounds.bottom - bounds.top + (int)mFooterLineHeight;
+            if (mFooterIndicatorStyle != IndicatorStyle.None) {
+                result += (int)mFooterIndicatorHeight;
+            }
         }
         return result;
     }
