@@ -39,6 +39,7 @@
         	<enum name="underline" value="2" />
         </attr>
         <attr name="footerIndicatorHeight" format="dimension" />
+        <attr name="footerIndicatorPadding" format="dimension" />
         <attr name="footerIndicatorUnderlinePadding" format="dimension" />
         <attr name="selectedColor" format="color" />
         <attr name="selectedBold" format="boolean" />
