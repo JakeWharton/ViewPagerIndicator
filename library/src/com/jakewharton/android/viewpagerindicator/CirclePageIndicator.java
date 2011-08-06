@@ -30,12 +30,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * A FlowIndicator which draws circles (one for each view). The current view
- * position is filled and others are only stroked.<br/><br/>
- * Available attributes are:<br/>
- * <ul>fillColor: Define the color used to fill a circle (default to white)</ul>
- * <ul>strokeColor: Define the color used to stroke a circle (default to white)</ul>
- * <ul>mRadius: Define the circle mRadius (default to 4.0)</ul>
+ * Draws circles (one for each view). The current view position is filled and
+ * others are only stroked.
  */
 public class CirclePageIndicator extends View implements PageIndicator, View.OnTouchListener {
     private float mRadius;
@@ -145,9 +141,10 @@ public class CirclePageIndicator extends View implements PageIndicator, View.OnT
         final int count = mViewPager.getAdapter().getCount();
         final float threeRadius = mRadius * 3;
         final float topOffset = getPaddingTop() + mRadius;
-        float leftOffset = getPaddingLeft() + mRadius;
+        final int paddingLeft = getPaddingLeft();
+        float leftOffset = paddingLeft + mRadius;
         if (mCentered) {
-            leftOffset += ((getWidth() - getPaddingLeft() - getPaddingRight()) / 2.0f) - ((count * threeRadius) / 2.0f);
+            leftOffset += ((getWidth() - paddingLeft - getPaddingRight()) / 2.0f) - ((count * threeRadius) / 2.0f);
         }
 
         //Draw stroked circles
@@ -273,12 +270,11 @@ public class CirclePageIndicator extends View implements PageIndicator, View.OnT
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
-        //We were told how big to be
         if (specMode == MeasureSpec.EXACTLY) {
+            //We were told how big to be
             result = specSize;
-        }
-        //Calculate the width according the views count
-        else {
+        } else {
+            //Calculate the width according the views count
             final int count = mViewPager.getAdapter().getCount();
             result = (int)(getPaddingLeft() + getPaddingRight()
                     + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
