@@ -156,6 +156,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     public void setFooterLineHeight(float footerLineHeight) {
         mFooterLineHeight = footerLineHeight;
+        mPaintFooterLine.setStrokeWidth(mFooterLineHeight);
         invalidate();
     }
 
