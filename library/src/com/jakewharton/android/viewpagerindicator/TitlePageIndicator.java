@@ -170,6 +170,15 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
         invalidate();
     }
 
+    public float getFooterIndicatorPadding() {
+        return mFooterIndicatorPadding;
+    }
+
+    public void setFooterIndicatorPadding(float footerIndicatorPadding) {
+        mFooterIndicatorPadding = footerIndicatorPadding;
+        invalidate();
+    }
+
     public IndicatorStyle getFooterIndicatorStyle() {
         return mFooterIndicatorStyle;
     }
