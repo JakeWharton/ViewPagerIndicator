@@ -26,6 +26,7 @@
         <item name="radius">@dimen/default_circle_indicator_radius</item>
         <item name="snap">@bool/default_circle_indicator_snap</item>
         <item name="strokeColor">@color/default_circle_indicator_stroke_color</item>
+        <item name="strokeWidth">@dimen/default_circle_indicator_stroke_width</item>
     </style>
 
     <style name="Widget.TitlePageIndicator" parent="@android:style/Widget">

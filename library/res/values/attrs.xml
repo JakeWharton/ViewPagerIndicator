@@ -34,6 +34,8 @@
         <attr name="snap" format="boolean" />
         <!-- Color of the open circles. -->
         <attr name="strokeColor" format="color" />
+        <!-- Width of the stroke used to draw the circles. -->
+        <attr name="strokeWidth" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="TitlePageIndicator">

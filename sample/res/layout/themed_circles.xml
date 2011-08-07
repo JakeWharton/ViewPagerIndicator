@@ -36,6 +36,7 @@
         app:radius="10dp"
         app:fillColor="#FF888888"
         app:strokeColor="#FF000000"
+        app:strokeWidth="2dp"
         />
 
 </LinearLayout>

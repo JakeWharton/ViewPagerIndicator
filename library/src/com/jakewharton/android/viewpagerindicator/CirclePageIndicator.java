@@ -62,6 +62,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         final Resources res = getResources();
         final int defaultFillColor = res.getColor(R.color.default_circle_indicator_fill_color);
         final int defaultStrokeColor = res.getColor(R.color.default_circle_indicator_stroke_color);
+        final float defaultStrokeWidth = res.getDimension(R.dimen.default_circle_indicator_stroke_width);
         final float defaultRadius = res.getDimension(R.dimen.default_circle_indicator_radius);
         final boolean defaultCentered = res.getBoolean(R.bool.default_circle_indicator_centered);
         final boolean defaultSnap = res.getBoolean(R.bool.default_circle_indicator_snap);
@@ -73,6 +74,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mPaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintStroke.setStyle(Style.STROKE);
         mPaintStroke.setColor(a.getColor(R.styleable.CirclePageIndicator_strokeColor, defaultStrokeColor));
+        mPaintStroke.setStrokeWidth(a.getDimension(R.styleable.CirclePageIndicator_strokeWidth, defaultStrokeWidth));
         mPaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintFill.setStyle(Style.FILL);
         mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
@@ -108,6 +110,15 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     public int getStrokeColor() {
         return mPaintStroke.getColor();
+    }
+
+    public void setStrokeWidth(float strokeWidth) {
+        mPaintStroke.setStrokeWidth(strokeWidth);
+        invalidate();
+    }
+
+    public float getStrokeWidth() {
+        return mPaintStroke.getStrokeWidth();
     }
 
     public void setRadius(float radius) {

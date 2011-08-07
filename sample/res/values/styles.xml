@@ -34,6 +34,7 @@
         <item name="android:background">#FFCCCCCC</item>
         <item name="fillColor">#FF888888</item>
         <item name="strokeColor">#FF000000</item>
+        <item name="strokeWidth">2dp</item>
         <item name="radius">10dp</item>
         <item name="centered">true</item>
     </style>

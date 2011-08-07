@@ -22,5 +22,6 @@ public class SampleCirclesStyledMethods extends FragmentActivity {
 		indicator.setRadius(10 * density);
 		indicator.setFillColor(0xFF888888);
 		indicator.setStrokeColor(0xFF000000);
+		indicator.setStrokeWidth(2 * density);
 	}
 }
