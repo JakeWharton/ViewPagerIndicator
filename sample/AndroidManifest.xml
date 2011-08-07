@@ -51,6 +51,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SampleCirclesStyledMethods"
+            android:label="Circles/Styled (via methods)"
+            android:theme="@android:style/Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".SampleCirclesStyledTheme"
             android:label="Circles/Styled (via theme)"
             android:theme="@style/StyledIndicators">
@@ -90,6 +99,15 @@
         <activity
             android:name=".SampleTitlesStyledLayout"
             android:label="Titles/Styled (via layout)"
+            android:theme="@android:style/Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SampleTitlesStyledMethods"
+            android:label="Titles/Styled (via methods)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
