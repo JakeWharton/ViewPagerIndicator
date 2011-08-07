@@ -44,6 +44,22 @@ Usage
          titleIndicator.setOnPageChangeListener(mPageChangeListener);
 
 
+Theming
+-------
+
+There are three ways to style the look of the indicators.
+
+ 1. **Theme XML**. An attribute for each type of indicator is provided in which
+    you can specify a custom style.
+ 2. **Layout XML**. Through the use of a custom namespace you can include any
+    desired styles.
+ 3. **Object methods**. Both styles have getters and setters for each style
+    attribute which can be changed at any point.
+
+Each indicator has a demo which creates the same look using each of these
+methods.
+
+
 Including In Your Project
 -------------------------
 
