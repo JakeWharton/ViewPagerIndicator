@@ -53,7 +53,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         public static IndicatorStyle fromValue(int value) {
             for (IndicatorStyle style : IndicatorStyle.values()) {
                 if (style.value == value) {
-                	return style;
+                    return style;
                 }
             }
             return null;
