@@ -30,7 +30,7 @@ import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.TextView;
+import android.view.View;
 
 /**
  * A TitlePageIndicator is a PageIndicator which displays the title of left view
@@ -38,7 +38,7 @@ import android.widget.TextView;
  * the right view (if exist). When the user scrolls the ViewPager then titles are
  * also scrolled.
  */
-public class TitlePageIndicator extends TextView implements PageIndicator {
+public class TitlePageIndicator extends View implements PageIndicator {
     private static final float UNDERLINE_FADE_PERCENTAGE = 0.25f;
 
     public enum IndicatorStyle {
@@ -588,7 +588,6 @@ public class TitlePageIndicator extends TextView implements PageIndicator {
 
     @Override
     public Parcelable onSaveInstanceState() {
-        setFreezesText(true);
         Parcelable superState = super.onSaveInstanceState();
         SavedState savedState = new SavedState(superState);
         savedState.currentPage = mCurrentPage;
