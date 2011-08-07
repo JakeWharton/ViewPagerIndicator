@@ -17,34 +17,53 @@
 
 <resources>
     <declare-styleable name="ViewPagerIndicator">
+        <!-- Style of the circle indicator. -->
         <attr name="circlePageIndicatorStyle" format="reference"/>
+        <!-- Style of the title indicator. -->
         <attr name="titlePageIndicatorStyle" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="CirclePageIndicator">
+        <!-- Whether or not the indicators should be centered. -->
         <attr name="centered" format="boolean" />
+        <!-- Color of the filled circle that represents the current page. -->
         <attr name="fillColor" format="color" />
+        <!-- Radius of the circles. This is also the spacing between circles. -->
         <attr name="radius" format="dimension" />
+        <!-- Whether or not the selected indicator snaps to the circles. -->
         <attr name="snap" format="boolean" />
+        <!-- Color of the open circles. -->
         <attr name="strokeColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="TitlePageIndicator">
+        <!-- Screen edge padding. -->
         <attr name="clipPadding" format="dimension" />
+        <!-- Color of the footer line and indicator. -->
         <attr name="footerColor" format="color" />
+        <!-- Height of the footer line. -->
         <attr name="footerLineHeight" format="dimension" />
+        <!-- Style of the indicator. Default is triangle. -->
         <attr name="footerIndicatorStyle">
-        	<enum name="none" value="0" />
-        	<enum name="triangle" value="1" />
-        	<enum name="underline" value="2" />
+            <enum name="none" value="0" />
+            <enum name="triangle" value="1" />
+            <enum name="underline" value="2" />
         </attr>
+        <!-- Height of the indicator above the footer line. -->
         <attr name="footerIndicatorHeight" format="dimension" />
+        <!-- Padding between the top of the indicator and bottom of the title. -->
         <attr name="footerIndicatorPadding" format="dimension" />
+        <!-- Left and right padding of the underline indicator. -->
         <attr name="footerIndicatorUnderlinePadding" format="dimension" />
+        <!-- Color of the selected title. -->
         <attr name="selectedColor" format="color" />
+        <!-- Whether or not the selected item is displayed as bold. -->
         <attr name="selectedBold" format="boolean" />
+        <!-- Color of regular titles. -->
         <attr name="textColor" format="color" />
+        <!-- Size of title text. -->
         <attr name="textSize" format="dimension" />
+        <!-- Padding between titles when bumping into each other. -->
         <attr name="titlePadding" format="dimension" />
     </declare-styleable>
 </resources>
