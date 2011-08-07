@@ -72,8 +72,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private IndicatorStyle mFooterIndicatorStyle;
     private final Paint mPaintFooterIndicator;
     private float mFooterIndicatorHeight;
-    private float mFooterIndicatorPadding;
     private float mFooterIndicatorUnderlinePadding;
+    private float mFooterPadding;
     private float mTitlePadding;
     /** Left and right side padding for not active view titles. */
     private float mClipPadding;
@@ -97,8 +97,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final float defaultFooterLineHeight = res.getDimension(R.dimen.default_title_indicator_footer_line_height);
         final int defaultFooterIndicatorStyle = res.getInteger(R.integer.default_title_indicator_footer_indicator_style);
         final float defaultFooterIndicatorHeight = res.getDimension(R.dimen.default_title_indicator_footer_indicator_height);
-        final float defaultFooterIndicatorPadding = res.getDimension(R.dimen.default_title_indicator_footer_indicator_padding);
         final float defaultFooterIndicatorUnderlinePadding = res.getDimension(R.dimen.default_title_indicator_footer_indicator_underline_padding);
+        final float defaultFooterPadding = res.getDimension(R.dimen.default_title_indicator_footer_padding);
         final int defaultSelectedColor = res.getColor(R.color.default_title_indicator_selected_color);
         final boolean defaultSelectedBold = res.getBoolean(R.bool.default_title_indicator_selected_bold);
         final int defaultTextColor = res.getColor(R.color.default_title_indicator_text_color);
@@ -113,8 +113,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mFooterLineHeight = a.getDimension(R.styleable.TitlePageIndicator_footerLineHeight, defaultFooterLineHeight);
         mFooterIndicatorStyle = IndicatorStyle.fromValue(a.getInteger(R.styleable.TitlePageIndicator_footerIndicatorStyle, defaultFooterIndicatorStyle));
         mFooterIndicatorHeight = a.getDimension(R.styleable.TitlePageIndicator_footerIndicatorHeight, defaultFooterIndicatorHeight);
-        mFooterIndicatorPadding = a.getDimension(R.styleable.TitlePageIndicator_footerIndicatorPadding, defaultFooterIndicatorPadding);
         mFooterIndicatorUnderlinePadding = a.getDimension(R.styleable.TitlePageIndicator_footerIndicatorUnderlinePadding, defaultFooterIndicatorUnderlinePadding);
+        mFooterPadding = a.getDimension(R.styleable.TitlePageIndicator_footerPadding, defaultFooterPadding);
         mTitlePadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
 
@@ -169,11 +169,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
     }
 
     public float getFooterIndicatorPadding() {
-        return mFooterIndicatorPadding;
+        return mFooterPadding;
     }
 
     public void setFooterIndicatorPadding(float footerIndicatorPadding) {
-        mFooterIndicatorPadding = footerIndicatorPadding;
+        mFooterPadding = footerIndicatorPadding;
         invalidate();
     }
 
@@ -570,9 +570,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
             //Calculate the text bounds
             RectF bounds = new RectF();
             bounds.bottom = mPaintText.descent()-mPaintText.ascent();
-            result = bounds.bottom - bounds.top + mFooterLineHeight;
+            result = bounds.bottom - bounds.top + mFooterLineHeight + mFooterPadding;
             if (mFooterIndicatorStyle != IndicatorStyle.None) {
-                result += mFooterIndicatorHeight + mFooterIndicatorPadding;
+                result += mFooterIndicatorHeight;
             }
         }
         return (int)result;

@@ -51,10 +51,10 @@
         </attr>
         <!-- Height of the indicator above the footer line. -->
         <attr name="footerIndicatorHeight" format="dimension" />
-        <!-- Padding between the top of the indicator and bottom of the title. -->
-        <attr name="footerIndicatorPadding" format="dimension" />
         <!-- Left and right padding of the underline indicator. -->
         <attr name="footerIndicatorUnderlinePadding" format="dimension" />
+        <!-- Padding between the bottom of the title and the footer. -->
+        <attr name="footerPadding" format="dimension" />
         <!-- Color of the selected title. -->
         <attr name="selectedColor" format="color" />
         <!-- Whether or not the selected item is displayed as bold. -->
