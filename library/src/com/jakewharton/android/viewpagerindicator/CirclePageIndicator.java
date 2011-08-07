@@ -33,7 +33,7 @@ import android.view.View;
  * Draws circles (one for each view). The current view position is filled and
  * others are only stroked.
  */
-public class CirclePageIndicator extends View implements PageIndicator, View.OnTouchListener {
+public class CirclePageIndicator extends View implements PageIndicator {
     private float mRadius;
     private final Paint mPaintStroke;
     private final Paint mPaintFill;
@@ -57,7 +57,6 @@ public class CirclePageIndicator extends View implements PageIndicator, View.OnT
 
     public CirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        super.setOnTouchListener(this);
 
         //Load defaults from resources
         final Resources res = getResources();
@@ -161,29 +160,22 @@ public class CirclePageIndicator extends View implements PageIndicator, View.OnT
     }
 
     @Override
-    public final boolean onTouch(View view, MotionEvent event) {
-        if ((view != this) || (event.getAction() != MotionEvent.ACTION_DOWN)) {
-            return false;
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            final int count = mViewPager.getAdapter().getCount();
+            final float halfWidth = getWidth() / 2;
+            final float halfCircleWidth = (count * 3 * mRadius) / 2;
+
+            if ((mCurrentPage > 0) && (event.getX() < halfWidth - halfCircleWidth)) {
+                setCurrentItem(mCurrentPage - 1);
+                return true;
+            } else if ((mCurrentPage < count - 1) && (event.getX() > halfWidth + halfCircleWidth)) {
+                setCurrentItem(mCurrentPage + 1);
+                return true;
+            }
         }
 
-        final int count = mViewPager.getAdapter().getCount();
-        final float halfWidth = getWidth() / 2;
-        final float halfCircleWidth = (count * 3 * mRadius) / 2;
-
-        if ((mCurrentPage > 0) && (event.getX() < halfWidth - halfCircleWidth)) {
-            setCurrentItem(mCurrentPage - 1);
-            return true;
-        } else if ((mCurrentPage < count - 1) && (event.getX() > halfWidth + halfCircleWidth)) {
-            setCurrentItem(mCurrentPage + 1);
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public final void setOnTouchListener(OnTouchListener listener) {
-        throw new UnsupportedOperationException("This view does not support listening to its touch events.");
+        return super.onTouchEvent(event);
     }
 
     @Override
