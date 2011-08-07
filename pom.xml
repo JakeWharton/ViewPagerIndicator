@@ -6,7 +6,7 @@
 	<groupId>com.jakewharton</groupId>
 	<artifactId>android-viewpagerindicator-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 
 	<name>Android-ViewPagerIndicator (Parent)</name>
 	<description>Android library for.</description>
