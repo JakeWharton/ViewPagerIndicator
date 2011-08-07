@@ -258,20 +258,22 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
         final int countMinusOne = count - 1;
         final float halfWidth = getWidth() / 2f;
         final int left = getLeft();
+        final float leftClip = left + mClipPadding;
         final int width = getWidth();
         final int height = getHeight();
-        final int leftPlusWidth = left + width;
+        final int right = left + width;
+        final float rightClip = right - mClipPadding;
 
         //Verify if the current view must be clipped to the screen
-        RectF curViewBound = bounds.get(mCurrentPage);
-        float curViewWidth = curViewBound.right - curViewBound.left;
-        if (curViewBound.left < 0) {
+        RectF curPageBound = bounds.get(mCurrentPage);
+        float curPageWidth = curPageBound.right - curPageBound.left;
+        if (curPageBound.left < leftClip) {
             //Try to clip to the screen (left side)
-            clipViewOnTheLeft(curViewBound, curViewWidth);
+            clipViewOnTheLeft(curPageBound, curPageWidth, left);
         }
-        if (curViewBound.right > leftPlusWidth) {
+        if (curPageBound.right > rightClip) {
             //Try to clip to the screen (right side)
-            clipViewOnTheRight(curViewBound, curViewWidth, leftPlusWidth);
+            clipViewOnTheRight(curPageBound, curPageWidth, right);
         }
 
         //Left views starting from the current position
@@ -279,10 +281,10 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
             for (int i = mCurrentPage - 1; i >= 0; i--) {
                 RectF bound = bounds.get(i);
                 //Is left side is outside the screen
-                //if (bound.left < 0) {
+                if (bound.left < leftClip) {
                     float w = bound.right - bound.left;
                     //Try to clip to the screen (left side)
-                    clipViewOnTheLeft(bound, w);
+                    clipViewOnTheLeft(bound, w, left);
                     //Except if there's an intersection with the right view
                     RectF rightBound = bounds.get(i + 1);
                     //Intersection
@@ -290,7 +292,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
                         bound.left = rightBound.left - w - mTitlePadding;
                         bound.right = bound.left + w;
                     }
-                //}
+                }
             }
         }
         //Right views starting from the current position
@@ -298,10 +300,10 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
             for (int i = mCurrentPage + 1 ; i < count; i++) {
                 RectF bound = bounds.get(i);
                 //If right side is outside the screen
-                //if (bound.right > leftPlusWidth) {
+                if (bound.right > rightClip) {
                     float w = bound.right - bound.left;
                     //Try to clip to the screen (right side)
-                    clipViewOnTheRight(bound, w, leftPlusWidth);
+                    clipViewOnTheRight(bound, w, right);
                     //Except if there's an intersection with the left view
                     RectF leftBound = bounds.get(i - 1);
                     //Intersection
@@ -309,7 +311,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
                         bound.left = leftBound.right + mTitlePadding;
                         bound.right = bound.left + w;
                     }
-                //}
+                }
             }
         }
 
@@ -318,7 +320,7 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
             //Get the title
             RectF bound = bounds.get(i);
             //Only if one side is visible
-            if ((bound.left > left && bound.left < leftPlusWidth) || (bound.right > left && bound.right < leftPlusWidth)) {
+            if ((bound.left > left && bound.left < right) || (bound.right > left && bound.right < right)) {
                 Paint paint = mPaintText;
                 //Change the color is the title is closed to the center
                 float middle = (bound.left + bound.right) / 2;
@@ -409,8 +411,8 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
      * @param curViewWidth
      *            width of the view.
      */
-    private void clipViewOnTheRight(RectF curViewBound, float curViewWidth, int leftPlusWidth) {
-        curViewBound.right = leftPlusWidth - mClipPadding;
+    private void clipViewOnTheRight(RectF curViewBound, float curViewWidth, int right) {
+        curViewBound.right = right - mClipPadding;
         curViewBound.left = curViewBound.right - curViewWidth;
     }
 
@@ -422,9 +424,9 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
      * @param curViewWidth
      *            width of the view.
      */
-    private void clipViewOnTheLeft(RectF curViewBound, float curViewWidth) {
-        curViewBound.left = 0 + mClipPadding;
-        curViewBound.right = curViewWidth;
+    private void clipViewOnTheLeft(RectF curViewBound, float curViewWidth, int left) {
+        curViewBound.left = left + mClipPadding;
+        curViewBound.right = mClipPadding + curViewWidth;
     }
 
     /**
