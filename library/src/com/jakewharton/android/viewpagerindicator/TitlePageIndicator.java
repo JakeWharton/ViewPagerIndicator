@@ -269,9 +269,9 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
         if (mCurrentPage > 0) {
             for (int i = mCurrentPage - 1; i >= 0; i--) {
                 Rect bound = bounds.get(i);
-                int w = bound.right - bound.left;
                 //Is left side is outside the screen
                 if (bound.left < 0) {
+                    int w = bound.right - bound.left;
                     //Try to clip to the screen (left side)
                      clipViewOnTheLeft(bound, w);
                     //Except if there's an intersection with the right view
@@ -289,9 +289,9 @@ public class TitlePageIndicator extends TextView implements PageIndicator, View.
         if (mCurrentPage < countMinusOne) {
             for (int i = mCurrentPage + 1 ; i < count; i++) {
                 Rect bound = bounds.get(i);
-                int w = bound.right - bound.left;
                 //If right side is outside the screen
                 if (bound.right > leftPlusWidth) {
+                    int w = bound.right - bound.left;
                     //Try to clip to the screen (right side)
                     clipViewOnTheRight(bound, w, leftPlusWidth);
                     //Except if there's an intersection with the left view

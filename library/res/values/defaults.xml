@@ -21,7 +21,7 @@
     <bool name="default_circle_indicator_snap">false</bool>
     <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
 
-    <dimen name="default_title_indicator_clip_padding">0dp</dimen>
+    <dimen name="default_title_indicator_clip_padding">4dp</dimen>
     <color name="default_title_indicator_footer_color">#FF6899FF</color>
     <dimen name="default_title_indicator_footer_line_height">1px</dimen>
     <integer name="default_title_indicator_footer_indicator_style">1</integer>
