@@ -39,7 +39,19 @@ import android.view.View;
  * also scrolled.
  */
 public class TitlePageIndicator extends View implements PageIndicator {
-    private static final float UNDERLINE_FADE_PERCENTAGE = 0.25f;
+    /**
+     * Percentage indicating what percentage of the screen width away from
+     * center should the underline be fully faded. A value of 0.25 means that
+     * halfway between the center of the screen and an edge.
+     */
+    private static final float SELECTION_FADE_PERCENTAGE = 0.25f;
+
+    /**
+     * Percentage indicating what percentage of the screen width away from
+     * center should the selected text bold turn off. A value of 0.05 means
+     * that 10% between the center and an edge.
+     */
+    private static final float BOLD_FADE_PERCENTAGE = 0.05f;
 
     public enum IndicatorStyle {
         None(0), Triangle(1), Underline(2);
@@ -66,7 +78,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private int mCurrentPage;
     private int mCurrentOffset;
     private final Paint mPaintText;
-    private final Paint mPaintSelected;
+    private boolean mBoldText;
+    private int mColorText;
+    private int mColorSelected;
     private Path mPath;
     private final Paint mPaintFooterLine;
     private IndicatorStyle mFooterIndicatorStyle;
@@ -117,18 +131,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mFooterPadding = a.getDimension(R.styleable.TitlePageIndicator_footerPadding, defaultFooterPadding);
         mTitlePadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
+        mColorSelected = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
+        mColorText = a.getColor(R.styleable.TitlePageIndicator_textColor, defaultTextColor);
+        mBoldText = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
 
         final float textSize = a.getDimension(R.styleable.TitlePageIndicator_textSize, defaultTextSize);
         final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
         mPaintText = new Paint();
-        mPaintText.setColor(a.getColor(R.styleable.TitlePageIndicator_textColor, defaultTextColor));
         mPaintText.setTextSize(textSize);
         mPaintText.setAntiAlias(true);
-        mPaintSelected = new Paint();
-        mPaintSelected.setColor(a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor));
-        mPaintSelected.setTextSize(textSize);
-        mPaintSelected.setFakeBoldText(a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold));
-        mPaintSelected.setAntiAlias(true);
         mPaintFooterLine = new Paint();
         mPaintFooterLine.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterLine.setStrokeWidth(mFooterLineHeight);
@@ -189,29 +200,30 @@ public class TitlePageIndicator extends View implements PageIndicator {
     }
 
     public int getSelectedColor() {
-        return mPaintSelected.getColor();
+        return mColorSelected;
     }
 
     public void setSelectedColor(int selectedColor) {
-        mPaintSelected.setColor(selectedColor);
+        mColorSelected = selectedColor;
         invalidate();
     }
 
     public boolean isSelectedBold() {
-        return mPaintSelected.isFakeBoldText();
+        return mBoldText;
     }
 
     public void setSelectedBold(boolean selectedBold) {
-        mPaintSelected.setFakeBoldText(selectedBold);
+        mBoldText = selectedBold;
         invalidate();
     }
 
     public int getTextColor() {
-        return mPaintText.getColor();
+        return mColorText;
     }
 
     public void setTextColor(int textColor) {
         mPaintText.setColor(textColor);
+        mColorText = textColor;
         invalidate();
     }
 
@@ -263,6 +275,18 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final int height = getHeight();
         final int right = left + width;
         final float rightClip = right - mClipPadding;
+
+        int page = mCurrentPage;
+        float offsetPercent;
+        if (mCurrentOffset <= halfWidth) {
+            offsetPercent = 1.0f * mCurrentOffset / width;
+        } else {
+            page += 1;
+            offsetPercent = 1.0f * (width - mCurrentOffset) / width;
+        }
+        final boolean currentSelected = (offsetPercent <= SELECTION_FADE_PERCENTAGE);
+        final boolean currentBold = (offsetPercent <= BOLD_FADE_PERCENTAGE);
+        final float selectedPercent = (SELECTION_FADE_PERCENTAGE - offsetPercent) / SELECTION_FADE_PERCENTAGE;
 
         //Verify if the current view must be clipped to the screen
         RectF curPageBound = bounds.get(mCurrentPage);
@@ -321,13 +345,20 @@ public class TitlePageIndicator extends View implements PageIndicator {
             RectF bound = bounds.get(i);
             //Only if one side is visible
             if ((bound.left > left && bound.left < right) || (bound.right > left && bound.right < right)) {
-                Paint paint = mPaintText;
-                //Change the color is the title is closed to the center
-                float middle = (bound.left + bound.right) / 2;
-                if (Math.abs(middle - halfWidth) < 20) {
-                    paint = mPaintSelected;
+                final boolean currentPage = (i == page);
+                //Only set bold if we are within bounds
+                mPaintText.setFakeBoldText(currentPage && currentBold && mBoldText);
+
+                //Draw text as unselected
+                mPaintText.setColor(mColorText);
+                canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom, mPaintText);
+
+                //If we are within the selected bounds draw the selected text
+                if (currentPage && currentSelected) {
+                    mPaintText.setColor(mColorSelected);
+                    mPaintText.setAlpha((int)((mColorSelected >>> 24) * selectedPercent));
+                    canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom, mPaintText);
                 }
-                canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom, paint);
             }
         }
 
@@ -349,16 +380,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 break;
 
             case Underline:
-                float deltaPercentage = mCurrentOffset * 1.0f / width;
-                int alpha = 0xFF;
-                int page = mCurrentPage;
-                if (deltaPercentage <= UNDERLINE_FADE_PERCENTAGE) {
-                    alpha = (int)(0xFF * ((UNDERLINE_FADE_PERCENTAGE - deltaPercentage) / UNDERLINE_FADE_PERCENTAGE));
-                } else if (deltaPercentage >= (1 - UNDERLINE_FADE_PERCENTAGE)) {
-                    alpha = (int)(0xFF * ((deltaPercentage - (1 - UNDERLINE_FADE_PERCENTAGE)) / UNDERLINE_FADE_PERCENTAGE));
-                    page += 1; //We are coming into the next page
-                } else if (mCurrentOffset != 0) {
-                    break; //Not in underline scope
+                if (!currentSelected) {
+                    break;
                 }
 
                 RectF underlineBounds = bounds.get(page);
@@ -369,7 +392,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 mPath.lineTo(underlineBounds.left  - mFooterIndicatorUnderlinePadding, height - mFooterLineHeight - mFooterIndicatorHeight);
                 mPath.close();
 
-                mPaintFooterIndicator.setAlpha(alpha);
+                mPaintFooterIndicator.setAlpha((int)(0xFF * selectedPercent));
                 canvas.drawPath(mPath, mPaintFooterIndicator);
                 mPaintFooterIndicator.setAlpha(0xFF);
                 break;
