@@ -376,8 +376,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         //Draw the footer line
         mPath = new Path();
-        mPath.moveTo(0, height - mFooterLineHeight);
-        mPath.lineTo(width, height - mFooterLineHeight);
+        mPath.moveTo(0, height - mFooterLineHeight / 2f);
+        mPath.lineTo(width, height - mFooterLineHeight / 2f);
         mPath.close();
         canvas.drawPath(mPath, mPaintFooterLine);
 
