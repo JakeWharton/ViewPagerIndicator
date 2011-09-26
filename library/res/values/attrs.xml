@@ -67,5 +67,7 @@
         <attr name="textSize" format="dimension" />
         <!-- Padding between titles when bumping into each other. -->
         <attr name="titlePadding" format="dimension" />
+        <!-- Padding between titles and the top of the View. -->
+        <attr name="topPadding" format="dimension" />
     </declare-styleable>
 </resources>

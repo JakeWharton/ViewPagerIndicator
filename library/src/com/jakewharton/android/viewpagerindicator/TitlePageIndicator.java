@@ -89,6 +89,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private float mFooterIndicatorUnderlinePadding;
     private float mFooterPadding;
     private float mTitlePadding;
+    private float mTopPadding;
     /** Left and right side padding for not active view titles. */
     private float mClipPadding;
     private float mFooterLineHeight;
@@ -119,6 +120,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final float defaultTextSize = res.getDimension(R.dimen.default_title_indicator_text_size);
         final float defaultTitlePadding = res.getDimension(R.dimen.default_title_indicator_title_padding);
         final float defaultClipPadding = res.getDimension(R.dimen.default_title_indicator_clip_padding);
+        final float defaultTopPadding = res.getDimension(R.dimen.default_title_indicator_top_padding);
 
         //Retrieve styles attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TitlePageIndicator, defStyle, R.style.Widget_TitlePageIndicator);
@@ -129,6 +131,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mFooterIndicatorHeight = a.getDimension(R.styleable.TitlePageIndicator_footerIndicatorHeight, defaultFooterIndicatorHeight);
         mFooterIndicatorUnderlinePadding = a.getDimension(R.styleable.TitlePageIndicator_footerIndicatorUnderlinePadding, defaultFooterIndicatorUnderlinePadding);
         mFooterPadding = a.getDimension(R.styleable.TitlePageIndicator_footerPadding, defaultFooterPadding);
+        mTopPadding = a.getDimension(R.styleable.TitlePageIndicator_topPadding, defaultTopPadding);
         mTitlePadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
         mColorSelected = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
@@ -244,6 +247,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mTitlePadding = titlePadding;
         invalidate();
     }
+    
+    public float getTopPadding() {
+    	return this.mTopPadding;
+    }
+    
+    public void setTopPadding(float topPadding) {
+    	mTopPadding = topPadding;
+    	invalidate();
+    }
 
     public float getClipPadding() {
         return this.mClipPadding;
@@ -351,21 +363,21 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
                 //Draw text as unselected
                 mPaintText.setColor(mColorText);
-                canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom, mPaintText);
+                canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom + mTopPadding, mPaintText);
 
                 //If we are within the selected bounds draw the selected text
                 if (currentPage && currentSelected) {
                     mPaintText.setColor(mColorSelected);
                     mPaintText.setAlpha((int)((mColorSelected >>> 24) * selectedPercent));
-                    canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom, mPaintText);
+                    canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom + mTopPadding, mPaintText);
                 }
             }
         }
 
         //Draw the footer line
         mPath = new Path();
-        mPath.moveTo(0, height - mFooterLineHeight);
-        mPath.lineTo(width, height - mFooterLineHeight);
+        mPath.moveTo(0, height - mFooterLineHeight / 2f);
+        mPath.lineTo(width, height - mFooterLineHeight / 2f);
         mPath.close();
         canvas.drawPath(mPath, mPaintFooterLine);
 
@@ -595,7 +607,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
             //Calculate the text bounds
             RectF bounds = new RectF();
             bounds.bottom = mPaintText.descent()-mPaintText.ascent();
-            result = bounds.bottom - bounds.top + mFooterLineHeight + mFooterPadding;
+            result = bounds.bottom - bounds.top + mFooterLineHeight + mFooterPadding + mTopPadding;
             if (mFooterIndicatorStyle != IndicatorStyle.None) {
                 result += mFooterIndicatorHeight;
             }

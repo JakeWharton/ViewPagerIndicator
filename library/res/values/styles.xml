@@ -42,5 +42,6 @@
         <item name="textColor">@color/default_title_indicator_text_color</item>
         <item name="textSize">@dimen/default_title_indicator_text_size</item>
         <item name="titlePadding">@dimen/default_title_indicator_title_padding</item>
+        <item name="topPadding">@dimen/default_title_indicator_top_padding</item>
     </style>
 </resources>
