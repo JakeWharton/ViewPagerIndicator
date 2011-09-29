@@ -2,8 +2,8 @@ package com.jakewharton.android.viewpagerindicator.sample;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import com.jakewharton.android.view.CirclePageIndicator;
 import com.jakewharton.android.view.DirectionalViewPager;
-import com.jakewharton.android.viewpagerindicator.CirclePageIndicator;
 
 public class SampleCirclesOrientation extends FragmentActivity {
     @Override

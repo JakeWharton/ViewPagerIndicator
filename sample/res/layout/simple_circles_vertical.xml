@@ -26,7 +26,7 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         />
-    <com.jakewharton.android.viewpagerindicator.CirclePageIndicator
+    <com.jakewharton.android.view.CirclePageIndicator
         android:id="@+id/indicator"
         android:padding="10dip"
         android:layout_height="fill_parent"

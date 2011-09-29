@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
-import com.jakewharton.android.viewpagerindicator.TitlePageIndicator;
+import com.jakewharton.android.view.TitlePageIndicator;
 
 public class SampleTitlesWithListener extends FragmentActivity {
 	@Override

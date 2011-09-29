@@ -3,7 +3,7 @@ package com.jakewharton.android.viewpagerindicator.sample;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import com.jakewharton.android.viewpagerindicator.TitlePageIndicator;
+import com.jakewharton.android.view.TitlePageIndicator;
 
 public class SampleTitlesStyledTheme extends FragmentActivity {
 	@Override

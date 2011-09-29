@@ -1,7 +1,7 @@
 package com.jakewharton.android.viewpagerindicator.sample;
 
 import android.support.v4.app.FragmentManager;
-import com.jakewharton.android.viewpagerindicator.TitleProvider;
+import com.jakewharton.android.view.TitleProvider;
 
 class TestTitleFragmentAdapter extends TestFragmentAdapter implements TitleProvider {
 	public TestTitleFragmentAdapter(FragmentManager fm) {

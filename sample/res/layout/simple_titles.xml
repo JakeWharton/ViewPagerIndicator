@@ -20,7 +20,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <com.jakewharton.android.viewpagerindicator.TitlePageIndicator
+    <com.jakewharton.android.view.TitlePageIndicator
         android:id="@+id/indicator"
         android:padding="10dip"
         android:layout_height="wrap_content"
