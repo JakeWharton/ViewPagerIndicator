@@ -34,6 +34,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SampleCirclesOrientation"
+            android:label="Circles/Orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".SampleCirclesSnap"
             android:label="Circles/Snap">
             <intent-filter>

@@ -247,14 +247,14 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mTitlePadding = titlePadding;
         invalidate();
     }
-    
+
     public float getTopPadding() {
-    	return this.mTopPadding;
+        return this.mTopPadding;
     }
-    
+
     public void setTopPadding(float topPadding) {
-    	mTopPadding = topPadding;
-    	invalidate();
+        mTopPadding = topPadding;
+        invalidate();
     }
 
     public float getClipPadding() {

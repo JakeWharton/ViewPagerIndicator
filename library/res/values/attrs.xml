@@ -28,6 +28,11 @@
         <attr name="centered" format="boolean" />
         <!-- Color of the filled circle that represents the current page. -->
         <attr name="fillColor" format="color" />
+        <!-- Orientation of the indicator. -->
+        <attr name="orientation">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
         <!-- Radius of the circles. This is also the spacing between circles. -->
         <attr name="radius" format="dimension" />
         <!-- Whether or not the selected indicator snaps to the circles. -->
