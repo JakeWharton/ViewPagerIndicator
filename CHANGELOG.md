@@ -6,6 +6,7 @@ Version 1.1.0 *(In Development)*
 
  * Package changed from `com.jakewharton.android.viewpagerindicator` to
    `com.jakewharton.android.view`.
+ * Add vertical orientation support to the circle indicator.
 
 
 Version 1.0.1 *(2011-09-15)*
