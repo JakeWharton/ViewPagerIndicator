@@ -562,6 +562,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mListener = listener;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        invalidate();
+    }
+
     /*
      * (non-Javadoc)
      *
