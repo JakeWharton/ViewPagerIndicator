@@ -55,10 +55,4 @@ public interface PageIndicator extends ViewPager.OnPageChangeListener {
      * @param listener
      */
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener);
-
-    /**
-     * Notify the indicator that the underlying data set has changed and it
-     * should redraw itself to reflect the changes.
-     */
-    public void notifyDataSetChanged();
 }
