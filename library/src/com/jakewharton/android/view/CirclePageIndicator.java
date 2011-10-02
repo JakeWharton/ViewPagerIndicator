@@ -47,6 +47,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private int mCurrentPage;
     private int mSnapPage;
     private int mCurrentOffset;
+    private int mScrollState;
     private int mPageSize;
     private int mOrientation;
     private boolean mCentered;
@@ -285,6 +286,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onPageScrollStateChanged(int state) {
+        mScrollState = state;
+        
         if (mListener != null) {
             mListener.onPageScrollStateChanged(state);
         }
@@ -304,9 +307,11 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onPageSelected(int position) {
-        mCurrentPage = position;
-        mSnapPage = position;
-        invalidate();
+        if (mSnap || mScrollState == ViewPager.SCROLL_STATE_IDLE) {
+            mCurrentPage = position;
+            mSnapPage = position;
+            invalidate();
+        }
 
         if (mListener != null) {
             mListener.onPageSelected(position);
@@ -316,11 +321,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
     @Override
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
         mListener = listener;
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        invalidate();
     }
 
     /*

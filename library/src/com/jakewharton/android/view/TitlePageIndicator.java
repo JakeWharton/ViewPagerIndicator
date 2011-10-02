@@ -80,6 +80,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private TitleProvider mTitleProvider;
     private int mCurrentPage;
     private int mCurrentOffset;
+    private int mScrollState;
     private final Paint mPaintText;
     private boolean mBoldText;
     private int mColorText;
@@ -534,6 +535,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onPageScrollStateChanged(int state) {
+        mScrollState = state;
+        
         if (mListener != null) {
             mListener.onPageScrollStateChanged(state);
         }
@@ -552,6 +555,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onPageSelected(int position) {
+        if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
+            mCurrentPage = position;
+            invalidate();
+        }
+        
         if (mListener != null) {
             mListener.onPageSelected(position);
         }
@@ -560,11 +568,6 @@ public class TitlePageIndicator extends View implements PageIndicator {
     @Override
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
         mListener = listener;
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        invalidate();
     }
 
     /*
