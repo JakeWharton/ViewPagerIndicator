@@ -68,8 +68,25 @@ standalone JAR is not possible due to the theming capabilities offered by the
 indicator widgets.
 
 You can include this project by [referencing it as a library project][8] in
-Eclipse or ant. If you are a Maven user, artifacts will be deployed to a repo
-once the project hits the 1.0 milestone.
+Eclipse or ant.
+
+If you are a Maven user you can easily include the library by specifying it as
+a dependency:
+
+    <dependency>
+      <groupId>com.jakewharton</groupId>
+      <artifactId>android-viewpagerindicator</artifactId>
+      <version>1.1.0</version>
+    </dependency>
+
+You must also include the following repository:
+
+    <repository>
+      <id>com.jakewharton</id>
+      <url>http://r.jakewharton.com/maven/release<?url>
+    </repository>
+
+
 
 This project depends on the `ViewPager` class which is available in the
 [Android Compatibility Library][2] or [ActionBarSherlock][3]. Details for

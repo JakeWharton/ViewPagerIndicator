@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-Version 1.1.0 *(In Development)*
---------------------------------
+Version 1.1.0 *(2011-10-02)*
+----------------------------
 
  * Package changed from `com.jakewharton.android.viewpagerindicator` to
    `com.jakewharton.android.view`.
