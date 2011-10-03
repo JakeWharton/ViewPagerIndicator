@@ -536,7 +536,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     @Override
     public void onPageScrollStateChanged(int state) {
         mScrollState = state;
-        
+
         if (mListener != null) {
             mListener.onPageScrollStateChanged(state);
         }
@@ -559,7 +559,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
             mCurrentPage = position;
             invalidate();
         }
-        
+
         if (mListener != null) {
             mListener.onPageSelected(position);
         }
