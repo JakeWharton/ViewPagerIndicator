@@ -1,24 +1,23 @@
 package com.jakewharton.android.viewpagerindicator.sample;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import com.jakewharton.android.view.CirclePageIndicator;
 
-public class SampleCirclesInitialPage extends FragmentActivity {
+public class SampleCirclesInitialPage extends BaseSampleActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.simple_circles);
 		
-		TestFragmentAdapter adapter = new TestFragmentAdapter(getSupportFragmentManager());
+		mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
 		
-		ViewPager pager = (ViewPager)findViewById(R.id.pager);
-		pager.setAdapter(adapter);
+		mPager = (ViewPager)findViewById(R.id.pager);
+		mPager.setAdapter(mAdapter);
 		
 		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
-		indicator.setViewPager(pager);
-		indicator.setCurrentItem(adapter.getCount() - 1);
+		indicator.setViewPager(mPager);
+		indicator.setCurrentItem(mAdapter.getCount() - 1);
 		
 		//You can also do: indicator.setViewPager(pager, initialPage);
 	}

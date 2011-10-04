@@ -10,6 +10,6 @@ class TestTitleFragmentAdapter extends TestFragmentAdapter implements TitleProvi
 
 	@Override
 	public String getTitle(int position) {
-		return TestFragmentAdapter.CONTENT[position];
+		return TestFragmentAdapter.CONTENT[position % CONTENT.length];
 	}
 }

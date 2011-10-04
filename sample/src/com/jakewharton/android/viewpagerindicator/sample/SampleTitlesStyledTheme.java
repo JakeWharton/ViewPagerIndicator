@@ -1,11 +1,10 @@
 package com.jakewharton.android.viewpagerindicator.sample;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import com.jakewharton.android.view.TitlePageIndicator;
 
-public class SampleTitlesStyledTheme extends FragmentActivity {
+public class SampleTitlesStyledTheme extends BaseSampleActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -13,10 +12,12 @@ public class SampleTitlesStyledTheme extends FragmentActivity {
 		//The look of this sample is set via a style in the manifest
 		setContentView(R.layout.simple_titles);
 		
-		ViewPager pager = (ViewPager)findViewById(R.id.pager);
-		pager.setAdapter(new TestTitleFragmentAdapter(getSupportFragmentManager()));
+		mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager());
+		
+		mPager = (ViewPager)findViewById(R.id.pager);
+		mPager.setAdapter(mAdapter);
 		
 		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
-		indicator.setViewPager(pager);
+		indicator.setViewPager(mPager);
 	}
 }
