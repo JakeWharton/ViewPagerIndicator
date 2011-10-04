@@ -1,10 +1,10 @@
-package com.jakewharton.android.viewpagerindicator.sample;
+package com.jakewharton.android.viewpagerindicator;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import com.jakewharton.android.view.CirclePageIndicator;
 
-public class SampleCirclesSnap extends BaseSampleActivity {
+public class SampleCirclesDefault extends BaseSampleActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -17,6 +17,5 @@ public class SampleCirclesSnap extends BaseSampleActivity {
 		
 		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
 		indicator.setViewPager(mPager);
-		indicator.setSnap(true);
 	}
 }

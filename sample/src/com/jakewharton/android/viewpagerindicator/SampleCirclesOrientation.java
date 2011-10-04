@@ -1,4 +1,4 @@
-package com.jakewharton.android.viewpagerindicator.sample;
+package com.jakewharton.android.viewpagerindicator;
 
 import android.os.Bundle;
 import com.jakewharton.android.view.CirclePageIndicator;

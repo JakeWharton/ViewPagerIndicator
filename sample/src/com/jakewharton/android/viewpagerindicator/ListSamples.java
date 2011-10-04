@@ -1,4 +1,4 @@
-package com.jakewharton.android.viewpagerindicator.sample;
+package com.jakewharton.android.viewpagerindicator;
 
 import java.text.Collator;
 import java.util.ArrayList;

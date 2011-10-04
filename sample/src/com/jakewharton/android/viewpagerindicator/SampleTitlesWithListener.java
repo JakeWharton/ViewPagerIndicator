@@ -1,4 +1,4 @@
-package com.jakewharton.android.viewpagerindicator.sample;
+package com.jakewharton.android.viewpagerindicator;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;

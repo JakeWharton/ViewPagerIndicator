@@ -1,10 +1,10 @@
-package com.jakewharton.android.viewpagerindicator.sample;
+package com.jakewharton.android.viewpagerindicator;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import com.jakewharton.android.view.CirclePageIndicator;
 
-public class SampleCirclesStyledMethods extends BaseSampleActivity {
+public class SampleCirclesInitialPage extends BaseSampleActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -17,12 +17,8 @@ public class SampleCirclesStyledMethods extends BaseSampleActivity {
 		
 		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
 		indicator.setViewPager(mPager);
+		indicator.setCurrentItem(mAdapter.getCount() - 1);
 		
-		final float density = getResources().getDisplayMetrics().density;
-		indicator.setBackgroundColor(0xFFCCCCCC);
-		indicator.setRadius(10 * density);
-		indicator.setFillColor(0xFF888888);
-		indicator.setStrokeColor(0xFF000000);
-		indicator.setStrokeWidth(2 * density);
+		//You can also do: indicator.setViewPager(pager, initialPage);
 	}
 }

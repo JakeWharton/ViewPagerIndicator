@@ -1,13 +1,15 @@
-package com.jakewharton.android.viewpagerindicator.sample;
+package com.jakewharton.android.viewpagerindicator;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import com.jakewharton.android.view.TitlePageIndicator;
 
-public class SampleTitlesDefault extends BaseSampleActivity {
+public class SampleTitlesStyledTheme extends BaseSampleActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//The look of this sample is set via a style in the manifest
 		setContentView(R.layout.simple_titles);
 		
 		mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager());

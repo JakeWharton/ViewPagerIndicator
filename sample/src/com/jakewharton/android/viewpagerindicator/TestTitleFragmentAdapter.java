@@ -1,4 +1,4 @@
-package com.jakewharton.android.viewpagerindicator.sample;
+package com.jakewharton.android.viewpagerindicator;
 
 import android.support.v4.app.FragmentManager;
 import com.jakewharton.android.view.TitleProvider;
