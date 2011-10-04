@@ -35,6 +35,7 @@ public final class TestFragment extends Fragment {
 		}
 		
 		TextView text = new TextView(getActivity());
+		text.setGravity(Gravity.CENTER);
 		text.setText(mContent);
 		text.setTextSize(20 * getResources().getDisplayMetrics().density);
 		text.setPadding(20, 20, 20, 20);
