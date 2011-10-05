@@ -20,7 +20,7 @@ Usage
   1. Include one of the widgets in your view. This should usually be placed
      adjacent to the `ViewPager` it represents.
 
-        <com.jakewharton.android.viewpagerindicator.TitlePageIndicator
+        <com.viewpagerindicator.TitlePageIndicator
             android:id="@+id/titles"
             android:layout_height="wrap_content"
             android:layout_width="fill_parent" />
@@ -76,8 +76,8 @@ If you are a Maven user you can easily include the library by specifying it as
 a dependency:
 
     <dependency>
-      <groupId>com.jakewharton</groupId>
-      <artifactId>android-viewpagerindicator</artifactId>
+      <groupId>com.viewpagerindicator</groupId>
+      <artifactId>library</artifactId>
       <version>1.1.0</version>
     </dependency>
 
