@@ -1,4 +1,4 @@
-package com.viewpagerindicator;
+package com.viewpagerindicator.sample;
 
 import java.text.Collator;
 import java.util.ArrayList;

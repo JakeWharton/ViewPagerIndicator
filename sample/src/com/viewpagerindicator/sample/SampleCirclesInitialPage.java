@@ -1,8 +1,9 @@
-package com.viewpagerindicator;
+package com.viewpagerindicator.sample;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.R;
 
 public class SampleCirclesInitialPage extends BaseSampleActivity {
 	@Override

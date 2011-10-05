@@ -1,6 +1,9 @@
-package com.viewpagerindicator;
+package com.viewpagerindicator.sample;
 
 import java.util.Random;
+
+import com.viewpagerindicator.R;
+
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
