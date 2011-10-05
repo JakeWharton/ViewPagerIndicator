@@ -1,15 +1,15 @@
-package com.viewpagerindicator;
+package com.viewpagerindicator.sample;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+
+import com.viewpagerindicator.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
-public class SampleTitlesStyledTheme extends BaseSampleActivity {
+public class SampleTitlesInitialPage extends BaseSampleActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//The look of this sample is set via a style in the manifest
 		setContentView(R.layout.simple_titles);
 		
 		mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager());
@@ -19,5 +19,8 @@ public class SampleTitlesStyledTheme extends BaseSampleActivity {
 		
 		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
 		indicator.setViewPager(mPager);
+		indicator.setCurrentItem(mAdapter.getCount() - 1);
+		
+		//You can also do: indicator.setViewPager(pager, initialPage);
 	}
 }

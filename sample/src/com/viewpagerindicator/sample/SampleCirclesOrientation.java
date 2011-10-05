@@ -1,7 +1,8 @@
-package com.viewpagerindicator;
+package com.viewpagerindicator.sample;
 
 import android.os.Bundle;
 import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.R;
 import com.directionalviewpager.DirectionalViewPager;
 
 public class SampleCirclesOrientation extends BaseSampleActivity {

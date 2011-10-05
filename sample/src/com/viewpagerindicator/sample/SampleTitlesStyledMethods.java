@@ -1,7 +1,9 @@
-package com.viewpagerindicator;
+package com.viewpagerindicator.sample;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+
+import com.viewpagerindicator.R;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 
