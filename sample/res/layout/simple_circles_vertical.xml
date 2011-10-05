@@ -20,13 +20,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <com.jakewharton.android.view.DirectionalViewPager
+    <com.directionalviewpager.DirectionalViewPager
         android:id="@+id/pager"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         />
-    <com.jakewharton.android.view.CirclePageIndicator
+    <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/indicator"
         android:padding="10dip"
         android:layout_height="fill_parent"
