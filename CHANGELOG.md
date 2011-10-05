@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-Version 1.2.0 *(In Progress)*
------------------------------
+Version 1.2.0 *(2011-10-04)*
+----------------------------
 
  * Move to `com.viewpagerindicator` package.
  * Move maven group and artifact to `com.viewpagerindicator:library`.

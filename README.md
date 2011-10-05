@@ -78,7 +78,7 @@ a dependency:
     <dependency>
       <groupId>com.viewpagerindicator</groupId>
       <artifactId>library</artifactId>
-      <version>1.1.0</version>
+      <version>1.2.0</version>
     </dependency>
 
 You must also include the following repository:
