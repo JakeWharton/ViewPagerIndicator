@@ -146,7 +146,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".sample.sample.SampleTitlesWithListener"
+            android:name=".SampleTitlesWithListener"
             android:label="Titles/With Listener">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
