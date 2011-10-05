@@ -14,9 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jakewharton.android.view;
-
-import com.jakewharton.android.viewpagerindicator.R;
+package com.viewpagerindicator;
 
 import android.content.Context;
 import android.content.res.Resources;

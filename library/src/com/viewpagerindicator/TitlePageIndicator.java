@@ -15,12 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jakewharton.android.view;
+package com.viewpagerindicator;
 
 import java.util.ArrayList;
-
-import com.jakewharton.android.viewpagerindicator.R;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;

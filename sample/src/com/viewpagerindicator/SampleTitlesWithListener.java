@@ -1,29 +1,29 @@
-package com.jakewharton.android.viewpagerindicator;
+package com.viewpagerindicator;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
-import com.jakewharton.android.view.CirclePageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
 
-public class SampleCirclesWithListener extends BaseSampleActivity {
+public class SampleTitlesWithListener extends BaseSampleActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.simple_circles);
+		setContentView(R.layout.simple_titles);
 		
-		mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
+		mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager());
 		
 		mPager = (ViewPager)findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 		
-		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
+		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
 		indicator.setViewPager(mPager);
 		
 		//We set this on the indicator, NOT the pager
 		indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
-				Toast.makeText(SampleCirclesWithListener.this, "Changed to page " + position, Toast.LENGTH_SHORT).show();
+				Toast.makeText(SampleTitlesWithListener.this, "Changed to page " + position, Toast.LENGTH_SHORT).show();
 			}
 			
 			@Override

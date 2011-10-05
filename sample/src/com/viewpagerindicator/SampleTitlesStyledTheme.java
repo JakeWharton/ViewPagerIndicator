@@ -1,14 +1,15 @@
-package com.jakewharton.android.viewpagerindicator;
+package com.viewpagerindicator;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import com.jakewharton.android.view.TitlePageIndicator;
-import com.jakewharton.android.view.TitlePageIndicator.IndicatorStyle;
+import com.viewpagerindicator.TitlePageIndicator;
 
-public class SampleTitlesUnderline extends BaseSampleActivity {
+public class SampleTitlesStyledTheme extends BaseSampleActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//The look of this sample is set via a style in the manifest
 		setContentView(R.layout.simple_titles);
 		
 		mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager());
@@ -18,6 +19,5 @@ public class SampleTitlesUnderline extends BaseSampleActivity {
 		
 		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
 		indicator.setViewPager(mPager);
-		indicator.setFooterIndicatorStyle(IndicatorStyle.Underline);
 	}
 }

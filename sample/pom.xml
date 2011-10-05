@@ -3,14 +3,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.jakewharton</groupId>
-	<artifactId>android-viewpagerindicator-sample</artifactId>
+	<groupId>com.viewpagerindicator</groupId>
+	<artifactId>sample</artifactId>
 	<name>Android-ViewPagerIndicator Sample</name>
 	<packaging>apk</packaging>
 
 	<parent>
-		<groupId>com.jakewharton</groupId>
-		<artifactId>android-viewpagerindicator-parent</artifactId>
+		<groupId>com.viewpagerindicator</groupId>
+		<artifactId>parent</artifactId>
 		<version>1.1.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
@@ -28,8 +28,8 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>com.jakewharton</groupId>
-			<artifactId>android-viewpagerindicator</artifactId>
+			<groupId>com.viewpagerindicator</groupId>
+			<artifactId>library</artifactId>
 			<version>${project.version}</version>
 			<type>apklib</type>
 		</dependency>

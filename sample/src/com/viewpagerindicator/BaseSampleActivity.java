@@ -1,4 +1,4 @@
-package com.jakewharton.android.viewpagerindicator;
+package com.viewpagerindicator;
 
 import java.util.Random;
 import android.support.v4.app.FragmentActivity;

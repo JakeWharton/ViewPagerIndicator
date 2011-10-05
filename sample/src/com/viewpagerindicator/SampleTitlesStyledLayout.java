@@ -1,8 +1,8 @@
-package com.jakewharton.android.viewpagerindicator;
+package com.viewpagerindicator;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import com.jakewharton.android.view.TitlePageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
 
 public class SampleTitlesStyledLayout extends BaseSampleActivity {
 	@Override

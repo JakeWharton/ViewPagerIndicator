@@ -1,4 +1,4 @@
-package com.jakewharton.android.viewpagerindicator;
+package com.viewpagerindicator;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

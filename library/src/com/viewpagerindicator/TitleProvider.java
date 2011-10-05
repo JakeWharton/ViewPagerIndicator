@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.jakewharton.android.view;
+package com.viewpagerindicator;
 
 /**
  * A TitleProvider provides the title to display according to a view.
