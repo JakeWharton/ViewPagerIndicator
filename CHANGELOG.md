@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Version 1.2.1 *(In Development)*
+--------------------------------
+
+Maven 3 is now required when building from the command line.
+
+ * Update to support ADT 14.
+
+
 Version 1.2.0 *(2011-10-04)*
 ----------------------------
 
