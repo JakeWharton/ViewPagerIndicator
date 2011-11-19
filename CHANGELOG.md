@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+Version 2.0.0 *(In Development)*
+--------------------------------
+
+ * Update to link against ACLv4r4. This will now be required in all implementing
+   applications.
+ * Allow dragging the title and circle indicators to drag the pager.
+ * Remove orientation example as the DirectionalViewPager library has not been
+   updated to ACLv4r4.
+
+
 Version 1.2.1 *(2011-10-20)*
 ----------------------------
 
