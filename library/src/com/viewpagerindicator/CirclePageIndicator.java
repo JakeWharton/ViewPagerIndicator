@@ -67,7 +67,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     }
 
     public CirclePageIndicator(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.circlePageIndicatorStyle);
+        this(context, attrs, R.attr.vpiCirclePageIndicatorStyle);
     }
 
     public CirclePageIndicator(Context context, AttributeSet attrs, int defStyle) {

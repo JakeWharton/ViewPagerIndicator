@@ -18,9 +18,15 @@
 <resources>
     <declare-styleable name="ViewPagerIndicator">
         <!-- Style of the circle indicator. -->
-        <attr name="circlePageIndicatorStyle" format="reference"/>
+        <attr name="vpiCirclePageIndicatorStyle" format="reference"/>
+        
         <!-- Style of the title indicator. -->
-        <attr name="titlePageIndicatorStyle" format="reference"/>
+        <attr name="vpiTitlePageIndicatorStyle" format="reference"/>
+        
+        <!-- Style of the tab indicator. -->
+        <attr name="vpiTabPageIndicatorStyle" format="reference"/>
+        <!-- Style of the text in a tab. -->
+        <attr name="vpiTabTextStyle" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="CirclePageIndicator">

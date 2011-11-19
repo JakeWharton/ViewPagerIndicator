@@ -16,8 +16,8 @@
 
 <resources>
     <style name="StyledIndicators" parent="@android:style/Theme.Light">
-        <item name="circlePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
-        <item name="titlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
+        <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
+        <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
     </style>
 
     <style name="CustomTitlePageIndicator">

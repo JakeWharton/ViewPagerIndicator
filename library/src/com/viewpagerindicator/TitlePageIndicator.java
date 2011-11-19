@@ -28,6 +28,7 @@ import android.graphics.RectF;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -111,7 +112,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     }
 
     public TitlePageIndicator(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.titlePageIndicatorStyle);
+        this(context, attrs, R.attr.vpiTitlePageIndicatorStyle);
     }
 
     public TitlePageIndicator(Context context, AttributeSet attrs, int defStyle) {
@@ -574,15 +575,16 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     @Override
     public void setViewPager(ViewPager view) {
-        if (view.getAdapter() == null) {
+    	final PagerAdapter adapter = view.getAdapter();
+        if (adapter == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
-        if (!(view.getAdapter() instanceof TitleProvider)) {
+        if (!(adapter instanceof TitleProvider)) {
             throw new IllegalStateException("ViewPager adapter must implement TitleProvider to be used with TitlePageIndicator.");
         }
         mViewPager = view;
         mViewPager.setOnPageChangeListener(this);
-        mTitleProvider = (TitleProvider)mViewPager.getAdapter();
+        mTitleProvider = (TitleProvider)adapter;
         invalidate();
     }
 
