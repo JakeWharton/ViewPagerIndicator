@@ -24,10 +24,13 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 /**
  * Draws circles (one for each view). The current view position is filled and
@@ -50,6 +53,13 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private int mOrientation;
     private boolean mCentered;
     private boolean mSnap;
+
+    private static final int INVALID_POINTER = -1;
+
+    private int mTouchSlop;
+    private float mLastMotionX = -1;
+    private int mActivePointerId = INVALID_POINTER;
+    private boolean mIsDragging;
 
 
     public CirclePageIndicator(Context context) {
@@ -89,6 +99,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
 
         a.recycle();
+
+        final ViewConfiguration configuration = ViewConfiguration.get(context);
+        mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
     }
 
 
@@ -227,27 +240,85 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
         canvas.drawCircle(dX, dY, mRadius, mPaintFill);
     }
+    
+    public boolean onTouchEvent(android.view.MotionEvent ev) {
+        if (mViewPager == null) return false;
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            final int count = mViewPager.getAdapter().getCount();
-            final int longSize = (mOrientation == HORIZONTAL) ? getWidth() : getHeight();
-            final float halfLongSize = longSize / 2;
-            final float halfCircleLongSize = (count * 3 * mRadius) / 2;
-            final float pointerValue = (mOrientation == HORIZONTAL) ? event.getX() : event.getY();
+        final int action = ev.getAction();
 
-            if ((mCurrentPage > 0) && (pointerValue < halfLongSize - halfCircleLongSize)) {
-                setCurrentItem(mCurrentPage - 1);
-                return true;
-            } else if ((mCurrentPage < count - 1) && (pointerValue > halfLongSize + halfCircleLongSize)) {
-                setCurrentItem(mCurrentPage + 1);
-                return true;
+        switch (action & MotionEventCompat.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
+                mLastMotionX = ev.getX();
+                break;
+
+            case MotionEvent.ACTION_MOVE: {
+                final int activePointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+                final float x = MotionEventCompat.getX(ev, activePointerIndex);
+                final float deltaX = x - mLastMotionX;
+
+                if (!mIsDragging) {
+                    if (Math.abs(deltaX) > mTouchSlop) {
+                        mIsDragging = true;
+                    }
+                }
+
+                if (mIsDragging) {
+                    if (!mViewPager.isFakeDragging()) {
+                        mViewPager.beginFakeDrag();
+                    }
+
+                    mLastMotionX = x;
+                    
+                    mViewPager.fakeDragBy(deltaX);
+                }
+
+                break;
             }
+
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                if (!mIsDragging) {
+                    final int count = mViewPager.getAdapter().getCount();
+                    final int width = getWidth();
+                    final float halfWidth = width / 2f;
+                    final float sixthWidth = width / 6f;
+
+                    if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
+                        mViewPager.setCurrentItem(mCurrentPage - 1);
+                        return true;
+                    } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
+                        mViewPager.setCurrentItem(mCurrentPage + 1);
+                        return true;
+                    }
+                }
+                
+                mIsDragging = false;
+                mActivePointerId = INVALID_POINTER;
+                if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
+                break;
+
+            case MotionEventCompat.ACTION_POINTER_DOWN: {
+                final int index = MotionEventCompat.getActionIndex(ev);
+                final float x = MotionEventCompat.getX(ev, index);
+                mLastMotionX = x;
+                mActivePointerId = MotionEventCompat.getPointerId(ev, index);
+                break;
+            }
+
+            case MotionEventCompat.ACTION_POINTER_UP:
+                final int pointerIndex = MotionEventCompat.getActionIndex(ev);
+                final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
+                if (pointerId == mActivePointerId) {
+                    final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
+                    mActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex);
+                }
+                mLastMotionX = MotionEventCompat.getX(ev, MotionEventCompat.findPointerIndex(ev, mActivePointerId));
+                break;
         }
 
-        return super.onTouchEvent(event);
-    }
+        return true;
+    };
 
     @Override
     public void setViewPager(ViewPager view) {

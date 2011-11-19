@@ -162,10 +162,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mPaintFooterIndicator.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterIndicator.setColor(footerColor);
 
+        a.recycle();
+
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
-
-        a.recycle();
     }
 
 
