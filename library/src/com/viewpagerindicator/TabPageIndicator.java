@@ -132,7 +132,6 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         tabView.setOnClickListener(mTabClickListener);
 
         mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, LayoutParams.FILL_PARENT, 1));
-        requestLayout();
     }
 
     @Override
@@ -159,13 +158,30 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     @Override
     public void setViewPager(ViewPager view) {
+    	final PagerAdapter adapter = view.getAdapter();
+        if (adapter == null) {
+            throw new IllegalStateException("ViewPager does not have adapter instance.");
+        }
+        if (!(adapter instanceof TitleProvider)) {
+            throw new IllegalStateException("ViewPager adapter must implement TitleProvider to be used with TitlePageIndicator.");
+        }
         mViewPager = view;
         view.setOnPageChangeListener(this);
-        TitleProvider adapter = (TitleProvider)view.getAdapter();
+        notifyDataSetChanged();
+    }
+    
+    public void notifyDataSetChanged() {
+    	mTabLayout.removeAllViews();
+        TitleProvider adapter = (TitleProvider)mViewPager.getAdapter();
         final int count = ((PagerAdapter)adapter).getCount();
         for (int i = 0; i < count; i++) {
             addTab(adapter.getTitle(i), i);
         }
+        if (mSelectedTabIndex > count) {
+        	mSelectedTabIndex = count - 1;
+        }
+        setCurrentItem(mSelectedTabIndex);
+        requestLayout();
     }
 
     @Override
@@ -176,6 +192,9 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     @Override
     public void setCurrentItem(int item) {
+        if (mViewPager == null) {
+            throw new IllegalStateException("ViewPager has not been bound.");
+        }
         mSelectedTabIndex = item;
         final int tabCount = mTabLayout.getChildCount();
         for (int i = 0; i < tabCount; i++) {

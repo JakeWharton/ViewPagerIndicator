@@ -53,8 +53,8 @@
     <style name="Widget.TabPageIndicator" parent="Widget">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:background">@drawable/vpi__tab_indicator</item>
-        <item name="android:paddingLeft">16dip</item>
-        <item name="android:paddingRight">16dip</item>
+        <item name="android:paddingLeft">22dip</item>
+        <item name="android:paddingRight">22dip</item>
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
     </style>
@@ -63,8 +63,7 @@
         <item name="android:textColor">@color/vpi__dark_theme</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:maxLines">2</item>
+        <item name="android:maxLines">1</item>
     </style>
     
     <style name="TextAppearance.TabPageIndicator" parent="Widget">
