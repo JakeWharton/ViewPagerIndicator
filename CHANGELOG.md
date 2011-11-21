@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-Version 2.0.0 *(In Development)*
---------------------------------
+Version 2.0.0 *(2011-11-20)*
+----------------------------
 
  * New `TabPageIndicator`! Uses the Ice Cream Sandwich-style action bar tabs
    which fill the width of the view when there are only a few tabs or provide
