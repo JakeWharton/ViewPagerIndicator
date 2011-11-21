@@ -4,6 +4,9 @@ Change Log
 Version 2.0.0 *(In Development)*
 --------------------------------
 
+ * New `TabPageIndicator`! Uses the Ice Cream Sandwich-style action bar tabs
+   which fill the width of the view when there are only a few tabs or provide
+   horizontal animated scrolling when there are many.
  * Update to link against ACLv4r4. This will now be required in all implementing
    applications.
  * Allow dragging the title and circle indicators to drag the pager.
