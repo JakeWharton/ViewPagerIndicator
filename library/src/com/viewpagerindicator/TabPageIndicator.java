@@ -49,7 +49,6 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     private LayoutInflater mInflater;
 
     int mMaxTabWidth;
-    private int mContentHeight;
     private int mSelectedTabIndex;
 
     public TabPageIndicator(Context context) {
@@ -59,8 +58,6 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     public TabPageIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
-
-        setContentHeight(45); //TODO remove
 
         mInflater = LayoutInflater.from(context);
 
@@ -85,8 +82,6 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             mMaxTabWidth = -1;
         }
 
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(mContentHeight, MeasureSpec.EXACTLY);
-
         final int oldWidth = getMeasuredWidth();
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         final int newWidth = getMeasuredWidth();
@@ -95,11 +90,6 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             // Recenter the tab display if we're at a new (scrollable) size.
             setCurrentItem(mSelectedTabIndex);
         }
-    }
-
-    public void setContentHeight(int contentHeight) {
-        mContentHeight = contentHeight;
-        requestLayout();
     }
 
     private void animateToTab(final int position) {
