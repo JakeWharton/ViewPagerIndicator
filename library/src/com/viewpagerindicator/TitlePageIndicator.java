@@ -425,7 +425,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 break;
         }
     }
-    
+
     public boolean onTouchEvent(android.view.MotionEvent ev) {
         if (mViewPager == null) return false;
 
@@ -454,7 +454,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
                     }
 
                     mLastMotionX = x;
-                    
+
                     mViewPager.fakeDragBy(deltaX);
                 }
 
@@ -477,7 +477,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
                         return true;
                     }
                 }
-                
+
                 mIsDragging = false;
                 mActivePointerId = INVALID_POINTER;
                 if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
@@ -575,7 +575,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     @Override
     public void setViewPager(ViewPager view) {
-    	final PagerAdapter adapter = view.getAdapter();
+        final PagerAdapter adapter = view.getAdapter();
         if (adapter == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }

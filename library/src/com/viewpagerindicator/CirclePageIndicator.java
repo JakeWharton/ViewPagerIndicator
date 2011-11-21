@@ -240,7 +240,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
         canvas.drawCircle(dX, dY, mRadius, mPaintFill);
     }
-    
+
     public boolean onTouchEvent(android.view.MotionEvent ev) {
         if (mViewPager == null) return false;
 
@@ -269,7 +269,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
                     }
 
                     mLastMotionX = x;
-                    
+
                     mViewPager.fakeDragBy(deltaX);
                 }
 
@@ -292,7 +292,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
                         return true;
                     }
                 }
-                
+
                 mIsDragging = false;
                 mActivePointerId = INVALID_POINTER;
                 if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();

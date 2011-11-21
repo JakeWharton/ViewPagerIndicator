@@ -158,7 +158,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     @Override
     public void setViewPager(ViewPager view) {
-    	final PagerAdapter adapter = view.getAdapter();
+        final PagerAdapter adapter = view.getAdapter();
         if (adapter == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
@@ -169,16 +169,16 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         view.setOnPageChangeListener(this);
         notifyDataSetChanged();
     }
-    
+
     public void notifyDataSetChanged() {
-    	mTabLayout.removeAllViews();
+        mTabLayout.removeAllViews();
         TitleProvider adapter = (TitleProvider)mViewPager.getAdapter();
         final int count = ((PagerAdapter)adapter).getCount();
         for (int i = 0; i < count; i++) {
             addTab(adapter.getTitle(i), i);
         }
         if (mSelectedTabIndex > count) {
-        	mSelectedTabIndex = count - 1;
+            mSelectedTabIndex = count - 1;
         }
         setCurrentItem(mSelectedTabIndex);
         requestLayout();
