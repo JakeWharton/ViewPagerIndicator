@@ -17,6 +17,7 @@ public class SampleCirclesSnap extends BaseSampleActivity {
 		mPager.setAdapter(mAdapter);
 		
 		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
+		mIndicator = indicator;
 		indicator.setViewPager(mPager);
 		indicator.setSnap(true);
 	}

@@ -19,7 +19,7 @@ public class SampleTitlesStyledTheme extends BaseSampleActivity {
 		mPager = (ViewPager)findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 		
-		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
-		indicator.setViewPager(mPager);
+		mIndicator = (TitlePageIndicator)findViewById(R.id.indicator);
+		mIndicator.setViewPager(mPager);
 	}
 }

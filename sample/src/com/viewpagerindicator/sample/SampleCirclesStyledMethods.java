@@ -17,6 +17,7 @@ public class SampleCirclesStyledMethods extends BaseSampleActivity {
 		mPager.setAdapter(mAdapter);
 		
 		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
+		mIndicator = indicator;
 		indicator.setViewPager(mPager);
 		
 		final float density = getResources().getDisplayMetrics().density;
