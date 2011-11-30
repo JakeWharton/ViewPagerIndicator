@@ -354,6 +354,11 @@ public class CirclePageIndicator extends View implements PageIndicator {
     }
 
     @Override
+    public void notifyDataSetChanged() {
+        invalidate();
+    }
+
+    @Override
     public void onPageScrollStateChanged(int state) {
         mScrollState = state;
 

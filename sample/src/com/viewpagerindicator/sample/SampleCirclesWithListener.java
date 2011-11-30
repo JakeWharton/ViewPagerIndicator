@@ -17,11 +17,11 @@ public class SampleCirclesWithListener extends BaseSampleActivity {
 		mPager = (ViewPager)findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 		
-		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
-		indicator.setViewPager(mPager);
+		mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+		mIndicator.setViewPager(mPager);
 		
 		//We set this on the indicator, NOT the pager
-		indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+		mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
 				Toast.makeText(SampleCirclesWithListener.this, "Changed to page " + position, Toast.LENGTH_SHORT).show();

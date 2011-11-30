@@ -18,7 +18,7 @@ public class SampleCirclesStyledTheme extends BaseSampleActivity {
 		mPager = (ViewPager)findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 		
-		CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.indicator);
-		indicator.setViewPager(mPager);
+		mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+		mIndicator.setViewPager(mPager);
 	}
 }

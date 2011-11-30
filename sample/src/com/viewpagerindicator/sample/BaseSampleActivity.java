@@ -2,6 +2,7 @@ package com.viewpagerindicator.sample;
 
 import java.util.Random;
 
+import com.viewpagerindicator.PageIndicator;
 import com.viewpagerindicator.R;
 
 import android.support.v4.app.FragmentActivity;
@@ -10,11 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class BaseSampleActivity extends FragmentActivity {
+public abstract class BaseSampleActivity extends FragmentActivity {
 	private static final Random RANDOM = new Random();
 	
 	TestFragmentAdapter mAdapter;
 	ViewPager mPager;
+	PageIndicator mIndicator;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,12 +36,14 @@ public class BaseSampleActivity extends FragmentActivity {
 			case R.id.add_page:
 				if (mAdapter.getCount() < 10) {
 					mAdapter.setCount(mAdapter.getCount() + 1);
+					mIndicator.notifyDataSetChanged();
 				}
 				return true;
 				
 			case R.id.remove_page:
 				if (mAdapter.getCount() > 1) {
 					mAdapter.setCount(mAdapter.getCount() - 1);
+					mIndicator.notifyDataSetChanged();
 				}
 				return true;
 		}

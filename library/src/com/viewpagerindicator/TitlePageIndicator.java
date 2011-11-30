@@ -595,6 +595,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
     }
 
     @Override
+    public void notifyDataSetChanged() {
+        invalidate();
+    }
+
+    @Override
     public void setCurrentItem(int item) {
         if (mViewPager == null) {
             throw new IllegalStateException("ViewPager has not been bound.");

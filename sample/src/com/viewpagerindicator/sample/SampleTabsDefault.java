@@ -21,8 +21,8 @@ public class SampleTabsDefault extends BaseSampleActivity {
 		mPager = (ViewPager)findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 		
-		TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);
-		indicator.setViewPager(mPager);
+		mIndicator = (TabPageIndicator)findViewById(R.id.indicator);
+		mIndicator.setViewPager(mPager);
 	}
 	
 	class GoogleMusicAdapter extends TestFragmentAdapter implements TitleProvider {
