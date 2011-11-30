@@ -293,6 +293,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
         //Calculate views bounds
         ArrayList<RectF> bounds = calculateAllBounds(mPaintText);
 
+        //Make sure we're on a page that still exists
+        if(mCurrentPage >= bounds.size())
+            setCurrentItem(bounds.size()-1);
+
         final int count = mViewPager.getAdapter().getCount();
         final int countMinusOne = count - 1;
         final float halfWidth = getWidth() / 2f;
