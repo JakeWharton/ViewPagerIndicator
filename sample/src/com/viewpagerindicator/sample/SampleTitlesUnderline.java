@@ -19,6 +19,7 @@ public class SampleTitlesUnderline extends BaseSampleActivity {
 		mPager.setAdapter(mAdapter);
 		
 		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
+		mIndicator = indicator;
 		indicator.setViewPager(mPager);
 		indicator.setFooterIndicatorStyle(IndicatorStyle.Underline);
 	}

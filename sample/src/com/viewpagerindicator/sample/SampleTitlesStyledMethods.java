@@ -19,6 +19,7 @@ public class SampleTitlesStyledMethods extends BaseSampleActivity {
 		mPager.setAdapter(mAdapter);
 		
 		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
+		mIndicator = indicator;
 		indicator.setViewPager(mPager);
 		
 		final float density = getResources().getDisplayMetrics().density;

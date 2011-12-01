@@ -17,9 +17,9 @@ public class SampleTitlesInitialPage extends BaseSampleActivity {
 		mPager = (ViewPager)findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 		
-		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
-		indicator.setViewPager(mPager);
-		indicator.setCurrentItem(mAdapter.getCount() - 1);
+		mIndicator = (TitlePageIndicator)findViewById(R.id.indicator);
+		mIndicator.setViewPager(mPager);
+		mIndicator.setCurrentItem(mAdapter.getCount() - 1);
 		
 		//You can also do: indicator.setViewPager(pager, initialPage);
 	}
