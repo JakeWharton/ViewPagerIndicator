@@ -9,7 +9,7 @@ import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitleProvider;
 
 public class SampleTabsDefault extends BaseSampleActivity {
-	private static final String[] CONTENT = new String[] { "Recent", "Artists", "Albums", "Song", "Playlists", "Genres" };
+	private static final String[] CONTENT = new String[] { "Recent", "Artists", "Albums", "Songs", "Playlists", "Genres" };
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
