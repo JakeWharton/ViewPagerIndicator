@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-Version 2.1.0 *(In Development)*
---------------------------------
+Version 2.1.0 *(2011-11-30)*
+----------------------------
 
  * Indicators now have a `notifyDataSetChanged` method which should be called
    when changes are made to the adapter.
