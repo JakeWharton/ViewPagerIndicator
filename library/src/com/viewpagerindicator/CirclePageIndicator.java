@@ -186,6 +186,14 @@ public class CirclePageIndicator extends View implements PageIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if (mViewPager == null) {
+            return;
+        }
+        final int count = mViewPager.getAdapter().getCount();
+        if (count == 0) {
+            return;
+        }
+
         int longSize;
         int longPaddingBefore;
         int longPaddingAfter;
@@ -202,7 +210,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
             shortPaddingBefore = getPaddingLeft();
         }
 
-        final int count = mViewPager.getAdapter().getCount();
         final float threeRadius = mRadius * 3;
         final float shortOffset = shortPaddingBefore + mRadius;
         float longOffset = longPaddingBefore + mRadius;
@@ -242,7 +249,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
     }
 
     public boolean onTouchEvent(android.view.MotionEvent ev) {
-        if (mViewPager == null) return false;
+        if ((mViewPager == null) || (mViewPager.getAdapter().getCount() == 0)) {
+            return false;
+        }
 
         final int action = ev.getAction();
 
@@ -423,7 +432,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
-        if (specMode == MeasureSpec.EXACTLY) {
+        if ((specMode == MeasureSpec.EXACTLY) || (mViewPager == null)) {
             //We were told how big to be
             result = specSize;
         } else {

@@ -290,14 +290,22 @@ public class TitlePageIndicator extends View implements PageIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if (mViewPager == null) {
+            return;
+        }
+        final int count = mViewPager.getAdapter().getCount();
+        if (count == 0) {
+            return;
+        }
+
         //Calculate views bounds
         ArrayList<RectF> bounds = calculateAllBounds(mPaintText);
 
         //Make sure we're on a page that still exists
-        if(mCurrentPage >= bounds.size())
+        if (mCurrentPage >= bounds.size()) {
             setCurrentItem(bounds.size()-1);
+        }
 
-        final int count = mViewPager.getAdapter().getCount();
         final int countMinusOne = count - 1;
         final float halfWidth = getWidth() / 2f;
         final int left = getLeft();
@@ -431,7 +439,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
     }
 
     public boolean onTouchEvent(android.view.MotionEvent ev) {
-        if (mViewPager == null) return false;
+        if ((mViewPager == null) || (mViewPager.getAdapter().getCount() == 0)) {
+            return false;
+        }
 
         final int action = ev.getAction();
 
