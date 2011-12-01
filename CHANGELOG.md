@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+Version 2.1.0 *(In Development)*
+--------------------------------
+
+ * Indicators now have a `notifyDataSetChanged` method which should be called
+   when changes are made to the adapter.
+ * Fix: Avoid `NullPointerException`s when the `ViewPager` is not immediately
+   bound to the indicator.
+
+
 Version 2.0.0 *(2011-11-20)*
 ----------------------------
 
