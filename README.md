@@ -79,6 +79,7 @@ a dependency:
       <groupId>com.viewpagerindicator</groupId>
       <artifactId>library</artifactId>
       <version>2.1.0</version>
+      <type>apklib</type>
     </dependency>
 
 You must also include the following repository:
