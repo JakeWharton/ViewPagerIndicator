@@ -86,7 +86,7 @@ You must also include the following repository:
 
     <repository>
       <id>com.jakewharton</id>
-      <url>http://r.jakewharton.com/maven/release<?url>
+      <url>http://r.jakewharton.com/maven/release</url>
     </repository>
 
 
