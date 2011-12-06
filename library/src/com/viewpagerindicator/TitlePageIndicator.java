@@ -75,6 +75,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
             return null;
         }
     }
+    
+    public static interface OnCentreItemClickListener {
+	    void onCentreItemClick();
+    }
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
@@ -98,6 +102,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
     /** Left and right side padding for not active view titles. */
     private float mClipPadding;
     private float mFooterLineHeight;
+    
+    private OnCentreItemClickListener mCentreItemClickListener;
 
     private static final int INVALID_POINTER = -1;
 
@@ -215,6 +221,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
     public void setFooterIndicatorStyle(IndicatorStyle indicatorStyle) {
         mFooterIndicatorStyle = indicatorStyle;
         invalidate();
+    }
+    
+    public void setOnCentreItemClickListener(OnCentreItemClickListener centreItemClickListener) {
+        mCentreItemClickListener = centreItemClickListener;
     }
 
     public int getSelectedColor() {
@@ -489,7 +499,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
                     } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
                         mViewPager.setCurrentItem(mCurrentPage + 1);
                         return true;
-                    }
+                    } else if (null != mCentreItemClickListener	&& (Math.abs(ev.getX() - halfWidth) <= sixthWidth)) {
+    					mCentreItemClickListener.onCentreItemClick();
+    					return true;
+    				}
                 }
 
                 mIsDragging = false;
