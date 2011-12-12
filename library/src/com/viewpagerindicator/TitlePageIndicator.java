@@ -1,7 +1,7 @@
 /*
+ * Copyright (C) 2011 Jake Wharton
  * Copyright (C) 2011 Patrik Akerfeldt
  * Copyright (C) 2011 Francisco Figueiredo Jr.
- * Copyright (C) 2011 Jake Wharton
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,6 +57,18 @@ public class TitlePageIndicator extends View implements PageIndicator {
      */
     private static final float BOLD_FADE_PERCENTAGE = 0.05f;
 
+    /**
+     * Interface for a callback when the center item has been clicked.
+     */
+    public static interface OnCenterItemClickListener {
+        /**
+         * Callback when the center item has been clicked.
+         *
+         * @param position Position of the current center item.
+         */
+        public void onCenterItemClick(int position);
+    }
+
     public enum IndicatorStyle {
         None(0), Triangle(1), Underline(2);
 
@@ -105,6 +117,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private float mLastMotionX = -1;
     private int mActivePointerId = INVALID_POINTER;
     private boolean mIsDragging;
+
+    private OnCenterItemClickListener mCenterItemClickListener;
 
 
     public TitlePageIndicator(Context context) {
@@ -482,13 +496,25 @@ public class TitlePageIndicator extends View implements PageIndicator {
                     final int width = getWidth();
                     final float halfWidth = width / 2f;
                     final float sixthWidth = width / 6f;
+                    final float leftThird = halfWidth - sixthWidth;
+                    final float rightThird = halfWidth + sixthWidth;
+                    final float eventX = ev.getX();
 
-                    if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
-                        mViewPager.setCurrentItem(mCurrentPage - 1);
-                        return true;
-                    } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
-                        mViewPager.setCurrentItem(mCurrentPage + 1);
-                        return true;
+                    if (eventX < leftThird) {
+                        if (mCurrentPage > 0) {
+                            mViewPager.setCurrentItem(mCurrentPage - 1);
+                            return true;
+                        }
+                    } else if (eventX > rightThird) {
+                        if (mCurrentPage < count - 1) {
+                            mViewPager.setCurrentItem(mCurrentPage + 1);
+                            return true;
+                        }
+                    } else {
+                        //Middle third
+                        if (mCenterItemClickListener != null) {
+                            mCenterItemClickListener.onCenterItemClick(mCurrentPage);
+                        }
                     }
                 }
 
@@ -611,6 +637,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
     @Override
     public void notifyDataSetChanged() {
         invalidate();
+    }
+
+    /**
+     * Set a callback listener for the center item click.
+     *
+     * @param listener Callback instance.
+     */
+    public void setOnCenterItemClickListener(OnCenterItemClickListener listener) {
+        mCenterItemClickListener = listener;
     }
 
     @Override

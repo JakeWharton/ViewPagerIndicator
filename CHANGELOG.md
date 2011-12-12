@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Version 2.1.1 *(In Development)*
+--------------------------------
+
+ * Title indicator now allows specifying an `OnCenterItemClickListener` which
+   will give you callbacks when the current item title has been clicked.
+   (Thanks Chris Banes)
+
+
 Version 2.1.0 *(2011-11-30)*
 ----------------------------
 
