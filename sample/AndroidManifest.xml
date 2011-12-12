@@ -87,6 +87,14 @@
         
         <!-- TITLE INDICATOR -->
         <activity
+            android:name=".SampleTitlesCenterClickListener"
+            android:label="Titles/Center Click Listener">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".SampleTitlesDefault"
             android:label="Titles/Default">
             <intent-filter>
@@ -130,8 +138,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SampleTitlesUnderline"
-            android:label="Titles/Underline Style">
+            android:name=".SampleTitlesTriangle"
+            android:label="Titles/Triangle Style">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />

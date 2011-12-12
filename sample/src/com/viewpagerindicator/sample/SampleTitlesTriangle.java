@@ -7,7 +7,7 @@ import com.viewpagerindicator.R;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 
-public class SampleTitlesUnderline extends BaseSampleActivity {
+public class SampleTitlesTriangle extends BaseSampleActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,8 +19,8 @@ public class SampleTitlesUnderline extends BaseSampleActivity {
 		mPager.setAdapter(mAdapter);
 		
 		TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
-		mIndicator = indicator;
 		indicator.setViewPager(mPager);
-		indicator.setFooterIndicatorStyle(IndicatorStyle.Underline);
+		indicator.setFooterIndicatorStyle(IndicatorStyle.Triangle);
+        mIndicator = indicator;
 	}
 }

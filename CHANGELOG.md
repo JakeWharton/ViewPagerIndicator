@@ -1,9 +1,10 @@
 Change Log
 ==========
 
-Version 2.1.1 *(In Development)*
+Version 2.2.0 *(In Development)*
 --------------------------------
 
+ * Default title indicator style is now 'underline'.
  * Title indicator now allows specifying an `OnCenterItemClickListener` which
    will give you callbacks when the current item title has been clicked.
    (Thanks Chris Banes)

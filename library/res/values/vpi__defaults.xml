@@ -25,15 +25,15 @@
 
     <dimen name="default_title_indicator_clip_padding">4dp</dimen>
     <color name="default_title_indicator_footer_color">#FF6899FF</color>
-    <dimen name="default_title_indicator_footer_line_height">1px</dimen>
-    <integer name="default_title_indicator_footer_indicator_style">1</integer>
-    <dimen name="default_title_indicator_footer_indicator_height">5dp</dimen>
+    <dimen name="default_title_indicator_footer_line_height">2dp</dimen>
+    <integer name="default_title_indicator_footer_indicator_style">2</integer>
+    <dimen name="default_title_indicator_footer_indicator_height">4dp</dimen>
     <dimen name="default_title_indicator_footer_indicator_underline_padding">20dp</dimen>
-    <dimen name="default_title_indicator_footer_padding">8dp</dimen>
+    <dimen name="default_title_indicator_footer_padding">7dp</dimen>
     <color name="default_title_indicator_selected_color">#FFFFFFFF</color>
     <bool name="default_title_indicator_selected_bold">true</bool>
-    <color name="default_title_indicator_text_color">#FFAAAAAA</color>
-    <dimen name="default_title_indicator_text_size">18dp</dimen>
+    <color name="default_title_indicator_text_color">#BBFFFFFF</color>
+    <dimen name="default_title_indicator_text_size">15sp</dimen>
     <dimen name="default_title_indicator_title_padding">5dp</dimen>
-    <dimen name="default_title_indicator_top_padding">0dp</dimen>
+    <dimen name="default_title_indicator_top_padding">7dp</dimen>
 </resources>
