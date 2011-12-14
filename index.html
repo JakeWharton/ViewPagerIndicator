@@ -43,14 +43,13 @@
 			#logo {
 				margin-bottom: -40px;
 			}
-			h5 {
-				text-align: center;
-			}
 			.app {
-				margin: 20px 0;
+				padding: 20px 0;
+				clear: left;
 			}
 			.app .icon {
 				float: left;
+				padding-bottom: 20px;
 			}
 			.app .desc {
 				margin-left: 95px;
@@ -61,10 +60,42 @@
 				border: 1px solid #aaa;
 				border-radius: 5px;
 			}
+			td.indicator {
+				width: 320px;
+			}
+			.image-table {
+				margin-top: 18px;
+			}
+			.image-table td {
+				padding: 15px;
+			}
+			div.well.dl {
+				background-color: rgba(200, 200, 200, 0.2);
+				margin: 1em;
+			}
+			p.h1 {
+				font-size: 14px;
+				font-weight: normal;
+				margin-bottom: 15px;
+			}
+			p.h2 {
+				margin-top: 25px;
+				margin-bottom: 10px;
+			}
+			.features p {
+				padding: 0 2em;
+				margin-bottom: 2em;
+			}
+			.features p img {
+				background-color: rgba(255, 255, 255, 0.4);
+				border: 1px solid #aaa;
+				border-radius: 3px;
+				padding: 5px;
+			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar navbar-fixed" data-scrollspy="scrollspy">
+		<div class="navbar navbar-fixed">
 			<div class="navbar-inner">
 				<div class="container">
 					<a class="brand" href="/">ViewPagerIndicator</a>
@@ -74,10 +105,12 @@
 						<li><a href="#usage">Usage</a></li>
 						<li><a href="#implementations">Implementations</a></li>
 						<li><a href="#credits">Credits</a></li>
+						<li class="divider"></li>
 						<li class="dropdown">
-							<a href="javascript:void(0)" class="dropdown-toggle" data-dropdown="dropdown"><strong>More</strong></a>
+							<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><strong>More Libraries</strong></a>
 							<ul class="dropdown-menu">
 								<li><a href="http://actionbarsherlock.com/">ActionBarSherlock</a></li>
+								<li><a href="https://github.com/JakeWharton/NineOldAndroids/">NineOldAndroids</a></li>
 								<li><a href="https://github.com/JakeWharton/Android-DirectionalViewPager/">DirectionalViewPager</a></li>
 							</ul>
 						</li>
@@ -91,19 +124,34 @@
 				<div class="row">
 					<div class="span8">
 						<h2>Introduction</h2>
-						<p>Paging indicator widgets compatible with the <code>ViewPager</code> from the <a href="http://developer.android.com/sdk/compatibility-library.html">Android Compatibility Library</a> and <a href="http://actionbarsherlock.com/">ActionBarSherlock</a>. Ported and enhanced from <a href="https://github.com/pakerfeldt">Patrik Åkerfeldt</a>'s ViewFlow.</p>
+						<p>Paging indicator widgets compatible with the <code>ViewPager</code> from the <a href="http://developer.android.com/sdk/compatibility-library.html">Android Compatibility Library</a> and <a href="http://actionbarsherlock.com/">ActionBarSherlock</a>. Originally based on <a href="https://github.com/pakerfeldt">Patrik Åkerfeldt</a>'s ViewFlow.</p>
 						<p>When using the <code>ViewPager</code> widget it is not always obvious to the user that there are adjacent views they can navigate to. By implementing this widget you provide a clear indicator that there exists additional content which they can click or swipe to see.</p>
-						<p>At present there are two styles of indicators which can be used:</p>
-						<div class="row">
-							<div class="offset1 span3">
-								<h5>Title Indicators</h5>
-								<p>TODO: image</p>
-							</div>
-							<div class="span3">
-								<h5>Circle Indicators</h5>
-								<p>TODO: image</p>
-							</div>
-						</div>
+						<p>At present there are three styles of indicators which can be used:</p>
+						<table class="image-table">
+							<tbody>
+								<tr>
+									<td>
+										<h5>Title Indicator</h5>
+										<p>Displays the title of the selected page in the center with the titles of the adjacent pages (if available) in a more subtle style.</p>
+									</td>
+									<td class="indicator"><img src="indicator_titles.png" alt="Title indicator sample screenshot"/></td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Tab Indicator</h5>
+										<p>Similar to the title indicator but displays as many titles as possible in scrolling and animated horizontal tabs.</p>
+									</td>
+									<td class="indicator"><img src="indicator_tabs.png" alt="Tab indicator sample screenshot"/></td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Circle Indicator</h5>
+										<p>Simple indication of the number of pages available in the pager with a separate drawing style for the currently selected page.</p>
+									</td>
+									<td class="indicator"><img src="indicator_circles.png" alt="Circle indicator sample screenshot"/></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					<div class="span4"><img src="web.png"></div>
 				</div>
@@ -113,11 +161,17 @@
 				<div class="row">
 					<div class="span12"><h2>Download</h2></div>
 					<div class="span8">
-						<p>TODO: All the things!</p>
+						<p class="h1"><strong>Version 2.2.0</strong> &mdash; 2011-12-13</p>
+						<p><a href="https://github.com/JakeWharton/Android-ViewPagerIndicator/zipball/master" class="btn small success">Download ZIP</a> <a href="https://github.com/JakeWharton/Android-ViewPagerIndicator/tarball/master" class="btn small success">Download TGZ</a></p>
+						<p class="h2">Change Log</p>
+						<ul>
+							<li>Default title indicator style is now 'underline'.</li>
+							<li>Title indicator now allows specifying an <code>OnCenterItemClickListener</code> which will give you callbacks when the current item title has been clicked. <em>(Thanks Chris Banes)</em></li>
+						</ul>
+						<p>Looking for an older version? Check <a href="https://github.com/JakeWharton/Android-ViewPagerIndicator/tags">here</a>.</p>
 					</div>
 					<div class="span4">
 						<p>Try out the sample application: <a href="https://market.android.com/details?id=com.viewpagerindicator.sample"><img src="marketqr.png" alt="Download from the Android Market"></a></p>
-						<p>Looking for an older version? Check <a href="https://github.com/JakeWharton/Android-ViewPagerIndicator/tags">here</a>.</p>
 					</div>
 				</div>
 			</section>
@@ -131,29 +185,34 @@
 							<li>
 								<span>Include one of the widgets in your view. This should usually be placed adjacent to the <code>ViewPager</code> it represents.</span>
 								<pre class="prettyprint">&lt;com.viewpagerindicator.TitlePageIndicator
-    android:id="@+id/titles"
-    android:layout_height="wrap_content"
-    android:layout_width="fill_parent" /></pre>
-    						</li>
-    						<li>
-    							<span>In your <code>onCreate</code> method (or <code>onCreateView</code> for a fragment), bind the indicator to the <code>ViewPager</code>.</span>
-    							<pre class="prettyprint">//Set the pager with an adapter
+	android:id="@+id/titles"
+	android:layout_height="wrap_content"
+	android:layout_width="fill_parent" /></pre>
+							</li>
+							<li>
+								<span>In your <code>onCreate</code> method (or <code>onCreateView</code> for a fragment), bind the indicator to the <code>ViewPager</code>.</span>
+								<pre class="prettyprint">//Set the pager with an adapter
 ViewPager pager = (ViewPager)findViewById(R.id.pager);
 pager.setAdapter(new TestAdapter(getSupportFragmentManager()));
 
 //Bind the title indicator to the adapter
 TitlePageIndicator titleIndicator = (TitlePageIndicator)findViewById(R.id.titles);
 titleIndicator.setViewPager(pager);</pre>
- 								<span><em>Note</em>: If you are using <code>TitlePageIndicator</code> your adapter must implement <code>TitleProvider</code>.</span>
-    						</li>
-    						<li>
-    							<span>(<em>Optional</em>) If you use an OnPageChangeListener with your view pager you should set it in the indicator rather than on the pager directly.</span>
-    							<pre class="prettyprint">//continued from above
+								<span><em>Note</em>: If you are using <code>TitlePageIndicator</code> your adapter must implement <code>TitleProvider</code>.</span>
+							</li>
+							<li>
+								<span>(<em>Optional</em>) If you use an OnPageChangeListener with your view pager you should set it in the indicator rather than on the pager directly.</span>
+								<pre class="prettyprint">//continued from above
 titleIndicator.setOnPageChangeListener(mPageChangeListener);</pre>
-    						</li>
+							</li>
 						</ol>
+						<p><strong>For more examples please take a look at the <a href="https://github.com/JakeWharton/Android-ViewPagerIndicator/tree/master/sample">source code to the samples</a>.</strong></p>
 					</div>
-					<div class="span4">TODO: images</div>
+					<div class="span4 features">
+						<p><img src="feature_beautifulwidgets.png" alt=""/></p>
+						<p><img src="feature_friendcaster.png" alt=""/></p>
+						<p><img src="feature_ridemetra.png" alt=""/></p>
+					</div>
 				</div>
 			</section>
 
@@ -165,8 +224,9 @@ titleIndicator.setOnPageChangeListener(mPageChangeListener);</pre>
 
 						LOOKING TO ADD YOUR OWN APP?
 
-						1. Search for your app on the market. On the search results page
-						   right click the icon and save it in the `apps/` folder. You
+						1. Search for your app on the market. On the search results page,
+						   right click the icon and save it in the `apps/` folder. DO NOT
+						   use the icon from the app summary page as it is too large. You
 						   should name it using your apps package name followed by
 						   '-logo.png' (e.g., "com.jakewharton.coolapp-logo.png")
 
@@ -177,26 +237,16 @@ titleIndicator.setOnPageChangeListener(mPageChangeListener);</pre>
 							<div class="desc">
 								<h4>YOUR APP NAME</h4>
 								<p>SHORT DESCRIPTION OF APP</p>
-								<ul class="media-grid">
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-								</ul>
 							</div>
 						</div>
 
 						-->
 
 						<div class="app">
-							<img class="icon" src="apps/com.jerrellmardis.ridemetra-logo.png">
+							<img class="icon" src="apps/com.levelup.beautifulwidgets-logo.png">
 							<div class="desc">
-								<h4><a href="https://market.android.com/details?id=com.jerrellmardis.ridemetra">Ride Metra</a></h4>
-								<p>Ride Metra is an easy to use and beautiful transit app that provides Metra train schedules, station locations and directions, nearby stations, upcoming departures, Metra service advisory alerts and the ability to search for a Metra rail line or station.</p>
-								<ul class="media-grid">
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-								</ul>
+								<h4><a href="https://market.android.com/details?id=com.levelup.beautifulwidgets">Beautiful Widgets</a></h4>
+								<p>Beautiful set of Widgets containing clock widget, clock and weather widget, weather widgets, date widgets and toggle widgets with skins/themes support! Now with more widgets and layouts!</p>
 							</div>
 						</div>
 						<div class="app">
@@ -204,11 +254,20 @@ titleIndicator.setOnPageChangeListener(mPageChangeListener);</pre>
 							<div class="desc">
 								<h4><a href="https://market.android.com/details?id=uk.co.senab.blueNotifyFree">FriendCaster</a></h4>
 								<p>FriendCaster for Facebook gives you the best Facebook experience on Android devices!</p>
-								<ul class="media-grid">
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-								</ul>
+							</div>
+						</div>
+						<div class="app">
+							<img class="icon" src="apps/com.battlelancer.seriesguide-logo.png">
+							<div class="desc">
+								<h4><a href="https://market.android.com/details?id=com.battlelancer.seriesguide">SeriesGuide</a></h4>
+								<p>Manage the progress of (re-)watching your favorite TV shows. Keep track of which episodes you still have to watch or which ones are upcoming.</p>
+							</div>
+						</div>
+						<div class="app">
+							<img class="icon" src="apps/com.jerrellmardis.ridemetra-logo.png">
+							<div class="desc">
+								<h4><a href="https://market.android.com/details?id=com.jerrellmardis.ridemetra">Ride Metra</a></h4>
+								<p>Ride Metra is an easy to use and beautiful transit app that provides Metra train schedules, station locations and directions, nearby stations, upcoming departures, Metra service advisory alerts and the ability to search for a Metra rail line or station.</p>
 							</div>
 						</div>
 						<div class="app">
@@ -216,11 +275,6 @@ titleIndicator.setOnPageChangeListener(mPageChangeListener);</pre>
 							<div class="desc">
 								<h4><a href="https://market.android.com/details?id=com.florianmski.tracktoid">Traktoid</a></h4>
 								<p>Traktoid, a trakt client.</p>
-								<ul class="media-grid">
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-									<li><a href="#"><img class="thumbnail" src="http://placehold.it/90x90"></a></li>
-								</ul>
 							</div>
 						</div>
 					</div>
@@ -238,20 +292,43 @@ titleIndicator.setOnPageChangeListener(mPageChangeListener);</pre>
 				<div class="row">
 					<div class="span12"><h2>Credits</h2></div>
 					<div class="span8">
-						<p>&copy; 2011 Jake Wharton &mdash; <a href="http://twitter.com/JakeWharton">@JakeWharton</a></p>
+						<p>&copy; 2011 Jake Wharton &mdash; <a href="http://twitter.com/JakeWharton">@JakeWharton</a> &middot; <a href="http://profiles.google.com/jakewharton">+JakeWharton</a></p>
 						<p>Developed and distributed under the Apache License, Version 2.0.</p>
-						<p>Original indicators developed by Patrik Åkerfeldt.</p>
+						<p>Originally based on widgets developed by Patrik Åkerfeldt.</p>
 					</div>
 					<div class="span4"><img id="logo" src="logo.png"></div>
 				</div>
 			</section>
 		</div>
 
+		<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+		<script src="js/bootstrap-dropdown.js"></script>
+		<script src="js/google-code-prettify/prettify.js"></script>
+		<script>
+			$(function () {
+				prettyPrint();
 
-    	<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
-    	<script src="js/bootstrap-dropdown.js"></script>
-    	<script src="js/bootstrap-scrollspy.js"></script>
-    	<script src="js/google-code-prettify/prettify.js"></script>
-    	<script>$(function () { prettyPrint() })</script>
+				var $window = $(window);
+				var element = $('#missing');
+				var marginTop = 70; //pixels
+				var offset = element.offset().top - marginTop;
+				var width = element.width();
+				$window.scroll(function() {
+					if ($window.scrollTop() > offset) {
+						element.css({
+							top: marginTop,
+							position: 'fixed',
+							width: width
+						});
+					} else {
+						element.css({
+							top: '',
+							position: '',
+							width: ''
+						});
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
