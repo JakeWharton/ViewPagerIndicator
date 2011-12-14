@@ -695,60 +695,29 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mListener = listener;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see android.view.View#onMeasure(int, int)
-     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
-    }
+        //Measure our width in whatever mode specified
+        final int measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
 
-    /**
-     * Determines the width of this view
-     *
-     * @param measureSpec
-     *            A measureSpec packed into an int
-     * @return The width of the view, honoring constraints from measureSpec
-     */
-    private int measureWidth(int measureSpec) {
-        int result = 0;
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-
-        if (specMode != MeasureSpec.EXACTLY) {
-            throw new IllegalStateException(getClass().getSimpleName() + " can only be used in EXACTLY mode.");
-        }
-        result = specSize;
-        return result;
-    }
-
-    /**
-     * Determines the height of this view
-     *
-     * @param measureSpec
-     *            A measureSpec packed into an int
-     * @return The height of the view, honoring constraints from measureSpec
-     */
-    private int measureHeight(int measureSpec) {
-        float result = 0;
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-
-        if (specMode == MeasureSpec.EXACTLY) {
+        //Determine our height
+        float height = 0;
+        final int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
+        if (heightSpecMode == MeasureSpec.EXACTLY) {
             //We were told how big to be
-            result = specSize;
+            height = MeasureSpec.getSize(heightMeasureSpec);
         } else {
             //Calculate the text bounds
             RectF bounds = new RectF();
             bounds.bottom = mPaintText.descent()-mPaintText.ascent();
-            result = bounds.bottom - bounds.top + mFooterLineHeight + mFooterPadding + mTopPadding;
+            height = bounds.bottom - bounds.top + mFooterLineHeight + mFooterPadding + mTopPadding;
             if (mFooterIndicatorStyle != IndicatorStyle.None) {
-                result += mFooterIndicatorHeight;
+                height += mFooterIndicatorHeight;
             }
         }
-        return (int)result;
+        final int measuredHeight = (int)height;
+
+        setMeasuredDimension(measuredWidth, measuredHeight);
     }
 
     @Override
