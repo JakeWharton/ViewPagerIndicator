@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 2.2.1 *(In Development)*
+--------------------------------
+
+ * New `setTypeface(Typeface)` and `getTypeface()` methods for title indicator.
+   (Thanks Dimitri Fedorov)
+
+
 Version 2.2.0 *(2012-12-13)*
 ----------------------------
 

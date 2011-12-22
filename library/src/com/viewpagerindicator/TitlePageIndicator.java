@@ -25,6 +25,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
@@ -293,6 +294,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
     public void setClipPadding(float clipPadding) {
         mClipPadding = clipPadding;
         invalidate();
+    }
+
+    public void setTypeface(Typeface typeface) {
+        mPaintText.setTypeface(typeface);
+        invalidate();
+    }
+
+    public Typeface getTypeface() {
+        return mPaintText.getTypeface();
     }
 
     /*
