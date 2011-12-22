@@ -95,14 +95,14 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private int mCurrentPage;
     private int mCurrentOffset;
     private int mScrollState;
-    private final Paint mPaintText;
+    private final Paint mPaintText = new Paint();
     private boolean mBoldText;
     private int mColorText;
     private int mColorSelected;
     private Path mPath;
-    private final Paint mPaintFooterLine;
+    private final Paint mPaintFooterLine = new Paint();
     private IndicatorStyle mFooterIndicatorStyle;
-    private final Paint mPaintFooterIndicator;
+    private final Paint mPaintFooterIndicator = new Paint();
     private float mFooterIndicatorHeight;
     private float mFooterIndicatorUnderlinePadding;
     private float mFooterPadding;
@@ -167,14 +167,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         final float textSize = a.getDimension(R.styleable.TitlePageIndicator_textSize, defaultTextSize);
         final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
-        mPaintText = new Paint();
         mPaintText.setTextSize(textSize);
         mPaintText.setAntiAlias(true);
-        mPaintFooterLine = new Paint();
         mPaintFooterLine.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterLine.setStrokeWidth(mFooterLineHeight);
         mPaintFooterLine.setColor(footerColor);
-        mPaintFooterIndicator = new Paint();
         mPaintFooterIndicator.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterIndicator.setColor(footerColor);
 
