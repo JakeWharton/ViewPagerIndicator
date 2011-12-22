@@ -18,6 +18,8 @@
     <style name="StyledIndicators" parent="@android:style/Theme.Light">
         <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
+        <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
+        <item name="vpiTabTextStyle">@style/CustomTabPageIndicator.Text</item>
     </style>
 
     <style name="CustomTitlePageIndicator">
@@ -38,5 +40,12 @@
         <item name="strokeWidth">2dp</item>
         <item name="radius">10dp</item>
         <item name="centered">true</item>
+    </style>
+    
+    <style name="CustomTabPageIndicator" parent="Widget.TabPageIndicator">
+        <item name="android:background">@drawable/custom_tab_indicator</item>
+    </style>
+    <style name="CustomTabPageIndicator.Text" parent="Widget.TabPageIndicator.Text">
+        <item name="android:textColor">#FF555555</item>
     </style>
 </resources>

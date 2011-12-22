@@ -166,6 +166,15 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SampleTabsStyled"
+            android:label="Tabs/Styled"
+            android:theme="@style/StyledIndicators">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
         
     </application>
 </manifest>
