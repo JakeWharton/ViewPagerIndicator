@@ -7,6 +7,7 @@ Version 2.2.1 *(In Development)*
  * New `setTypeface(Typeface)` and `getTypeface()` methods for title indicator.
    (Thanks Dimitri Fedorov)
  * Added styled tab indicator sample.
+ * Support for widths other than those that could be measured exactly.
 
 
 Version 2.2.0 *(2012-12-13)*
