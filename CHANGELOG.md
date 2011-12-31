@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-Version 2.2.1 *(In Development)*
---------------------------------
+Version 2.2.1 *(2011-12-31)*
+----------------------------
 
  * New `setTypeface(Typeface)` and `getTypeface()` methods for title indicator.
    (Thanks Dimitri Fedorov)
@@ -10,7 +10,7 @@ Version 2.2.1 *(In Development)*
  * Support for widths other than those that could be measured exactly.
 
 
-Version 2.2.0 *(2012-12-13)*
+Version 2.2.0 *(2011-12-13)*
 ----------------------------
 
  * Default title indicator style is now 'underline'.
