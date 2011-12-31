@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 2.2.2 *(2011-12-31)*
+----------------------------
+
+ * Fix incorrect `R.java` imports in all of the sample activities.
+
+
 Version 2.2.1 *(2011-12-31)*
 ----------------------------
 

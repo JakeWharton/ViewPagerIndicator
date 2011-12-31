@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import com.viewpagerindicator.R;
+import com.viewpagerindicator.sample.R;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitleProvider;
 

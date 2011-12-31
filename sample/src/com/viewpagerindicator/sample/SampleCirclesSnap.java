@@ -3,7 +3,7 @@ package com.viewpagerindicator.sample;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import com.viewpagerindicator.CirclePageIndicator;
-import com.viewpagerindicator.R;
+import com.viewpagerindicator.sample.R;
 
 public class SampleCirclesSnap extends BaseSampleActivity {
 	@Override

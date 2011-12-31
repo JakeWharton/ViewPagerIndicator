@@ -3,7 +3,7 @@ package com.viewpagerindicator.sample;
 import java.util.Random;
 
 import com.viewpagerindicator.PageIndicator;
-import com.viewpagerindicator.R;
+import com.viewpagerindicator.sample.R;
 
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
-import com.viewpagerindicator.R;
+import com.viewpagerindicator.sample.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
 public class SampleTitlesWithListener extends BaseSampleActivity {
