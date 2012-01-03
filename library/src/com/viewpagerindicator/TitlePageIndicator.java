@@ -549,7 +549,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 break;
         }
 
-        return true;
+        return super.onTouchEvent(ev);
     };
 
     /**

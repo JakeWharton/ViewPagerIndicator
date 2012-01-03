@@ -326,7 +326,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
                 break;
         }
 
-        return true;
+        return super.onTouchEvent(ev);
     };
 
     @Override
