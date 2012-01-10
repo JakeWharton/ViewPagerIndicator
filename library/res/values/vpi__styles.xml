@@ -27,6 +27,7 @@
     <style name="Widget.CirclePageIndicator" parent="Widget">
         <item name="centered">@bool/default_circle_indicator_centered</item>
         <item name="fillColor">@color/default_circle_indicator_fill_color</item>
+        <item name="pageColor">@color/default_circle_indicator_page_color</item>
         <item name="orientation">@integer/default_circle_indicator_orientation</item>
         <item name="radius">@dimen/default_circle_indicator_radius</item>
         <item name="snap">@bool/default_circle_indicator_snap</item>

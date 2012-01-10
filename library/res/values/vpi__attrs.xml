@@ -34,6 +34,8 @@
         <attr name="centered" format="boolean" />
         <!-- Color of the filled circle that represents the current page. -->
         <attr name="fillColor" format="color" />
+        <!-- Color of the filled circles that represents pages. -->
+        <attr name="pageColor" format="color" />
         <!-- Orientation of the indicator. -->
         <attr name="orientation">
             <enum name="horizontal" value="0" />
