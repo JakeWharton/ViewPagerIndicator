@@ -41,6 +41,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     public static final int VERTICAL = 1;
 
     private float mRadius;
+    private final Paint mPaintPageFill;
     private final Paint mPaintStroke;
     private final Paint mPaintFill;
     private ViewPager mViewPager;
@@ -75,6 +76,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         //Load defaults from resources
         final Resources res = getResources();
+        final int defaultPageColor = res.getColor(R.color.default_circle_indicator_page_color);
         final int defaultFillColor = res.getColor(R.color.default_circle_indicator_fill_color);
         final int defaultOrientation = res.getInteger(R.integer.default_circle_indicator_orientation);
         final int defaultStrokeColor = res.getColor(R.color.default_circle_indicator_stroke_color);
@@ -88,6 +90,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         mCentered = a.getBoolean(R.styleable.CirclePageIndicator_centered, defaultCentered);
         mOrientation = a.getInt(R.styleable.CirclePageIndicator_orientation, defaultOrientation);
+        mPaintPageFill = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintPageFill.setStyle(Style.FILL);
+        mPaintPageFill.setColor(a.getColor(R.styleable.CirclePageIndicator_pageColor, defaultPageColor));
         mPaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintStroke.setStyle(Style.STROKE);
         mPaintStroke.setColor(a.getColor(R.styleable.CirclePageIndicator_strokeColor, defaultStrokeColor));
@@ -112,6 +117,15 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     public boolean isCentered() {
         return mCentered;
+    }
+
+    public void setPageColor(int pageColor) {
+        mPaintPageFill.setColor(pageColor);
+        invalidate();
+    }
+
+    public int getPageColor() {
+        return mPaintPageFill.getColor();
     }
 
     public void setFillColor(int fillColor) {
@@ -220,6 +234,11 @@ public class CirclePageIndicator extends View implements PageIndicator {
         float dX;
         float dY;
 
+        float pageFillRadius = mRadius;
+        if (mPaintStroke.getStrokeWidth() > 0) {
+            pageFillRadius -= mPaintStroke.getStrokeWidth() / 2.0f;
+        }
+
         //Draw stroked circles
         for (int iLoop = 0; iLoop < count; iLoop++) {
             float drawLong = longOffset + (iLoop * threeRadius);
@@ -230,7 +249,15 @@ public class CirclePageIndicator extends View implements PageIndicator {
                 dX = shortOffset;
                 dY = drawLong;
             }
-            canvas.drawCircle(dX, dY, mRadius, mPaintStroke);
+            // Only paint fill if not completely transparent
+            if (mPaintPageFill.getAlpha() > 0) {
+                canvas.drawCircle(dX, dY, pageFillRadius, mPaintPageFill);
+            }
+
+            // Only paint stroke if a stroke width was non-zero
+            if (pageFillRadius != mRadius) {
+                canvas.drawCircle(dX, dY, mRadius, mPaintStroke);
+            }
         }
 
         //Draw the filled circle according to the current scroll
