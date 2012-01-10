@@ -410,7 +410,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 mPaintText.setFakeBoldText(currentPage && currentBold && mBoldText);
 
                 if (currentPage && currentSelected) {
-                    //We are within the selected bounds draw, the selected text
+                    //We are within the selected bounds, draw the selected text
                     mPaintText.setColor(mColorSelected);
                     mPaintText.setAlpha((int)((mColorSelected >>> 24) * selectedPercent));
                     canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom + mTopPadding, mPaintText);
