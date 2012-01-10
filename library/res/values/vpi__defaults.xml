@@ -17,6 +17,7 @@
 <resources>
     <bool name="default_circle_indicator_centered">true</bool>
     <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
+    <color name="default_circle_indicator_page_color">#00000000</color>
     <integer name="default_circle_indicator_orientation">0</integer>
     <dimen name="default_circle_indicator_radius">3dp</dimen>
     <bool name="default_circle_indicator_snap">false</bool>
