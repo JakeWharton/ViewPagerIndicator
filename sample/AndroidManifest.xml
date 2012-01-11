@@ -4,7 +4,9 @@
     android:versionCode="26"
     android:versionName="2.2.2">
 
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk
+        android:minSdkVersion="4"
+        android:targetSdkVersion="15" />
 
     <application
         android:label="ViewPagerIndicator Sample"
