@@ -34,7 +34,7 @@
     <color name="default_title_indicator_selected_color">#FFFFFFFF</color>
     <bool name="default_title_indicator_selected_bold">true</bool>
     <color name="default_title_indicator_text_color">#BBFFFFFF</color>
-    <dimen name="default_title_indicator_text_size">15sp</dimen>
+    <dimen name="default_title_indicator_text_size">15dp</dimen>
     <dimen name="default_title_indicator_title_padding">5dp</dimen>
     <dimen name="default_title_indicator_top_padding">7dp</dimen>
 </resources>
