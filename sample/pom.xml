@@ -47,7 +47,7 @@
 		<plugins>
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-				<artifactId>maven-android-plugin</artifactId>
+				<artifactId>android-maven-plugin</artifactId>
 				<extensions>true</extensions>
 			</plugin>
 
@@ -74,7 +74,8 @@
 				<plugins>
 					<plugin>
 						<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-						<artifactId>maven-android-plugin</artifactId>
+						<artifactId>android-maven-plugin</artifactId>
+						<version>${android-maven.version}</version>
 						<inherited>true</inherited>
 						<configuration>
 							<zipalign>

@@ -76,6 +76,8 @@
 		<android.version>1.6_r2</android.version>
 		<android.platform>4</android.platform>
 		<android.support.version>r6</android.support.version>
+
+		<android-maven.version>3.0.0</android-maven.version>
 	</properties>
 
 	<dependencyManagement>
@@ -123,7 +125,7 @@
 				<plugin>
 					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
-					<version>3.0.0-alpha-13</version>
+					<version>${android-maven.version}</version>
 					<configuration>
 						<sdk>
 							<platform>${android.platform}</platform>
