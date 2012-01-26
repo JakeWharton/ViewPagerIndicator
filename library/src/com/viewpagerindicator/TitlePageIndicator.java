@@ -321,10 +321,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         //Calculate views bounds
         ArrayList<RectF> bounds = calculateAllBounds(mPaintText);
+        final int boundsSize = bounds.size();
 
         //Make sure we're on a page that still exists
-        if (mCurrentPage >= bounds.size()) {
-            setCurrentItem(bounds.size()-1);
+        if (mCurrentPage >= boundsSize) {
+            setCurrentItem(boundsSize - 1);
         }
 
         final int countMinusOne = count - 1;
@@ -445,7 +446,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 break;
 
             case Underline:
-                if (!currentSelected) {
+                if (!currentSelected || page >= boundsSize) {
                     break;
                 }
 
