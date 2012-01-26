@@ -208,6 +208,11 @@ public class CirclePageIndicator extends View implements PageIndicator {
             return;
         }
 
+        if (mCurrentPage >= count) {
+            setCurrentItem(count - 1);
+            return;
+        }
+
         int longSize;
         int longPaddingBefore;
         int longPaddingAfter;
