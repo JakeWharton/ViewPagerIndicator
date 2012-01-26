@@ -326,6 +326,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         //Make sure we're on a page that still exists
         if (mCurrentPage >= boundsSize) {
             setCurrentItem(boundsSize - 1);
+            return;
         }
 
         final int countMinusOne = count - 1;
