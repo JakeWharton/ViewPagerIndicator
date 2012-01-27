@@ -92,7 +92,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
     private TitleProvider mTitleProvider;
-    private int mCurrentPage;
+    private int mCurrentPage = -1;
     private int mCurrentOffset;
     private int mScrollState;
     private final Paint mPaintText = new Paint();
@@ -319,6 +319,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
             return;
         }
 
+        // mCurrentPage is -1 on first start and after orientation changed. If so, retrieve the correct index from viewpager.
+        if(mCurrentPage == -1 && mViewPager != null) mCurrentPage = mViewPager.getCurrentItem();
+        
         //Calculate views bounds
         ArrayList<RectF> bounds = calculateAllBounds(mPaintText);
         final int boundsSize = bounds.size();
