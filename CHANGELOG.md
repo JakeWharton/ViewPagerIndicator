@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Version 2.2.3 *(2012-01-26)*
+----------------------------
+
+ * Correctly handle removing the last page when it is selected.
+ * Use antialiased text for the title indicators.
+ * New circle fill color for circle indicators.
+
+
 Version 2.2.2 *(2011-12-31)*
 ----------------------------
 
