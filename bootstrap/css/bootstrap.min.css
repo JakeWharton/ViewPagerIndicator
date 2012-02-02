@@ -110,7 +110,7 @@ label{display:block;margin-bottom:5px;color:#333333;}
 input,textarea,select,.uneditable-input{display:inline-block;width:210px;height:18px;padding:4px;margin-bottom:9px;font-size:13px;line-height:18px;color:#555555;border:1px solid #ccc;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
 .uneditable-textarea{width:auto;height:auto;}
 label input,label textarea,label select{display:block;}
-input[type="image"],input[type="checkbox"],input[type="radio"]{width:auto;height:auto;padding:0;margin:3px 0;*margin-top:0;line-height:normal;border:0;cursor:pointer;border-radius:0 \0/;}
+input[type="image"],input[type="checkbox"],input[type="radio"]{width:auto;height:auto;padding:0;margin:3px 0;*margin-top:0;line-height:normal;border:0;cursor:pointer;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;}
 input[type="file"]{padding:initial;line-height:initial;border:initial;background-color:#ffffff;background-color:initial;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
 input[type="button"],input[type="reset"],input[type="submit"]{width:auto;height:auto;}
 select,input[type="file"]{height:28px;*margin-top:4px;line-height:28px;}
@@ -413,8 +413,8 @@ button.btn.small,input[type="submit"].btn.small{*padding-top:3px;*padding-bottom
 .nav-list>li>a,.nav-list .nav-header{display:block;padding:3px 15px;margin-left:-15px;margin-right:-15px;text-shadow:0 1px 0 rgba(255, 255, 255, 0.5);}
 .nav-list .nav-header{font-size:11px;font-weight:bold;line-height:18px;color:#999999;text-transform:uppercase;}
 .nav-list>li+.nav-header{margin-top:9px;}
-.nav-list .active>a{color:#ffffff;text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2);background-color:#0088cc;}
-.nav-list .icon{margin-right:2px;}
+.nav-list .active>a,.nav-list .active>a:hover{color:#ffffff;text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2);background-color:#0088cc;}
+.nav-list [class^="icon-"]{margin-right:2px;}
 .nav-tabs,.nav-pills{*zoom:1;}.nav-tabs:before,.nav-pills:before,.nav-tabs:after,.nav-pills:after{display:table;content:"";}
 .nav-tabs:after,.nav-pills:after{clear:both;}
 .nav-tabs>li,.nav-pills>li{float:left;}
