@@ -42,8 +42,9 @@
 			#logo {
 				margin-bottom: -40px;
 			}
-			.social div {
+			.social .well {
 				text-align: center;
+				margin-top: 15px;
 			}
 			.app {
 				padding: 20px 0;
@@ -126,15 +127,6 @@
 		</script>
 	</head>
 	<body>
-		<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));</script>
-
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
@@ -204,15 +196,11 @@
 					<div class="span4 social">
 						<img src="web.png">
 
-						<!-- Google Plus -->
-						<div><g:plusone href="http://viewpagerindicator.com"></g:plusone></div>
-
-						<!-- Twitter -->
-						<div><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://viewpagerindicator.com" data-text="Paging indicator widgets compatible with the Android support library ViewPager." data-via="JakeWharton" data-size="large">Tweet</a></div>
-						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-						<!-- Facebook -->
-						<div class="fb-like" data-href="http://viewpagerindicator.com" data-send="false" data-layout="button_count" data-width="200" data-show-faces="false"></div>
+						<div class="well">
+							<g:plusone href="http://viewpagerindicator.com"></g:plusone></div>
+							<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://viewpagerindicator.com" data-text="Paging indicator widgets compatible with the Android support library ViewPager." data-via="JakeWharton" data-size="large">Tweet</a>
+							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						</div>
 					</div>
 				</div>
 			</section>
