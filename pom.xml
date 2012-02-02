@@ -89,8 +89,8 @@
 			</dependency>
 
 			<dependency>
-				<groupId>android.support</groupId>
-				<artifactId>compatibility-v4</artifactId>
+				<groupId>com.google.android</groupId>
+				<artifactId>support-v4</artifactId>
 				<version>${android.support.version}</version>
 			</dependency>
 		</dependencies>
