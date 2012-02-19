@@ -26,6 +26,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
@@ -33,6 +34,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -68,6 +70,12 @@ public class TitlePageIndicator extends View implements PageIndicator {
          * @param position Position of the current center item.
          */
         public void onCenterItemClick(int position);
+        /**
+         * Callback when the center item has been long clicked.
+         *
+         * @param position Position of the current center item.
+         */
+        public void onCenterItemLongClick(int position);
     }
 
     public enum IndicatorStyle {
@@ -120,6 +128,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private boolean mIsDragging;
 
     private OnCenterItemClickListener mCenterItemClickListener;
+
+    private boolean mPressed;
+    private Handler handle;
+    private Runnable longClick;
 
 
     public TitlePageIndicator(Context context) {
@@ -179,6 +191,16 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+        handle = new Handler();
+        longClick = new Runnable() {
+            @Override
+            public void run() {
+                if (mPressed) {
+                    performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    mCenterItemClickListener.onCenterItemLongClick(mCurrentPage);
+                }
+            }
+        };
     }
 
 
@@ -480,6 +502,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
             case MotionEvent.ACTION_DOWN:
                 mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
                 mLastMotionX = ev.getX();
+                mPressed = true;
+                handle.postDelayed(longClick, 800);
                 break;
 
             case MotionEvent.ACTION_MOVE: {
@@ -508,6 +532,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
+                mPressed = false;
+                handle.removeCallbacks(longClick);
                 if (!mIsDragging) {
                     final int count = mViewPager.getAdapter().getCount();
                     final int width = getWidth();
