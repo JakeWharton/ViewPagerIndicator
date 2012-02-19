@@ -502,8 +502,16 @@ public class TitlePageIndicator extends View implements PageIndicator {
             case MotionEvent.ACTION_DOWN:
                 mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
                 mLastMotionX = ev.getX();
-                mPressed = true;
-                handle.postDelayed(longClick, 800);
+                final int widthD = getWidth();
+                final float halfWidthD = widthD / 2f;
+                final float sixthWidthD = widthD / 6f;
+                final float leftThirdD = halfWidthD - sixthWidthD;
+                final float rightThirdD = halfWidthD + sixthWidthD;
+
+                if (!(mLastMotionX < leftThirdD || mLastMotionX > rightThirdD)) {
+                    mPressed = true;
+                    handle.postDelayed(longClick, 800);
+                }
                 break;
 
             case MotionEvent.ACTION_MOVE: {
