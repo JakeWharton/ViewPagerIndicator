@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2011 Jake Wharton
+	 Copyright (C) 2012 Jesse Ridgway
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -37,4 +38,15 @@
     <dimen name="default_title_indicator_text_size">15dp</dimen>
     <dimen name="default_title_indicator_title_padding">5dp</dimen>
     <dimen name="default_title_indicator_top_padding">7dp</dimen>
+    
+    <dimen name="default_icon_indicator_clip_padding">4dp</dimen>
+	<color name="default_icon_indicator_footer_color">#FF6899FF</color>
+	<dimen name="default_icon_indicator_footer_line_height">2dp</dimen>
+	<dimen name="default_icon_indicator_footer_padding">7dp</dimen>
+	<dimen name="default_icon_indicator_icon_padding">5dp</dimen>
+	<dimen name="default_icon_indicator_top_padding">12dp</dimen>
+	<integer name="default_icon_indicator_side_icon_alpha">255</integer>
+	<dimen name="default_icon_indicator_above_icon_padding">3dp</dimen>
+	<integer name="default_icon_indicator_side_icon_vertical_shift">0</integer>
+    
 </resources>

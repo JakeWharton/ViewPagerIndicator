@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2011 Patrik Åkerfeldt
      Copyright (C) 2011 Jake Wharton
+     Copyright (C) 2012 Jesse Ridgway
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -27,6 +28,8 @@
         <attr name="vpiTabPageIndicatorStyle" format="reference"/>
         <!-- Style of the text in a tab. -->
         <attr name="vpiTabTextStyle" format="reference"/>
+        <!-- Style of the icon indicator -->
+        <attr name="vpiIconPageIndicatorStyle" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="CirclePageIndicator">
@@ -49,6 +52,27 @@
         <attr name="strokeColor" format="color" />
         <!-- Width of the stroke used to draw the circles. -->
         <attr name="strokeWidth" format="dimension" />
+    </declare-styleable>
+    
+    <declare-styleable name="IconPageIndicator" >
+        <!-- Padding around icons -->
+        <attr name="iconPadding" format="dimension" />
+        <!-- Opacity of side icons (between 0 and 255) -->
+        <attr name="sideIconAlpha" format="integer" />
+        <!-- Screen edge padding -->
+        <attr name="iconSidePadding" format="dimension" />
+        <!-- Footer color -->
+        <attr name="footerLineColor" format="dimension" />
+        <!-- Footer Height -->
+        <attr name="footerHeight" format="dimension" />
+        <!-- Footer Line Top Padding -->
+        <attr name="footerLineTopPadding" format="dimension" />
+        <!-- Icon Top Padding -->
+        <attr name="iconTopPadding" format="dimension" />
+        <!-- Side Icon Vertical Shift -->
+        <attr name="sideIconVerticalShift" format="integer" />
+        <!-- Footer padding -->
+        <attr name="iconFooterPadding" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="TitlePageIndicator">

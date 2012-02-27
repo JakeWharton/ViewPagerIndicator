@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2011 Jake Wharton
+	 Copyright (C) 2012 Jesse Ridgway
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -49,6 +50,18 @@
         <item name="textSize">@dimen/default_title_indicator_text_size</item>
         <item name="titlePadding">@dimen/default_title_indicator_title_padding</item>
         <item name="topPadding">@dimen/default_title_indicator_top_padding</item>
+    </style>
+    
+    <style name="Widget.IconPageIndicator" parent="Widget">
+        <item name="iconSidePadding">@dimen/default_icon_indicator_clip_padding</item>
+        <item name="footerLineColor">@color/default_icon_indicator_footer_color</item>
+        <item name="footerHeight">@dimen/default_icon_indicator_footer_line_height</item>
+        <item name="iconFooterPadding">@dimen/default_icon_indicator_footer_padding</item>
+        <item name="iconPadding">@dimen/default_icon_indicator_icon_padding</item>
+        <item name="footerLineTopPadding">@dimen/default_icon_indicator_top_padding</item>
+        <item name="sideIconAlpha">@integer/default_icon_indicator_side_icon_alpha</item>
+        <item name="iconTopPadding">@dimen/default_icon_indicator_above_icon_padding</item>
+        <item name="sideIconVerticalShift">@integer/default_icon_indicator_side_icon_vertical_shift</item>
     </style>
     
     <style name="Widget.TabPageIndicator" parent="Widget">
