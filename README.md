@@ -13,7 +13,7 @@ Usage
 =====
 
 *For a working implementation of the IconPageIndicator class see the `sample/`
-folder. Try changing the drawables to see how it works!
+folder. Try changing the drawables to see how it works!*
 
   1. Include the IconPageIndicator widget in your view:
 
