@@ -240,4 +240,4 @@ License
  [9]: https://raw.github.com/JakeWharton/Android-ViewPagerIndicator/master/sample/screens.png
  [10]: https://market.android.com/details?id=com.viewpagerindicator.sample
  [11]: https://github.com/jakewharton/android-viewpagerindicator
- [12]: http://raw.github.com/jmrboosties/android-viewpagerindicator/master/sample/iconscreens.png
+ [12]: https://github.com/jmrboosties/Android-ViewPagerIndicator/raw/master/sample/iconscreens.png
