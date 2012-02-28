@@ -22,7 +22,7 @@ public interface IconProvider {
 	 * @param position
 	 * @return Integer array of length 3, left, center, and right icon.
 	 */
-	public Integer[] getIcon(int child);
+	public Integer[] getIconArray(int child);
 	
 	/*
 	 *Sample implementation: 

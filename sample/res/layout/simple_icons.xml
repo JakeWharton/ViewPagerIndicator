@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <com.viewpagerindicator.IconPageIndicator
+        android:id="@+id/indicator"
+        android:padding="5dp"
+        android:background="#000000"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        />
+    
+    <android.support.v4.view.ViewPager android:id="@+id/viewpager"
+    	android:layout_width="match_parent"
+    	android:layout_height="match_parent" /> 
+
+</LinearLayout>
