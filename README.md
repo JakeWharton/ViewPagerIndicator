@@ -1,3 +1,91 @@
+Icon Page Indicator
+===================
+
+An edit to [Jake Wharton][11]'s ViewPagerIndicator library giving users the ability to 
+use drawable icons as indicators the same way text was used in the 
+TitlePageIndicator class. Full README for Jake's original class is below this section.
+
+![IconPageIndicator Sample Screenshots][12]
+
+
+
+Usage
+=====
+
+*For a working implementation of the IconPageIndicator class see the `sample/`
+folder. Try changing the drawables to see how it works!
+
+  1. Include the IconPageIndicator widget in your view:
+
+		<com.viewpagerindicator.IconPageIndicator
+			android:id="@+id/indicator"
+			android:padding="5dp"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent" />
+  
+  2. In your `onCreate` method (or `onCreateView` for a fragment), bind the
+     indicator to the `ViewPager`:
+	 
+		//From the sample, note that IconPagerAdapter is a simple nested class I created
+		ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
+		IconPagerAdapter adapter = new IconPagerAdapter();
+		pager.setAdapter(adapter);
+		pager.setCurrentItem(1); //set this to whatever you want to start with focus
+		IconPageIndicator indicator = (IconPageIndicator)findViewById(R.id.indicator);
+		indicator.setViewPager(pager, 1); //set the int to the same page that has focus above
+		
+		Resources res = this.getResources();
+		float density = res.getDisplayMetrics().density;
+		
+		indicator.setTopPadding(8 * density);
+		//set whatever other features you want
+
+		
+  3. Implementing the IconProvider Interface requires overriding the method `getIconArray` method.
+	 For each view in your ViewPager, you must provide an array of length 3 providing the desired
+	 drawable for when the view is at the left, center, and right position in indicies 0, 1 and 2 
+	 respectively. An example of this implementation is below (as well as in the sample app):
+		
+		@Override
+		public Integer[] getIconArray(int i) {
+			switch(i) {
+			case LEFT_ACTIVITY :
+				Integer[] mainDrawables = 
+				{R.drawable.arrow_left, R.drawable.leftlogo, R.drawable.arrow_right};
+				return mainDrawables;
+			case CENTER_ACTIVITY :
+				Integer[] settingsDrawables = 
+				{R.drawable.arrow_left, R.drawable.uglylogo, R.drawable.arrow_right};
+				return settingsDrawables;
+			case RIGHT_ACTIVITY :
+				Integer[] friendDrawables = 
+				{R.drawable.rightlogomini, R.drawable.rightlogo, R.drawable.rightlogomini};
+				return friendDrawables;
+			default :
+				throw new IllegalArgumentException("Page does not exist");
+			}
+		}
+  
+	 Note that for each activity you are specifying the icons for the activities' relative position
+	 on the screen, NOT the icons that will necessarily appear on that view. For the above example, 
+	 the center activity will show the `ugly logo` drawable in the center when it is in focus,
+	 the `arrow_right` icon when it is to the right of the view in focus, and the `arrow_left` icon
+	 when it is to the left of the view in focus.
+	 
+	 In the right activity, it shows the `rightlogo` when it is the view in focus. However, the left
+	 and right icons will NOT be `rightlogomini` when it is in focus. Instead, the center activity's
+	 left icon, `arrow_left` will be shown, because the center activity is to the left of the view in
+	 focus. `rightlogomini` will appear when the view in focus is the center activity (when the right 
+	 activity is to the right of the focus).
+	 
+	 This may sound a bit counter-intuitive, but it allows for users to easily add or rearrange the 
+	 order of their views without needing to reconfigure their icons every single time.
+  
+  
+Give it a try and give me some feedback! You can reach me via email directly at jmrboosties@gmail.com, 
+or just PM me on github. Thanks to [Jake Wharton][11] for this fantastic library, I'm glad I could add
+a neat feature to it.
+  
 Android ViewPagerIndicator
 ==========================
 
@@ -122,6 +210,7 @@ License
     Copyright 2011 Patrik Åkerfeldt
     Copyright 2011 Francisco Figueiredo Jr.
     Copyright 2011 Jake Wharton
+	Copyright 2012 Jesse Ridgway
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -150,3 +239,5 @@ License
  [8]: http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject
  [9]: https://raw.github.com/JakeWharton/Android-ViewPagerIndicator/master/sample/screens.png
  [10]: https://market.android.com/details?id=com.viewpagerindicator.sample
+ [11]: https://github.com/jakewharton/android-viewpagerindicator
+ [12]: http://raw.github.com/jmrboosties/android-viewpagerindicator/master/sample/iconscreens.png
