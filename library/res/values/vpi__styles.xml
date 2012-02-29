@@ -59,7 +59,6 @@
         <item name="iconFooterPadding">@dimen/default_icon_indicator_footer_padding</item>
         <item name="iconPadding">@dimen/default_icon_indicator_icon_padding</item>
         <item name="footerLineTopPadding">@dimen/default_icon_indicator_top_padding</item>
-        <item name="sideIconAlpha">@integer/default_icon_indicator_side_icon_alpha</item>
         <item name="iconTopPadding">@dimen/default_icon_indicator_above_icon_padding</item>
         <item name="sideIconVerticalShift">@integer/default_icon_indicator_side_icon_vertical_shift</item>
     </style>

@@ -45,7 +45,6 @@
 	<dimen name="default_icon_indicator_footer_padding">7dp</dimen>
 	<dimen name="default_icon_indicator_icon_padding">5dp</dimen>
 	<dimen name="default_icon_indicator_top_padding">12dp</dimen>
-	<integer name="default_icon_indicator_side_icon_alpha">255</integer>
 	<dimen name="default_icon_indicator_above_icon_padding">3dp</dimen>
 	<integer name="default_icon_indicator_side_icon_vertical_shift">0</integer>
     

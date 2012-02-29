@@ -57,8 +57,6 @@
     <declare-styleable name="IconPageIndicator" >
         <!-- Padding around icons -->
         <attr name="iconPadding" format="dimension" />
-        <!-- Opacity of side icons (between 0 and 255) -->
-        <attr name="sideIconAlpha" format="integer" />
         <!-- Screen edge padding -->
         <attr name="iconSidePadding" format="dimension" />
         <!-- Footer color -->

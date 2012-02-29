@@ -93,7 +93,6 @@ public class IconPageIndicator extends View implements PageIndicator {
     private float mClipPadding;
     private float mFooterLineHeight;
     
-    private int mSideIconAlpha;
     private int mSideIconVerticalShift;
     private float mAboveIconPadding;
     
@@ -130,7 +129,6 @@ public class IconPageIndicator extends View implements PageIndicator {
         final float defaultTitlePadding = res.getDimension(R.dimen.default_icon_indicator_icon_padding);
         final float defaultClipPadding = res.getDimension(R.dimen.default_icon_indicator_clip_padding);
         final float defaultTopPadding = res.getDimension(R.dimen.default_icon_indicator_top_padding);
-        final int defaultSideIconAlpha = res.getInteger(R.integer.default_icon_indicator_side_icon_alpha);
         final float defaultAboveIconPadding = res.getDimension(R.dimen.default_icon_indicator_above_icon_padding);
         final int defaultSideIconVerticalShift = res.getInteger(R.integer.default_icon_indicator_side_icon_vertical_shift);
 
@@ -141,18 +139,17 @@ public class IconPageIndicator extends View implements PageIndicator {
         mFooterLineHeight = a.getDimension(R.styleable.IconPageIndicator_footerHeight, defaultFooterLineHeight);
         mFooterPadding = a.getDimension(R.styleable.IconPageIndicator_iconFooterPadding, defaultFooterPadding);
         mTopPadding = a.getDimension(R.styleable.IconPageIndicator_footerLineTopPadding, defaultTopPadding);
-        mIconPadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
-        mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
+        mIconPadding = a.getDimension(R.styleable.IconPageIndicator_iconPadding, defaultTitlePadding);
+        mClipPadding = a.getDimension(R.styleable.IconPageIndicator_iconSidePadding, defaultClipPadding);
 //        mColorSelected = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
 //        mColorText = a.getColor(R.styleable.TitlePageIndicator_textColor, defaultTextColor);
 //        mBoldText = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
         
-        mSideIconAlpha = a.getInteger(R.styleable.IconPageIndicator_sideIconAlpha, defaultSideIconAlpha);
         mSideIconVerticalShift = defaultSideIconVerticalShift;
         mAboveIconPadding = defaultAboveIconPadding;
         
 //        final float textSize = a.getDimension(R.styleable.TitlePageIndicator_textSize, defaultTextSize);
-        final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
+        final int footerColor = a.getColor(R.styleable.IconPageIndicator_footerLineColor, defaultFooterColor);
 //        mPaintIndicator.setTextSize(textSize);
         mPaintIndicator.setAntiAlias(true);
         mPaintFooterLine.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -267,18 +264,6 @@ public class IconPageIndicator extends View implements PageIndicator {
         return mPaintIndicator.getTypeface();
     }
 
-    public int getSideIconAlpha() {
-		return mSideIconAlpha;
-	}
-
-	public void setSideIconAlpha(int sideIconAlpha) {
-		if(sideIconAlpha > 255 || sideIconAlpha < 0) {
-			throw new IllegalArgumentException("Alpha must be between 0 and 255");
-		}
-		this.mSideIconAlpha = sideIconAlpha;
-		invalidate();
-	}
-
 	public int getSideIconVerticalShift() {
 		return mSideIconVerticalShift;
 	}
@@ -336,11 +321,21 @@ public class IconPageIndicator extends View implements PageIndicator {
         int page = mCurrentPage;
         
         float offsetPercent;
+        int leftAlpha = 255;
+        int rightAlpha = 255;
         if (mCurrentOffset <= halfWidth) {
             offsetPercent = 1.0f * mCurrentOffset / width;
         } else {
             page += 1;
             offsetPercent = 1.0f * (width - mCurrentOffset) / width;
+        }
+        if(offsetPercent > SELECTION_FADE_PERCENTAGE) {
+        	if(mCurrentOffset > halfWidth) {
+        		leftAlpha = (int) ((.5 - offsetPercent) * 4 * 255);
+        	}
+        	else if(mCurrentOffset < halfWidth) {
+        		rightAlpha = (int) ((.5 - offsetPercent) * 4 * 255);
+        	}
         }
         final boolean currentSelected = (offsetPercent <= SELECTION_FADE_PERCENTAGE);
 //        final boolean currentBold = (offsetPercent <= BOLD_FADE_PERCENTAGE);
@@ -415,9 +410,9 @@ public class IconPageIndicator extends View implements PageIndicator {
                 //Draw text as unselected
 //                mPaintIndicator.setColor(mColorText);
                 
-                leftIcon = mIconProivder.getIcon(i)[0];
-                rightIcon = mIconProivder.getIcon(i)[2];
-                centerIcon = mIconProivder.getIcon(i)[1];
+                leftIcon = mIconProivder.getIconArray(i)[0];
+                rightIcon = mIconProivder.getIconArray(i)[2];
+                centerIcon = mIconProivder.getIconArray(i)[1];
                 
                 float trueHeight = 24;                
                 float density = res.getDisplayMetrics().density;
@@ -433,7 +428,7 @@ public class IconPageIndicator extends View implements PageIndicator {
             		canvas.drawBitmap(bitmap, bound.left, bound.top + (float)(mAboveIconPadding), mPaintIndicator);
             	}
             	else if(i == (page - 1)) { //left
-            		mPaintIndicator.setAlpha(mSideIconAlpha);
+            		mPaintIndicator.setAlpha(leftAlpha);
             		bitmap = BitmapFactory.decodeResource(res, leftIcon);
             		float change = trueHeight / bitmap.getHeight();
             		float trueWidth = bitmap.getWidth() * change;
@@ -441,7 +436,7 @@ public class IconPageIndicator extends View implements PageIndicator {
 					canvas.drawBitmap(bitmap, bound.left, bound.top + (float)(mAboveIconPadding + (mSideIconVerticalShift * density)), mPaintIndicator);
             	}
             	else if(i == (page + 1)) { //right
-            		mPaintIndicator.setAlpha(mSideIconAlpha);
+            		mPaintIndicator.setAlpha(rightAlpha);
             		bitmap = BitmapFactory.decodeResource(res, rightIcon);
             		float change = trueHeight / bitmap.getHeight();
             		float trueWidth = bitmap.getWidth() * change;
@@ -632,7 +627,7 @@ public class IconPageIndicator extends View implements PageIndicator {
     private RectF calcBounds(int index, Paint paint) {
         //Calculate the text bounds
         RectF bounds = new RectF();
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), mIconProivder.getIcon(index)[1]);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), mIconProivder.getIconArray(index)[1]);
         
         float trueHeight = 24;                
         float density = getResources().getDisplayMetrics().density;
@@ -651,9 +646,6 @@ public class IconPageIndicator extends View implements PageIndicator {
         final PagerAdapter adapter = view.getAdapter();
         if (adapter == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
-        }
-        if (!(adapter instanceof TitleProvider)) {
-            throw new IllegalStateException("ViewPager adapter must implement TitleProvider to be used with TitlePageIndicator.");
         }
         if(!(adapter instanceof IconProvider)) {
         	throw new IllegalStateException("Needs to be ico");
