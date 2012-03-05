@@ -162,9 +162,6 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         if (adapter == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
-        if (!(adapter instanceof TitleProvider)) {
-            throw new IllegalStateException("ViewPager adapter must implement TitleProvider to be used with TitlePageIndicator.");
-        }
         mViewPager = view;
         view.setOnPageChangeListener(this);
         notifyDataSetChanged();
@@ -172,10 +169,12 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     public void notifyDataSetChanged() {
         mTabLayout.removeAllViews();
-        TitleProvider adapter = (TitleProvider)mViewPager.getAdapter();
-        final int count = ((PagerAdapter)adapter).getCount();
+       	PagerAdapter adapter = mViewPager.getAdapter();
+        final int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
-            addTab(adapter.getTitle(i), i);
+            CharSequence title = adapter.getPageTitle(i);
+            if (title == null) title = ""; //TODO use something else than ""
+            addTab(title.toString(), i);
         }
         if (mSelectedTabIndex > count) {
             mSelectedTabIndex = count - 1;
