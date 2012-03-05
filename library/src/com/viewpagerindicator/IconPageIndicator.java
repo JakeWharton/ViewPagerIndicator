@@ -37,6 +37,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -182,11 +183,11 @@ public class IconPageIndicator extends View implements PageIndicator {
         invalidate();
     }
 
-    public float getFooterIndicatorPadding() {
+    public float getFooterPadding() {
         return mFooterPadding;
     }
 
-    public void setFooterIndicatorPadding(float footerIndicatorPadding) {
+    public void setFooterPadding(float footerIndicatorPadding) {
         mFooterPadding = footerIndicatorPadding;
         invalidate();
     }
@@ -336,11 +337,15 @@ public class IconPageIndicator extends View implements PageIndicator {
         	else if(mCurrentOffset < halfWidth) {
         		rightAlpha = (int) ((.5 - offsetPercent) * 4 * 255);
         	}
+        	else {
+        		leftAlpha = 0;
+        		rightAlpha = 0;
+        	}
         }
         final boolean currentSelected = (offsetPercent <= SELECTION_FADE_PERCENTAGE);
 //        final boolean currentBold = (offsetPercent <= BOLD_FADE_PERCENTAGE);
         final float selectedPercent = (SELECTION_FADE_PERCENTAGE - offsetPercent) / SELECTION_FADE_PERCENTAGE;
-
+        
         //Verify if the current view must be clipped to the screen
         RectF curPageBound = bounds.get(mCurrentPage);
         float curPageWidth = curPageBound.right - curPageBound.left;
@@ -414,10 +419,13 @@ public class IconPageIndicator extends View implements PageIndicator {
                 rightIcon = mIconProivder.getIconArray(i)[2];
                 centerIcon = mIconProivder.getIconArray(i)[1];
                 
-                float trueHeight = 24;                
+                float trueHeight = getHeight() - mFooterPadding;
+                Log.e("get height", getHeight() + "");
+                Log.e("without footer", trueHeight + "");
                 float density = res.getDisplayMetrics().density;
                 
-                trueHeight = trueHeight * density;
+//                trueHeight = trueHeight * density;
+                Log.e("true height", trueHeight + "");
                 
             	if(currentPage && currentSelected) {
             		mPaintIndicator.setAlpha((int)(colorTextAlpha * selectedPercent));
@@ -434,6 +442,7 @@ public class IconPageIndicator extends View implements PageIndicator {
             		float trueWidth = bitmap.getWidth() * change;
             		bitmap = Bitmap.createScaledBitmap(bitmap, (int)trueWidth, (int)trueHeight, true);
 					canvas.drawBitmap(bitmap, bound.left, bound.top + (float)(mAboveIconPadding + (mSideIconVerticalShift * density)), mPaintIndicator);
+					Log.e("bound left for left icon", "" + bound.left);
             	}
             	else if(i == (page + 1)) { //right
             		mPaintIndicator.setAlpha(rightAlpha);
@@ -442,6 +451,7 @@ public class IconPageIndicator extends View implements PageIndicator {
             		float trueWidth = bitmap.getWidth() * change;
             		bitmap = Bitmap.createScaledBitmap(bitmap, (int)trueWidth, (int)trueHeight, true);
 					canvas.drawBitmap(bitmap, bound.right - bitmap.getWidth(), bound.top + (float)(mAboveIconPadding + (mSideIconVerticalShift * density)), mPaintIndicator);
+					Log.e("bound right for right icon", "" + bound.right);
             	}
                 
 //            	if(currentPage && currentSelected) {
@@ -608,6 +618,7 @@ public class IconPageIndicator extends View implements PageIndicator {
             float w = (bounds.right - bounds.left);
             float h = (bounds.bottom - bounds.top);
             bounds.left = (halfWidth) - (w / 2) - mCurrentOffset + ((i - mCurrentPage) * width);
+            Log.e("lefty loosey for" + i, bounds.left + "");
             bounds.right = bounds.left + w;
             bounds.top = 0;
             bounds.bottom = h;
@@ -629,13 +640,11 @@ public class IconPageIndicator extends View implements PageIndicator {
         RectF bounds = new RectF();
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), mIconProivder.getIconArray(index)[1]);
         
-        float trueHeight = 24;                
-        float density = getResources().getDisplayMetrics().density;
-        trueHeight = trueHeight * density;
+        float trueHeight = this.getHeight() - mFooterPadding;
         float change = trueHeight / bitmap.getHeight();
 		float trueWidth = bitmap.getWidth() * change;
         
-        bounds.right = trueWidth/* / 2*/;
+        bounds.right = trueWidth;
         
         bounds.bottom = paint.descent() - paint.ascent();
         return bounds;
@@ -648,7 +657,7 @@ public class IconPageIndicator extends View implements PageIndicator {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
         if(!(adapter instanceof IconProvider)) {
-        	throw new IllegalStateException("Needs to be ico");
+        	throw new IllegalStateException("Needs to implement IconProvider");
         }
         mViewPager = view;
         mViewPager.setOnPageChangeListener(this);
