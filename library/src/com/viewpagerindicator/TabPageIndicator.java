@@ -167,14 +167,13 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         notifyDataSetChanged();
     }
 
-    
     public void notifyDataSetChanged() {
         mTabLayout.removeAllViews();
        	PagerAdapter adapter = mViewPager.getAdapter();
         final int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
-        	CharSequence title = adapter.getPageTitle(i);
-        	if (title == null) title = ""; //TODO use something else than ""
+            CharSequence title = adapter.getPageTitle(i);
+            if (title == null) title = ""; //TODO use something else than ""
             addTab(title.toString(), i);
         }
         if (mSelectedTabIndex > count) {

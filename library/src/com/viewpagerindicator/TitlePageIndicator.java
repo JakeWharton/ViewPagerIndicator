@@ -781,8 +781,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
     }
     
     private String getTitle(int i) {
-    	CharSequence title = mPagerAdapter.getPageTitle(i);
-    	if (title == null) title = ""; //TODO use something else than ""
+        CharSequence title = mPagerAdapter.getPageTitle(i);
+        if (title == null) title = ""; //TODO use something else than ""
         return title.toString();
     }
 }
