@@ -34,8 +34,7 @@ public class SampleIconsDefault extends Activity {
 		
 		Resources res = this.getResources();
 		float density = res.getDisplayMetrics().density;
-		
-		indicator.setTopPadding(8 * density);
+		indicator.setTopPadding(2 * density);
 		//set whatever other features you want
 	}
 	

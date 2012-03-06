@@ -29,7 +29,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
@@ -140,6 +139,7 @@ public class IconPageIndicator extends View implements PageIndicator {
         mFooterLineHeight = a.getDimension(R.styleable.IconPageIndicator_footerHeight, defaultFooterLineHeight);
         mFooterPadding = a.getDimension(R.styleable.IconPageIndicator_iconFooterPadding, defaultFooterPadding);
         mTopPadding = a.getDimension(R.styleable.IconPageIndicator_footerLineTopPadding, defaultTopPadding);
+        Log.e("top padding after set", mTopPadding + "");
         mIconPadding = a.getDimension(R.styleable.IconPageIndicator_iconPadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.IconPageIndicator_iconSidePadding, defaultClipPadding);
 //        mColorSelected = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
@@ -192,43 +192,6 @@ public class IconPageIndicator extends View implements PageIndicator {
         invalidate();
     }
 
-//    public int getSelectedColor() {
-//        return mColorSelected;
-//    }
-//
-//    public void setSelectedColor(int selectedColor) {
-//        mColorSelected = selectedColor;
-//        invalidate();
-//    }
-//
-//    public boolean isSelectedBold() {
-//        return mBoldText;
-//    }
-//
-//    public void setSelectedBold(boolean selectedBold) {
-//        mBoldText = selectedBold;
-//        invalidate();
-//    }
-//
-//    public int getTextColor() {
-//        return mColorText;
-//    }
-//
-//    public void setTextColor(int textColor) {
-//        mPaintIndicator.setColor(textColor);
-//        mColorText = textColor;
-//        invalidate();
-//    }
-
-    public float getTextSize() {
-        return mPaintIndicator.getTextSize();
-    }
-
-    public void setTextSize(float textSize) {
-        mPaintIndicator.setTextSize(textSize);
-        invalidate();
-    }
-
     public float getTitlePadding() {
         return this.mIconPadding;
     }
@@ -254,15 +217,6 @@ public class IconPageIndicator extends View implements PageIndicator {
     public void setClipPadding(float clipPadding) {
         mClipPadding = clipPadding;
         invalidate();
-    }
-
-    public void setTypeface(Typeface typeface) {
-        mPaintIndicator.setTypeface(typeface);
-        invalidate();
-    }
-
-    public Typeface getTypeface() {
-        return mPaintIndicator.getTypeface();
     }
 
 	public int getSideIconVerticalShift() {
@@ -291,7 +245,7 @@ public class IconPageIndicator extends View implements PageIndicator {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+        
         if (mViewPager == null) {
             return;
         }
@@ -301,7 +255,7 @@ public class IconPageIndicator extends View implements PageIndicator {
         }
 
         //Calculate views bounds
-        ArrayList<RectF> bounds = calculateAllBounds(mPaintIndicator);
+        ArrayList<RectF> bounds = calculateAllBounds();
         final int boundsSize = bounds.size();
 
         //Make sure we're on a page that still exists
@@ -370,9 +324,11 @@ public class IconPageIndicator extends View implements PageIndicator {
                     //Except if there's an intersection with the right view
                     RectF rightBound = bounds.get(i + 1);
                     //Intersection
+                    Log.e("left bound altered", bound.left + "");
                     if (bound.right + mIconPadding > rightBound.left) {
                         bound.left = rightBound.left - w - mIconPadding;
                         bound.right = bound.left + w;
+                        Log.e("left bound altered in if statement", bound.left + "");
                     }
                 }
             }
@@ -392,6 +348,7 @@ public class IconPageIndicator extends View implements PageIndicator {
                     if (bound.left - mIconPadding < leftBound.right) {
                         bound.left = leftBound.right + mIconPadding;
                         bound.right = bound.left + w;
+                        Log.e("right altered", bound.right + "");
                     }
                 }
             }
@@ -405,28 +362,19 @@ public class IconPageIndicator extends View implements PageIndicator {
         int centerIcon;
         int colorTextAlpha = 255; //mColorText >>> 24;
         for (int i = 0; i < count; i++) {
-            RectF bound = bounds.get(i);
+        	RectF bound = bounds.get(i);
+            Log.e(i + " top, bottom, left, right", "" + bound.top + " " + bound.bottom + " " + bound.left + " " + bound.right);
             //Only if one side is visible
             if ((bound.left > left && bound.left < right) || (bound.right > left && bound.right < right)) {
                 final boolean currentPage = (i == page);
-                //Only set bold if we are within bounds
-//                mPaintIndicator.setFakeBoldText(currentPage && currentBold && mBoldText);
-
-                //Draw text as unselected
-//                mPaintIndicator.setColor(mColorText);
                 
                 leftIcon = mIconProivder.getIconArray(i)[0];
                 rightIcon = mIconProivder.getIconArray(i)[2];
                 centerIcon = mIconProivder.getIconArray(i)[1];
                 
-                float trueHeight = getHeight() - mFooterPadding;
-                Log.e("get height", getHeight() + "");
-                Log.e("without footer", trueHeight + "");
+                float trueHeight = getHeight() - mFooterPadding - mTopPadding;
                 float density = res.getDisplayMetrics().density;
-                
-//                trueHeight = trueHeight * density;
-                Log.e("true height", trueHeight + "");
-                
+                                
             	if(currentPage && currentSelected) {
             		mPaintIndicator.setAlpha((int)(colorTextAlpha * selectedPercent));
             		bitmap = BitmapFactory.decodeResource(res, centerIcon);
@@ -442,7 +390,6 @@ public class IconPageIndicator extends View implements PageIndicator {
             		float trueWidth = bitmap.getWidth() * change;
             		bitmap = Bitmap.createScaledBitmap(bitmap, (int)trueWidth, (int)trueHeight, true);
 					canvas.drawBitmap(bitmap, bound.left, bound.top + (float)(mAboveIconPadding + (mSideIconVerticalShift * density)), mPaintIndicator);
-					Log.e("bound left for left icon", "" + bound.left);
             	}
             	else if(i == (page + 1)) { //right
             		mPaintIndicator.setAlpha(rightAlpha);
@@ -451,7 +398,6 @@ public class IconPageIndicator extends View implements PageIndicator {
             		float trueWidth = bitmap.getWidth() * change;
             		bitmap = Bitmap.createScaledBitmap(bitmap, (int)trueWidth, (int)trueHeight, true);
 					canvas.drawBitmap(bitmap, bound.right - bitmap.getWidth(), bound.top + (float)(mAboveIconPadding + (mSideIconVerticalShift * density)), mPaintIndicator);
-					Log.e("bound right for right icon", "" + bound.right);
             	}
                 
 //            	if(currentPage && currentSelected) {
@@ -607,19 +553,20 @@ public class IconPageIndicator extends View implements PageIndicator {
      * @param currentIndex
      * @return
      */
-    private ArrayList<RectF> calculateAllBounds(Paint paint) {
+    private ArrayList<RectF> calculateAllBounds() {
         ArrayList<RectF> list = new ArrayList<RectF>();
         //For each views (If no values then add a fake one)
         final int count = mViewPager.getAdapter().getCount();
         final int width = getWidth();
         final int halfWidth = width / 2;
         for (int i = 0; i < count; i++) {
-            RectF bounds = calcBounds(i, paint);
+            RectF bounds = calcBounds(i);
             float w = (bounds.right - bounds.left);
             float h = (bounds.bottom - bounds.top);
             bounds.left = (halfWidth) - (w / 2) - mCurrentOffset + ((i - mCurrentPage) * width);
-            Log.e("lefty loosey for" + i, bounds.left + "");
+            Log.e("left bound original", bounds.left + "");
             bounds.right = bounds.left + w;
+            Log.e("right bound original", bounds.right + "");
             bounds.top = 0;
             bounds.bottom = h;
             list.add(bounds);
@@ -635,18 +582,16 @@ public class IconPageIndicator extends View implements PageIndicator {
      * @param paint
      * @return
      */
-    private RectF calcBounds(int index, Paint paint) {
+    private RectF calcBounds(int index) {
         //Calculate the text bounds
         RectF bounds = new RectF();
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), mIconProivder.getIconArray(index)[1]);
-        
-        float trueHeight = this.getHeight() - mFooterPadding;
+        float trueHeight = getHeight() - mFooterPadding - mTopPadding;
         float change = trueHeight / bitmap.getHeight();
 		float trueWidth = bitmap.getWidth() * change;
-        
-        bounds.right = trueWidth;
-        
-        bounds.bottom = paint.descent() - paint.ascent();
+		bitmap = Bitmap.createScaledBitmap(bitmap, (int)trueWidth, (int)trueHeight, true);
+        bounds.right = bitmap.getWidth();
+        bounds.bottom = bitmap.getHeight();
         return bounds;
     }
 
