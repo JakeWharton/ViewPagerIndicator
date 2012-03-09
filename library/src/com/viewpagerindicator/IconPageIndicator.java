@@ -36,7 +36,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -49,13 +48,6 @@ public class IconPageIndicator extends View implements PageIndicator {
      * halfway between the center of the screen and an edge.
      */
     private static final float SELECTION_FADE_PERCENTAGE = 0.25f;
-
-    /**
-     * Percentage indicating what percentage of the screen width away from
-     * center should the selected text bold turn off. A value of 0.05 means
-     * that 10% between the center and an edge.
-     */
-//    private static final float BOLD_FADE_PERCENTAGE = 0.05f;
 
     /**
      * Interface for a callback when the center item has been clicked.
@@ -81,9 +73,6 @@ public class IconPageIndicator extends View implements PageIndicator {
     private int mCurrentOffset;
     private int mScrollState;
     private final Paint mPaintIndicator = new Paint();
-//    private boolean mBoldText;
-//    private int mColorText;
-//    private int mColorSelected;
     private Path mPath;
     private final Paint mPaintFooterLine = new Paint();
     private float mFooterPadding;
@@ -122,10 +111,6 @@ public class IconPageIndicator extends View implements PageIndicator {
         final int defaultFooterColor = res.getColor(R.color.default_icon_indicator_footer_color);
         final float defaultFooterLineHeight = res.getDimension(R.dimen.default_icon_indicator_footer_line_height);
         final float defaultFooterPadding = res.getDimension(R.dimen.default_icon_indicator_footer_padding);
-//        final int defaultSelectedColor = res.getColor(R.color.default_title_indicator_selected_color);
-//        final boolean defaultSelectedBold = res.getBoolean(R.bool.default_title_indicator_selected_bold);
-//        final int defaultTextColor = res.getColor(R.color.default_title_indicator_text_color);
-//        final float defaultTextSize = res.getDimension(R.dimen.default_title_indicator_text_size);
         final float defaultTitlePadding = res.getDimension(R.dimen.default_icon_indicator_icon_padding);
         final float defaultClipPadding = res.getDimension(R.dimen.default_icon_indicator_clip_padding);
         final float defaultTopPadding = res.getDimension(R.dimen.default_icon_indicator_top_padding);
@@ -139,19 +124,12 @@ public class IconPageIndicator extends View implements PageIndicator {
         mFooterLineHeight = a.getDimension(R.styleable.IconPageIndicator_footerHeight, defaultFooterLineHeight);
         mFooterPadding = a.getDimension(R.styleable.IconPageIndicator_iconFooterPadding, defaultFooterPadding);
         mTopPadding = a.getDimension(R.styleable.IconPageIndicator_footerLineTopPadding, defaultTopPadding);
-        Log.e("top padding after set", mTopPadding + "");
         mIconPadding = a.getDimension(R.styleable.IconPageIndicator_iconPadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.IconPageIndicator_iconSidePadding, defaultClipPadding);
-//        mColorSelected = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
-//        mColorText = a.getColor(R.styleable.TitlePageIndicator_textColor, defaultTextColor);
-//        mBoldText = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
-        
         mSideIconVerticalShift = defaultSideIconVerticalShift;
         mAboveIconPadding = defaultAboveIconPadding;
         
-//        final float textSize = a.getDimension(R.styleable.TitlePageIndicator_textSize, defaultTextSize);
         final int footerColor = a.getColor(R.styleable.IconPageIndicator_footerLineColor, defaultFooterColor);
-//        mPaintIndicator.setTextSize(textSize);
         mPaintIndicator.setAntiAlias(true);
         mPaintFooterLine.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterLine.setStrokeWidth(mFooterLineHeight);
@@ -254,7 +232,7 @@ public class IconPageIndicator extends View implements PageIndicator {
             return;
         }
 
-        //Calculate views bounds
+        //Calculate views bounds  
         ArrayList<RectF> bounds = calculateAllBounds();
         final int boundsSize = bounds.size();
 
@@ -297,11 +275,10 @@ public class IconPageIndicator extends View implements PageIndicator {
         	}
         }
         final boolean currentSelected = (offsetPercent <= SELECTION_FADE_PERCENTAGE);
-//        final boolean currentBold = (offsetPercent <= BOLD_FADE_PERCENTAGE);
         final float selectedPercent = (SELECTION_FADE_PERCENTAGE - offsetPercent) / SELECTION_FADE_PERCENTAGE;
         
         //Verify if the current view must be clipped to the screen
-        RectF curPageBound = bounds.get(mCurrentPage);
+        RectF curPageBound = bounds.get(mCurrentPage); //current = center
         float curPageWidth = curPageBound.right - curPageBound.left;
         if (curPageBound.left < leftClip) {
             //Try to clip to the screen (left side)
@@ -315,20 +292,18 @@ public class IconPageIndicator extends View implements PageIndicator {
         //Left views starting from the current position
         if (mCurrentPage > 0) {
             for (int i = mCurrentPage - 1; i >= 0; i--) {
-                RectF bound = bounds.get(i);
+                RectF bound = bounds.get(i); //bound should be for left
                 //Is left side is outside the screen
                 if (bound.left < leftClip) {
                     float w = bound.right - bound.left;
                     //Try to clip to the screen (left side)
                     clipViewOnTheLeft(bound, w, left);
                     //Except if there's an intersection with the right view
-                    RectF rightBound = bounds.get(i + 1);
+                    RectF rightBound = bounds.get(i + 1); //center
                     //Intersection
-                    Log.e("left bound altered", bound.left + "");
                     if (bound.right + mIconPadding > rightBound.left) {
                         bound.left = rightBound.left - w - mIconPadding;
                         bound.right = bound.left + w;
-                        Log.e("left bound altered in if statement", bound.left + "");
                     }
                 }
             }
@@ -336,19 +311,18 @@ public class IconPageIndicator extends View implements PageIndicator {
         //Right views starting from the current position
         if (mCurrentPage < countMinusOne) {
             for (int i = mCurrentPage + 1 ; i < count; i++) {
-                RectF bound = bounds.get(i);
+                RectF bound = bounds.get(i); //right
                 //If right side is outside the screen
                 if (bound.right > rightClip) {
                     float w = bound.right - bound.left;
-                    //Try to clip to the screen (right side)
+                    //Try to clip to the screen (right side) 
                     clipViewOnTheRight(bound, w, right);
                     //Except if there's an intersection with the left view
-                    RectF leftBound = bounds.get(i - 1);
+                    RectF leftBound = bounds.get(i - 1); //center
                     //Intersection
                     if (bound.left - mIconPadding < leftBound.right) {
-                        bound.left = leftBound.right + mIconPadding;
+                    	bound.left = leftBound.right + mIconPadding;
                         bound.right = bound.left + w;
-                        Log.e("right altered", bound.right + "");
                     }
                 }
             }
@@ -362,8 +336,7 @@ public class IconPageIndicator extends View implements PageIndicator {
         int centerIcon;
         int colorTextAlpha = 255; //mColorText >>> 24;
         for (int i = 0; i < count; i++) {
-        	RectF bound = bounds.get(i);
-            Log.e(i + " top, bottom, left, right", "" + bound.top + " " + bound.bottom + " " + bound.left + " " + bound.right);
+        	RectF bound = bounds.get(i); //find current page, do the +/-
             //Only if one side is visible
             if ((bound.left > left && bound.left < right) || (bound.right > left && bound.right < right)) {
                 final boolean currentPage = (i == page);
@@ -375,7 +348,7 @@ public class IconPageIndicator extends View implements PageIndicator {
                 float trueHeight = getHeight() - mFooterPadding - mTopPadding;
                 float density = res.getDisplayMetrics().density;
                                 
-            	if(currentPage && currentSelected) {
+            	if(currentPage && currentSelected) { //center
             		mPaintIndicator.setAlpha((int)(colorTextAlpha * selectedPercent));
             		bitmap = BitmapFactory.decodeResource(res, centerIcon);
             		float change = trueHeight / bitmap.getHeight();
@@ -399,20 +372,6 @@ public class IconPageIndicator extends View implements PageIndicator {
             		bitmap = Bitmap.createScaledBitmap(bitmap, (int)trueWidth, (int)trueHeight, true);
 					canvas.drawBitmap(bitmap, bound.right - bitmap.getWidth(), bound.top + (float)(mAboveIconPadding + (mSideIconVerticalShift * density)), mPaintIndicator);
             	}
-                
-//            	if(currentPage && currentSelected) {
-//                    //Fade out/in unselected text as the selected text fades in/out
-//                    mPaintText.setAlpha(colorTextAlpha - (int)(colorTextAlpha * selectedPercent));
-//                }
-//                canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom + mTopPadding, mPaintText);
-//
-//                //If we are within the selected bounds draw the selected text
-//                if (currentPage && currentSelected) {
-//                    mPaintText.setColor(mColorSelected);
-//                    mPaintText.setAlpha((int)((mColorSelected >>> 24) * selectedPercent));
-//                    canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom + mTopPadding, mPaintText);
-//                }
-                              
             }
         }
 
@@ -424,7 +383,7 @@ public class IconPageIndicator extends View implements PageIndicator {
         canvas.drawPath(mPath, mPaintFooterLine);
     }
 
-    public boolean onTouchEvent(android.view.MotionEvent ev) {
+	public boolean onTouchEvent(android.view.MotionEvent ev) {
         if (super.onTouchEvent(ev)) {
             return true;
         }
@@ -560,13 +519,22 @@ public class IconPageIndicator extends View implements PageIndicator {
         final int width = getWidth();
         final int halfWidth = width / 2;
         for (int i = 0; i < count; i++) {
-            RectF bounds = calcBounds(i);
+        	int icon = -1;
+        	int actualPage = mViewPager.getCurrentItem();
+        	if(i == actualPage) {
+        		icon = 1;
+        	}
+        	else if(i > actualPage) {
+        		icon = 2;
+        	}
+        	else if(i < actualPage) {
+        		icon = 0;
+        	}
+            RectF bounds = calcBounds(i, icon);
             float w = (bounds.right - bounds.left);
             float h = (bounds.bottom - bounds.top);
             bounds.left = (halfWidth) - (w / 2) - mCurrentOffset + ((i - mCurrentPage) * width);
-            Log.e("left bound original", bounds.left + "");
             bounds.right = bounds.left + w;
-            Log.e("right bound original", bounds.right + "");
             bounds.top = 0;
             bounds.bottom = h;
             list.add(bounds);
@@ -582,17 +550,17 @@ public class IconPageIndicator extends View implements PageIndicator {
      * @param paint
      * @return
      */
-    private RectF calcBounds(int index) {
+    private RectF calcBounds(int index, int icon) {
         //Calculate the text bounds
-        RectF bounds = new RectF();
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), mIconProivder.getIconArray(index)[1]);
+		RectF bounds = new RectF();
+		Bitmap bitmap = BitmapFactory.decodeResource(getResources(), mIconProivder.getIconArray(index)[icon]);
         float trueHeight = getHeight() - mFooterPadding - mTopPadding;
         float change = trueHeight / bitmap.getHeight();
 		float trueWidth = bitmap.getWidth() * change;
 		bitmap = Bitmap.createScaledBitmap(bitmap, (int)trueWidth, (int)trueHeight, true);
         bounds.right = bitmap.getWidth();
         bounds.bottom = bitmap.getHeight();
-        return bounds;
+        return bounds;       
     }
 
     @Override
