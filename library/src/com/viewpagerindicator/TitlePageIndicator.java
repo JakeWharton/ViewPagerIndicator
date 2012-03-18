@@ -162,10 +162,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mTitlePadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
         mColorSelected = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
-        mColorText = a.getColor(R.styleable.TitlePageIndicator_textColor, defaultTextColor);
+        mColorText = a.getColor(R.styleable.TitlePageIndicator_android_textColor, defaultTextColor);
         mBoldText = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
 
-        final float textSize = a.getDimension(R.styleable.TitlePageIndicator_textSize, defaultTextSize);
+        final float textSize = a.getDimension(R.styleable.TitlePageIndicator_android_textSize, defaultTextSize);
         final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
         mPaintText.setTextSize(textSize);
         mPaintText.setAntiAlias(true);

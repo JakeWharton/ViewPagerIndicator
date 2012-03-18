@@ -45,8 +45,8 @@
         <item name="footerPadding">@dimen/default_title_indicator_footer_padding</item>
         <item name="selectedColor">@color/default_title_indicator_selected_color</item>
         <item name="selectedBold">@bool/default_title_indicator_selected_bold</item>
-        <item name="textColor">@color/default_title_indicator_text_color</item>
-        <item name="textSize">@dimen/default_title_indicator_text_size</item>
+        <item name="android:textColor">@color/default_title_indicator_text_color</item>
+        <item name="android:textSize">@dimen/default_title_indicator_text_size</item>
         <item name="titlePadding">@dimen/default_title_indicator_title_padding</item>
         <item name="topPadding">@dimen/default_title_indicator_top_padding</item>
     </style>

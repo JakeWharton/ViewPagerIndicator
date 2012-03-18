@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+Version 2.3.0 *(In Development)*
+--------------------------------
+
+ * The title indicator now uses `android:textSize` and `android:textColor` in
+   its styles.
+ * The dependency on the support library is now using an artifact from Maven
+   central rather than requiring you to deploy your own locally.
+
+
 Version 2.2.3 *(2012-01-26)*
 ----------------------------
 
