@@ -28,7 +28,7 @@
         <item name="footerLineHeight">1dp</item>
         <item name="footerIndicatorHeight">3dp</item>
         <item name="footerIndicatorStyle">underline</item>
-        <item name="textColor">#AA000000</item>
+        <item name="android:textColor">#AA000000</item>
         <item name="selectedColor">#FF000000</item>
         <item name="selectedBold">true</item>
     </style>
