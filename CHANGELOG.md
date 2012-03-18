@@ -4,6 +4,8 @@ Change Log
 Version 2.3.0 *(In Development)*
 --------------------------------
 
+ * Title indicator adapter callback now uses the standard `getPageTitle(int)`
+   method introduced in the r6 version of the support library.
  * The title indicator now uses `android:textSize` and `android:textColor` in
    its styles.
  * The dependency on the support library is now using an artifact from Maven

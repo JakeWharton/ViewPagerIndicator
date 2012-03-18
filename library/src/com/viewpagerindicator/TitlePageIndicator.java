@@ -59,6 +59,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private static final float BOLD_FADE_PERCENTAGE = 0.05f;
 
     /**
+     * Title text used when no title is provided by the adapter.
+     */
+    private static final String EMPTY_TITLE = "";
+
+    /**
      * Interface for a callback when the center item has been clicked.
      */
     public static interface OnCenterItemClickListener {
@@ -91,7 +96,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
-    private TitleProvider mTitleProvider;
+    private PagerAdapter mPagerAdapter;
     private int mCurrentPage = -1;
     private int mCurrentOffset;
     private int mScrollState;
@@ -321,7 +326,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         // mCurrentPage is -1 on first start and after orientation changed. If so, retrieve the correct index from viewpager.
         if(mCurrentPage == -1 && mViewPager != null) mCurrentPage = mViewPager.getCurrentItem();
-        
+
         //Calculate views bounds
         ArrayList<RectF> bounds = calculateAllBounds(mPaintText);
         final int boundsSize = bounds.size();
@@ -412,6 +417,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
             //Only if one side is visible
             if ((bound.left > left && bound.left < right) || (bound.right > left && bound.right < right)) {
                 final boolean currentPage = (i == page);
+                final String pageTitle = getTitle(i);
+
                 //Only set bold if we are within bounds
                 mPaintText.setFakeBoldText(currentPage && currentBold && mBoldText);
 
@@ -421,13 +428,13 @@ public class TitlePageIndicator extends View implements PageIndicator {
                     //Fade out/in unselected text as the selected text fades in/out
                     mPaintText.setAlpha(colorTextAlpha - (int)(colorTextAlpha * selectedPercent));
                 }
-                canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom + mTopPadding, mPaintText);
+                canvas.drawText(pageTitle, bound.left, bound.bottom + mTopPadding, mPaintText);
 
                 //If we are within the selected bounds draw the selected text
                 if (currentPage && currentSelected) {
                     mPaintText.setColor(mColorSelected);
                     mPaintText.setAlpha((int)((mColorSelected >>> 24) * selectedPercent));
-                    canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom + mTopPadding, mPaintText);
+                    canvas.drawText(pageTitle, bound.left, bound.bottom + mTopPadding, mPaintText);
                 }
             }
         }
@@ -628,23 +635,19 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private RectF calcBounds(int index, Paint paint) {
         //Calculate the text bounds
         RectF bounds = new RectF();
-        bounds.right = paint.measureText(mTitleProvider.getTitle(index));
+        bounds.right = paint.measureText(getTitle(index));
         bounds.bottom = paint.descent() - paint.ascent();
         return bounds;
     }
 
     @Override
     public void setViewPager(ViewPager view) {
-        final PagerAdapter adapter = view.getAdapter();
-        if (adapter == null) {
+        mPagerAdapter = view.getAdapter();
+        if (mPagerAdapter == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
-        }
-        if (!(adapter instanceof TitleProvider)) {
-            throw new IllegalStateException("ViewPager adapter must implement TitleProvider to be used with TitlePageIndicator.");
         }
         mViewPager = view;
         mViewPager.setOnPageChangeListener(this);
-        mTitleProvider = (TitleProvider)adapter;
         invalidate();
     }
 
@@ -785,5 +788,13 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 return new SavedState[size];
             }
         };
+    }
+
+    private String getTitle(int i) {
+        CharSequence title = mPagerAdapter.getPageTitle(i);
+        if (title == null) {
+            title = EMPTY_TITLE;
+        }
+        return title.toString();
     }
 }

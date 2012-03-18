@@ -33,6 +33,11 @@ import android.widget.TextView;
  * across different configurations or circumstances.
  */
 public class TabPageIndicator extends HorizontalScrollView implements PageIndicator {
+    /**
+     * Title text used when no title is provided by the adapter.
+     */
+    private static final CharSequence EMPTY_TITLE = "";
+
     Runnable mTabSelector;
 
     private OnClickListener mTabClickListener = new OnClickListener() {
@@ -124,7 +129,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         }
     }
 
-    private void addTab(String text, int index) {
+    private void addTab(CharSequence text, int index) {
         //Workaround for not being able to pass a defStyle on pre-3.0
         final TabView tabView = (TabView)mInflater.inflate(R.layout.vpi__tab, null);
         tabView.init(this, text, index);
@@ -162,9 +167,6 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         if (adapter == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
-        if (!(adapter instanceof TitleProvider)) {
-            throw new IllegalStateException("ViewPager adapter must implement TitleProvider to be used with TitlePageIndicator.");
-        }
         mViewPager = view;
         view.setOnPageChangeListener(this);
         notifyDataSetChanged();
@@ -172,10 +174,14 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     public void notifyDataSetChanged() {
         mTabLayout.removeAllViews();
-        TitleProvider adapter = (TitleProvider)mViewPager.getAdapter();
-        final int count = ((PagerAdapter)adapter).getCount();
+        PagerAdapter adapter = mViewPager.getAdapter();
+        final int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
-            addTab(adapter.getTitle(i), i);
+            CharSequence title = adapter.getPageTitle(i);
+            if (title == null) {
+                title = EMPTY_TITLE;
+            }
+            addTab(title, i);
         }
         if (mSelectedTabIndex > count) {
             mSelectedTabIndex = count - 1;
@@ -220,7 +226,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             super(context, attrs);
         }
 
-        public void init(TabPageIndicator parent, String text, int index) {
+        public void init(TabPageIndicator parent, CharSequence text, int index) {
             mParent = parent;
             mIndex = index;
 

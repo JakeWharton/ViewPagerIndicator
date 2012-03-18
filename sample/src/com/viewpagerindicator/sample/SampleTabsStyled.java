@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import com.viewpagerindicator.sample.R;
 import com.viewpagerindicator.TabPageIndicator;
-import com.viewpagerindicator.TitleProvider;
 
 public class SampleTabsStyled extends BaseSampleActivity {
 	private static final String[] CONTENT = new String[] { "Recent", "Artists", "Albums", "Songs", "Playlists", "Genres" };
@@ -25,7 +24,7 @@ public class SampleTabsStyled extends BaseSampleActivity {
 		mIndicator.setViewPager(mPager);
 	}
 	
-	class GoogleMusicAdapter extends TestFragmentAdapter implements TitleProvider {
+	class GoogleMusicAdapter extends TestFragmentAdapter {
 		public GoogleMusicAdapter(FragmentManager fm) {
 			super(fm);
 		}
@@ -41,7 +40,7 @@ public class SampleTabsStyled extends BaseSampleActivity {
 		}
 
 		@Override
-		public String getTitle(int position) {
+		public CharSequence getPageTitle(int position) {
 			return SampleTabsStyled.CONTENT[position % SampleTabsStyled.CONTENT.length].toUpperCase();
 		}
 	}
