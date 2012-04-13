@@ -177,6 +177,17 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
-        
+
+        <!-- SYNCHRONIZED SCROLL -->
+        <activity
+            android:name=".SampleSynchronizedScrollDefault"
+            android:label="SynchronizedScroll/Default"
+            android:theme="@style/Theme.PageIndicatorDefaults">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
     </application>
 </manifest>
