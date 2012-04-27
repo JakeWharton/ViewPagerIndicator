@@ -105,6 +105,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private int mColorText;
     private int mColorSelected;
     private Path mPath = new Path();
+    private final RectF mBounds = new RectF();
     private final Paint mPaintFooterLine = new Paint();
     private IndicatorStyle mFooterIndicatorStyle;
     private final Paint mPaintFooterIndicator = new Paint();
@@ -731,9 +732,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
             height = MeasureSpec.getSize(heightMeasureSpec);
         } else {
             //Calculate the text bounds
-            RectF bounds = new RectF();
-            bounds.bottom = mPaintText.descent()-mPaintText.ascent();
-            height = bounds.bottom - bounds.top + mFooterLineHeight + mFooterPadding + mTopPadding;
+            mBounds.setEmpty();
+            mBounds.bottom = mPaintText.descent()-mPaintText.ascent();
+            height = mBounds.bottom - mBounds.top + mFooterLineHeight + mFooterPadding + mTopPadding;
             if (mFooterIndicatorStyle != IndicatorStyle.None) {
                 height += mFooterIndicatorHeight;
             }
