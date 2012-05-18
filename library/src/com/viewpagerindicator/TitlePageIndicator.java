@@ -24,7 +24,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.RectF;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -105,7 +105,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private int mColorText;
     private int mColorSelected;
     private Path mPath = new Path();
-    private final RectF mBounds = new RectF();
+    private final Rect mBounds = new Rect();
     private final Paint mPaintFooterLine = new Paint();
     private IndicatorStyle mFooterIndicatorStyle;
     private final Paint mPaintFooterIndicator = new Paint();
@@ -329,7 +329,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         if(mCurrentPage == -1 && mViewPager != null) mCurrentPage = mViewPager.getCurrentItem();
 
         //Calculate views bounds
-        ArrayList<RectF> bounds = calculateAllBounds(mPaintText);
+        ArrayList<Rect> bounds = calculateAllBounds(mPaintText);
         final int boundsSize = bounds.size();
 
         //Make sure we're on a page that still exists
@@ -360,7 +360,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final float selectedPercent = (SELECTION_FADE_PERCENTAGE - offsetPercent) / SELECTION_FADE_PERCENTAGE;
 
         //Verify if the current view must be clipped to the screen
-        RectF curPageBound = bounds.get(mCurrentPage);
+        Rect curPageBound = bounds.get(mCurrentPage);
         float curPageWidth = curPageBound.right - curPageBound.left;
         if (curPageBound.left < leftClip) {
             //Try to clip to the screen (left side)
@@ -374,17 +374,17 @@ public class TitlePageIndicator extends View implements PageIndicator {
         //Left views starting from the current position
         if (mCurrentPage > 0) {
             for (int i = mCurrentPage - 1; i >= 0; i--) {
-                RectF bound = bounds.get(i);
+                Rect bound = bounds.get(i);
                 //Is left side is outside the screen
                 if (bound.left < leftClip) {
-                    float w = bound.right - bound.left;
+                    int w = bound.right - bound.left;
                     //Try to clip to the screen (left side)
                     clipViewOnTheLeft(bound, w, left);
                     //Except if there's an intersection with the right view
-                    RectF rightBound = bounds.get(i + 1);
+                    Rect rightBound = bounds.get(i + 1);
                     //Intersection
                     if (bound.right + mTitlePadding > rightBound.left) {
-                        bound.left = rightBound.left - w - mTitlePadding;
+                        bound.left = (int) (rightBound.left - w - mTitlePadding);
                         bound.right = bound.left + w;
                     }
                 }
@@ -393,17 +393,17 @@ public class TitlePageIndicator extends View implements PageIndicator {
         //Right views starting from the current position
         if (mCurrentPage < countMinusOne) {
             for (int i = mCurrentPage + 1 ; i < count; i++) {
-                RectF bound = bounds.get(i);
+                Rect bound = bounds.get(i);
                 //If right side is outside the screen
                 if (bound.right > rightClip) {
-                    float w = bound.right - bound.left;
+                    int w = bound.right - bound.left;
                     //Try to clip to the screen (right side)
                     clipViewOnTheRight(bound, w, right);
                     //Except if there's an intersection with the left view
-                    RectF leftBound = bounds.get(i - 1);
+                    Rect leftBound = bounds.get(i - 1);
                     //Intersection
                     if (bound.left - mTitlePadding < leftBound.right) {
-                        bound.left = leftBound.right + mTitlePadding;
+                        bound.left = (int) (leftBound.right + mTitlePadding);
                         bound.right = bound.left + w;
                     }
                 }
@@ -414,11 +414,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
         int colorTextAlpha = mColorText >>> 24;
         for (int i = 0; i < count; i++) {
             //Get the title
-            RectF bound = bounds.get(i);
+            Rect bound = bounds.get(i);
             //Only if one side is visible
             if ((bound.left > left && bound.left < right) || (bound.right > left && bound.right < right)) {
                 final boolean currentPage = (i == page);
-                final String pageTitle = getTitle(i);
+                final CharSequence pageTitle = getTitle(i);
 
                 //Only set bold if we are within bounds
                 mPaintText.setFakeBoldText(currentPage && currentBold && mBoldText);
@@ -429,13 +429,13 @@ public class TitlePageIndicator extends View implements PageIndicator {
                     //Fade out/in unselected text as the selected text fades in/out
                     mPaintText.setAlpha(colorTextAlpha - (int)(colorTextAlpha * selectedPercent));
                 }
-                canvas.drawText(pageTitle, bound.left, bound.bottom + mTopPadding, mPaintText);
+                canvas.drawText(pageTitle, 0, pageTitle.length(), bound.left, bound.bottom + mTopPadding, mPaintText);
 
                 //If we are within the selected bounds draw the selected text
                 if (currentPage && currentSelected) {
                     mPaintText.setColor(mColorSelected);
                     mPaintText.setAlpha((int)((mColorSelected >>> 24) * selectedPercent));
-                    canvas.drawText(pageTitle, bound.left, bound.bottom + mTopPadding, mPaintText);
+                    canvas.drawText(pageTitle, 0, pageTitle.length(), bound.left, bound.bottom + mTopPadding, mPaintText);
                 }
             }
         }
@@ -462,7 +462,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
                     break;
                 }
 
-                RectF underlineBounds = bounds.get(page);
+                Rect underlineBounds = bounds.get(page);
                 mPath.reset();
                 mPath.moveTo(underlineBounds.left  - mFooterIndicatorUnderlinePadding, height - mFooterLineHeight);
                 mPath.lineTo(underlineBounds.right + mFooterIndicatorUnderlinePadding, height - mFooterLineHeight);
@@ -581,9 +581,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
      * @param curViewWidth
      *            width of the view.
      */
-    private void clipViewOnTheRight(RectF curViewBound, float curViewWidth, int right) {
-        curViewBound.right = right - mClipPadding;
-        curViewBound.left = curViewBound.right - curViewWidth;
+    private void clipViewOnTheRight(Rect curViewBound, float curViewWidth, int right) {
+        curViewBound.right = (int) (right - mClipPadding);
+        curViewBound.left = (int) (curViewBound.right - curViewWidth);
     }
 
     /**
@@ -594,9 +594,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
      * @param curViewWidth
      *            width of the view.
      */
-    private void clipViewOnTheLeft(RectF curViewBound, float curViewWidth, int left) {
-        curViewBound.left = left + mClipPadding;
-        curViewBound.right = mClipPadding + curViewWidth;
+    private void clipViewOnTheLeft(Rect curViewBound, float curViewWidth, int left) {
+        curViewBound.left = (int) (left + mClipPadding);
+        curViewBound.right = (int) (mClipPadding + curViewWidth);
     }
 
     /**
@@ -605,16 +605,16 @@ public class TitlePageIndicator extends View implements PageIndicator {
      * @param paint
      * @return
      */
-    private ArrayList<RectF> calculateAllBounds(Paint paint) {
-        ArrayList<RectF> list = new ArrayList<RectF>();
+    private ArrayList<Rect> calculateAllBounds(Paint paint) {
+        ArrayList<Rect> list = new ArrayList<Rect>();
         //For each views (If no values then add a fake one)
         final int count = mViewPager.getAdapter().getCount();
         final int width = getWidth();
         final int halfWidth = width / 2;
         for (int i = 0; i < count; i++) {
-            RectF bounds = calcBounds(i, paint);
-            float w = (bounds.right - bounds.left);
-            float h = (bounds.bottom - bounds.top);
+            Rect bounds = calcBounds(i, paint);
+            int w = (bounds.right - bounds.left);
+            int h = (bounds.bottom - bounds.top);
             bounds.left = (halfWidth) - (w / 2) - mCurrentOffset + ((i - mCurrentPage) * width);
             bounds.right = bounds.left + w;
             bounds.top = 0;
@@ -632,11 +632,12 @@ public class TitlePageIndicator extends View implements PageIndicator {
      * @param paint
      * @return
      */
-    private RectF calcBounds(int index, Paint paint) {
+    private Rect calcBounds(int index, Paint paint) {
         //Calculate the text bounds
-        RectF bounds = new RectF();
-        bounds.right = paint.measureText(getTitle(index));
-        bounds.bottom = paint.descent() - paint.ascent();
+        Rect bounds = new Rect();
+        CharSequence title = getTitle(index);
+        bounds.right = (int) paint.measureText(title, 0, title.length());
+        bounds.bottom = (int) (paint.descent() - paint.ascent());
         return bounds;
     }
 
@@ -738,7 +739,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         } else {
             //Calculate the text bounds
             mBounds.setEmpty();
-            mBounds.bottom = mPaintText.descent()-mPaintText.ascent();
+            mBounds.bottom = (int) (mPaintText.descent() - mPaintText.ascent());
             height = mBounds.bottom - mBounds.top + mFooterLineHeight + mFooterPadding + mTopPadding;
             if (mFooterIndicatorStyle != IndicatorStyle.None) {
                 height += mFooterIndicatorHeight;
@@ -796,7 +797,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         };
     }
 
-    private String getTitle(int i) {
+    private CharSequence getTitle(int i) {
         CharSequence title = mPagerAdapter.getPageTitle(i);
         if (title == null) {
             title = EMPTY_TITLE;
