@@ -138,6 +138,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     public TitlePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        if (isInEditMode()) return;
 
         //Load defaults from resources
         final Resources res = getResources();

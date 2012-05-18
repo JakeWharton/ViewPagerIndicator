@@ -63,6 +63,8 @@ public class LinePageIndicator extends View implements PageIndicator {
 
     public LinePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        if (isInEditMode()) return;
+
         final Resources res = getResources();
 
         //Load defaults from resources
