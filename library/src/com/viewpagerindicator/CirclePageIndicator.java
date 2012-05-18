@@ -31,17 +31,17 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.LinearLayout;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
+import static android.widget.LinearLayout.HORIZONTAL;
+import static android.widget.LinearLayout.VERTICAL;
 
 /**
  * Draws circles (one for each view). The current view position is filled and
  * others are only stroked.
  */
 public class CirclePageIndicator extends View implements PageIndicator {
-    public static final int HORIZONTAL = 0;
-    public static final int VERTICAL = 1;
-
     private static final int INVALID_POINTER = -1;
 
     private float mRadius;
@@ -91,7 +91,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CirclePageIndicator, defStyle, 0);
 
         mCentered = a.getBoolean(R.styleable.CirclePageIndicator_centered, defaultCentered);
-        mOrientation = a.getInt(R.styleable.CirclePageIndicator_orientation, defaultOrientation);
+        mOrientation = a.getInt(R.styleable.CirclePageIndicator_android_orientation, defaultOrientation);
         mPaintPageFill.setStyle(Style.FILL);
         mPaintPageFill.setColor(a.getColor(R.styleable.CirclePageIndicator_pageColor, defaultPageColor));
         mPaintStroke.setStyle(Style.STROKE);
