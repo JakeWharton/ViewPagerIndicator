@@ -205,7 +205,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         }
         mSelectedTabIndex = item;
         mViewPager.setCurrentItem(item);
-        
+
         final int tabCount = mTabLayout.getChildCount();
         for (int i = 0; i < tabCount; i++) {
             final View child = mTabLayout.getChildAt(i);
