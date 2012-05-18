@@ -31,4 +31,9 @@ public class SampleTitlesCenterClickListener extends BaseSampleActivity implemen
     public void onCenterItemClick(int position) {
         Toast.makeText(this, "You clicked the center title!", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onCenterItemLongClick(int position) {
+        Toast.makeText(this, "You long-clicked the center title!", Toast.LENGTH_SHORT).show();
+    }
 }
