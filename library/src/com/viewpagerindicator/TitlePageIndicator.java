@@ -156,7 +156,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final float defaultTopPadding = res.getDimension(R.dimen.default_title_indicator_top_padding);
 
         //Retrieve styles attributes
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TitlePageIndicator, defStyle, R.style.Widget_TitlePageIndicator);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TitlePageIndicator, defStyle, 0);
 
         //Retrieve the colors to be used for this view and apply them.
         mFooterLineHeight = a.getDimension(R.styleable.TitlePageIndicator_footerLineHeight, defaultFooterLineHeight);
@@ -603,7 +603,6 @@ public class TitlePageIndicator extends View implements PageIndicator {
      * Calculate views bounds and scroll them according to the current index
      *
      * @param paint
-     * @param currentIndex
      * @return
      */
     private ArrayList<RectF> calculateAllBounds(Paint paint) {
@@ -643,6 +642,12 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     @Override
     public void setViewPager(ViewPager view) {
+        if (mViewPager == view) {
+            return;
+        }
+        if (mViewPager != null) {
+            mViewPager.setOnPageChangeListener(null);
+        }
         mPagerAdapter = view.getAdapter();
         if (mPagerAdapter == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");

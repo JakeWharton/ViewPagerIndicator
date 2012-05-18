@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        
-        
+
+
+
         <!-- CIRCLE INDICATOR -->
         <activity
             android:name=".SampleCirclesDefault"
@@ -84,9 +84,9 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
-        
-        
-        
+
+
+
         <!-- TITLE INDICATOR -->
         <activity
             android:name=".SampleTitlesCenterClickListener"
@@ -155,9 +155,9 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
-        
-        
-        
+
+
+
         <!-- TAB INDICATOR -->
         <activity
             android:name=".SampleTabsDefault"
@@ -177,6 +177,6 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
-        
+
     </application>
 </manifest>

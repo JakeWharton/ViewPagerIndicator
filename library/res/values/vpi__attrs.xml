@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2011 Patrik Åkerfeldt
-     Copyright (C) 2011 Jake Wharton
+<!-- Copyright (C) 2012 Jake Wharton
+     Copyright (C) 2011 Patrik Åkerfeldt
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -19,14 +19,12 @@
     <declare-styleable name="ViewPagerIndicator">
         <!-- Style of the circle indicator. -->
         <attr name="vpiCirclePageIndicatorStyle" format="reference"/>
-        
+
         <!-- Style of the title indicator. -->
         <attr name="vpiTitlePageIndicatorStyle" format="reference"/>
-        
-        <!-- Style of the tab indicator. -->
+
+        <!-- Style of the tab indicator's tabs. -->
         <attr name="vpiTabPageIndicatorStyle" format="reference"/>
-        <!-- Style of the text in a tab. -->
-        <attr name="vpiTabTextStyle" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="CirclePageIndicator">

@@ -32,6 +32,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import static android.graphics.Paint.ANTI_ALIAS_FLAG;
+
 /**
  * Draws circles (one for each view). The current view position is filled and
  * others are only stroked.
@@ -40,10 +42,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
     public static final int HORIZONTAL = 0;
     public static final int VERTICAL = 1;
 
+    private static final int INVALID_POINTER = -1;
+
     private float mRadius;
-    private final Paint mPaintPageFill;
-    private final Paint mPaintStroke;
-    private final Paint mPaintFill;
+    private final Paint mPaintPageFill = new Paint(ANTI_ALIAS_FLAG);
+    private final Paint mPaintStroke = new Paint(ANTI_ALIAS_FLAG);
+    private final Paint mPaintFill = new Paint(ANTI_ALIAS_FLAG);
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
     private int mCurrentPage;
@@ -54,8 +58,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private int mOrientation;
     private boolean mCentered;
     private boolean mSnap;
-
-    private static final int INVALID_POINTER = -1;
 
     private int mTouchSlop;
     private float mLastMotionX = -1;
@@ -86,18 +88,15 @@ public class CirclePageIndicator extends View implements PageIndicator {
         final boolean defaultSnap = res.getBoolean(R.bool.default_circle_indicator_snap);
 
         //Retrieve styles attributes
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CirclePageIndicator, defStyle, R.style.Widget_CirclePageIndicator);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CirclePageIndicator, defStyle, 0);
 
         mCentered = a.getBoolean(R.styleable.CirclePageIndicator_centered, defaultCentered);
         mOrientation = a.getInt(R.styleable.CirclePageIndicator_orientation, defaultOrientation);
-        mPaintPageFill = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintPageFill.setStyle(Style.FILL);
         mPaintPageFill.setColor(a.getColor(R.styleable.CirclePageIndicator_pageColor, defaultPageColor));
-        mPaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintStroke.setStyle(Style.STROKE);
         mPaintStroke.setColor(a.getColor(R.styleable.CirclePageIndicator_strokeColor, defaultStrokeColor));
         mPaintStroke.setStrokeWidth(a.getDimension(R.styleable.CirclePageIndicator_strokeWidth, defaultStrokeWidth));
-        mPaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintFill.setStyle(Style.FILL);
         mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
         mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
@@ -191,11 +190,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
         return mSnap;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see android.view.View#onDraw(android.graphics.Canvas)
-     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -366,6 +360,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     @Override
     public void setViewPager(ViewPager view) {
+        if (mViewPager == view) {
+            return;
+        }
+        if (mViewPager != null) {
+            mViewPager.setOnPageChangeListener(null);
+        }
         if (view.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
