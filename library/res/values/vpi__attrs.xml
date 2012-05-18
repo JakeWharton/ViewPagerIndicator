@@ -19,10 +19,10 @@
     <declare-styleable name="ViewPagerIndicator">
         <!-- Style of the circle indicator. -->
         <attr name="vpiCirclePageIndicatorStyle" format="reference"/>
-
+        <!-- Style of the line indicator. -->
+        <attr name="vpiLinePageIndicatorStyle" format="reference"/>
         <!-- Style of the title indicator. -->
         <attr name="vpiTitlePageIndicatorStyle" format="reference"/>
-
         <!-- Style of the tab indicator's tabs. -->
         <attr name="vpiTabPageIndicatorStyle" format="reference"/>
     </declare-styleable>
@@ -49,6 +49,21 @@
         <attr name="strokeWidth" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="LinePageIndicator">
+        <!-- Whether or not the indicators should be centered. -->
+        <attr name="centered" />
+        <!-- Color of the unselected lines that represent the pages. -->
+        <attr name="unselectedColor" format="color" />
+        <!-- Color of the selected line that represents the current page. -->
+        <attr name="selectedColor" format="color" />
+        <!-- Width of each indicator line. -->
+        <attr name="lineWidth" format="dimension" />
+        <!-- Width of each indicator line's stroke. -->
+        <attr name="strokeWidth" />
+        <!-- Width of the gap between each indicator line. -->
+        <attr name="gapWidth" format="dimension" />
+    </declare-styleable>
+
     <declare-styleable name="TitlePageIndicator">
         <!-- Screen edge padding. -->
         <attr name="clipPadding" format="dimension" />
@@ -69,7 +84,7 @@
         <!-- Padding between the bottom of the title and the footer. -->
         <attr name="footerPadding" format="dimension" />
         <!-- Color of the selected title. -->
-        <attr name="selectedColor" format="color" />
+        <attr name="selectedColor" />
         <!-- Whether or not the selected item is displayed as bold. -->
         <attr name="selectedBold" format="boolean" />
         <!-- Color of regular titles. -->

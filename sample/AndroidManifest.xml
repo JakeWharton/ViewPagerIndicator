@@ -87,6 +87,45 @@
 
 
 
+        <!-- LINE INDICATOR -->
+        <activity
+                android:name=".SampleLinesDefault"
+                android:label="Lines/Default">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".SampleLinesStyledLayout"
+                android:label="Lines/Styled (via layout)"
+                android:theme="@android:style/Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".SampleLinesStyledMethods"
+                android:label="Lines/Styled (via methods)"
+                android:theme="@android:style/Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".SampleLinesStyledTheme"
+                android:label="Lines/Styled (via theme)"
+                android:theme="@style/StyledIndicators">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
+
+
         <!-- TITLE INDICATOR -->
         <activity
             android:name=".SampleTitlesCenterClickListener"
