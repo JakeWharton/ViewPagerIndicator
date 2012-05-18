@@ -148,6 +148,32 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			
+			<plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-eclipse-plugin</artifactId>
+	        <configuration>
+	          <excludes>
+	            <exclude>android:android</exclude>
+	            <exclude>com.google.android.maps:maps</exclude>
+	          </excludes>
+	          <buildOutputDirectory>bin</buildOutputDirectory>
+	          <classpathContainers>
+	            <classpathContainer>com.android.ide.eclipse.adt.ANDROID_FRAMEWORK</classpathContainer>
+	          </classpathContainers>
+	          <additionalProjectnatures>
+	            <projectnature>com.android.ide.eclipse.adt.AndroidNature</projectnature>
+	            <projectnature>org.eclipse.ajdt.ui.ajnature</projectnature>
+	          </additionalProjectnatures>
+	          <buildcommands>
+	            <buildcommand>com.android.ide.eclipse.adt.ResourceManagerBuilder</buildcommand>
+	            <buildcommand>com.android.ide.eclipse.adt.PreCompilerBuilder</buildcommand>
+	            <buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
+	            <buildcommand>com.android.ide.eclipse.adt.ApkBuilder</buildcommand>
+	          </buildcommands>
+	          <useProjectReferences>false</useProjectReferences>
+	        </configuration>
+	      </plugin>
 		</plugins>
 	</build>
 </project>
