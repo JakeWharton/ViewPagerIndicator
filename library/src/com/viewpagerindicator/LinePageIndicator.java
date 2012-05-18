@@ -212,13 +212,10 @@ public class LinePageIndicator extends View implements PageIndicator {
                 }
 
                 if (mIsDragging) {
-                    if (!mViewPager.isFakeDragging()) {
-                        mViewPager.beginFakeDrag();
-                    }
-
                     mLastMotionX = x;
-
-                    mViewPager.fakeDragBy(deltaX);
+                    if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
+                        mViewPager.fakeDragBy(deltaX);
+                    }
                 }
 
                 break;
