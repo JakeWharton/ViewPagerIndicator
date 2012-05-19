@@ -140,7 +140,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
     }
 
     public void setSelectedColor(int selectedColor) {
-        mPaint.setColor(selectedColor & 0xFFFFFF);
+        mPaint.setColor(selectedColor);
         invalidate();
     }
 
