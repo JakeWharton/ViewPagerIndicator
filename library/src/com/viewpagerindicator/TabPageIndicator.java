@@ -38,12 +38,29 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     /** Title text used when no title is provided by the adapter. */
     private static final CharSequence EMPTY_TITLE = "";
 
+    /**
+     * Interface for a callback when the selected tab has been reselected.
+     */
+    public interface OnTabReselectedListener {
+        /**
+         * Callback when the selected tab has been reselected.
+         *
+         * @param position Position of the current center item.
+         */
+        void onTabReselected(int position);
+    }
+
     private Runnable mTabSelector;
 
     private final OnClickListener mTabClickListener = new OnClickListener() {
         public void onClick(View view) {
             TabView tabView = (TabView)view;
-            mViewPager.setCurrentItem(tabView.getIndex());
+            final int oldSelected = mViewPager.getCurrentItem();
+            final int newSelected = tabView.getIndex();
+            mViewPager.setCurrentItem(newSelected);
+            if (oldSelected == newSelected && mTabReselectedListener != null) {
+                mTabReselectedListener.onTabReselected(newSelected);
+            }
         }
     };
 
@@ -53,6 +70,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private int mMaxTabWidth;
     private int mSelectedTabIndex;
+
+    private OnTabReselectedListener mTabReselectedListener;
 
     public TabPageIndicator(Context context) {
         this(context, null);
@@ -64,6 +83,10 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
         mTabLayout = new LinearLayout(getContext());
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, FILL_PARENT));
+    }
+
+    public void setOnTabReselectedListener(OnTabReselectedListener listener) {
+        mTabReselectedListener = listener;
     }
 
     @Override

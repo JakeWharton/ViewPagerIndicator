@@ -66,13 +66,13 @@ public class TitlePageIndicator extends View implements PageIndicator {
     /**
      * Interface for a callback when the center item has been clicked.
      */
-    public static interface OnCenterItemClickListener {
+    public interface OnCenterItemClickListener {
         /**
          * Callback when the center item has been clicked.
          *
          * @param position Position of the current center item.
          */
-        public void onCenterItemClick(int position);
+        void onCenterItemClick(int position);
     }
 
     public enum IndicatorStyle {
