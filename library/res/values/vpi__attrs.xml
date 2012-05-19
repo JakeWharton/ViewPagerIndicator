@@ -25,11 +25,18 @@
         <attr name="vpiTitlePageIndicatorStyle" format="reference"/>
         <!-- Style of the tab indicator's tabs. -->
         <attr name="vpiTabPageIndicatorStyle" format="reference"/>
+        <!-- Style of the underline indicator. -->
+        <attr name="vpiUnderlinePageIndicatorStyle" format="reference"/>
     </declare-styleable>
+
+    <attr name="centered" format="boolean" />
+    <attr name="selectedColor" format="color" />
+    <attr name="strokeWidth" format="dimension" />
+    <attr name="unselectedColor" format="color" />
 
     <declare-styleable name="CirclePageIndicator">
         <!-- Whether or not the indicators should be centered. -->
-        <attr name="centered" format="boolean" />
+        <attr name="centered" />
         <!-- Color of the filled circle that represents the current page. -->
         <attr name="fillColor" format="color" />
         <!-- Color of the filled circles that represents pages. -->
@@ -43,16 +50,16 @@
         <!-- Color of the open circles. -->
         <attr name="strokeColor" format="color" />
         <!-- Width of the stroke used to draw the circles. -->
-        <attr name="strokeWidth" format="dimension" />
+        <attr name="strokeWidth" />
     </declare-styleable>
 
     <declare-styleable name="LinePageIndicator">
         <!-- Whether or not the indicators should be centered. -->
         <attr name="centered" />
         <!-- Color of the unselected lines that represent the pages. -->
-        <attr name="unselectedColor" format="color" />
+        <attr name="unselectedColor" />
         <!-- Color of the selected line that represents the current page. -->
-        <attr name="selectedColor" format="color" />
+        <attr name="selectedColor" />
         <!-- Width of each indicator line. -->
         <attr name="lineWidth" format="dimension" />
         <!-- Width of each indicator line's stroke. -->
@@ -92,5 +99,16 @@
         <attr name="titlePadding" format="dimension" />
         <!-- Padding between titles and the top of the View. -->
         <attr name="topPadding" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="UnderlinePageIndicator">
+        <!-- Whether or not the selected indicator fades. -->
+        <attr name="fades" format="boolean" />
+        <!-- Length of the delay to fade the indicator. -->
+        <attr name="fadeDelay" format="integer" />
+        <!-- Length of the indicator fade to transparent. -->
+        <attr name="fadeLength" format="integer" />
+        <!-- Color of the selected line that represents the current page. -->
+        <attr name="selectedColor" />
     </declare-styleable>
 </resources>
