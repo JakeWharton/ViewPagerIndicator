@@ -160,7 +160,7 @@
 						<h2>Introduction</h2>
 						<p>Paging indicator widgets compatible with the <code>ViewPager</code> from the <a href="http://developer.android.com/sdk/compatibility-library.html">Android Support Library</a> and <a href="http://actionbarsherlock.com/">ActionBarSherlock</a>. Originally based on <a href="https://github.com/pakerfeldt">Patrik Åkerfeldt</a>'s ViewFlow.</p>
 						<p>When using the <code>ViewPager</code> widget it is not always obvious to the user that there are adjacent views they can navigate to. By implementing this widget you provide a clear indicator that there exists additional content which they can click or swipe to see.</p>
-						<p>At present there are three styles of indicators which can be used:</p>
+						<p>At present there are five styles of indicators which can be used:</p>
 						<table class="image-table">
 							<tbody>
 								<tr>
@@ -184,6 +184,18 @@
 									</td>
 									<td class="indicator"><img src="indicator_circles.png" alt="Circle indicator sample screenshot"/></td>
 								</tr>
+								<tr>
+									<td>
+										<h5>Line Indicator</h5>
+										<p>Similar to the circle indicator but draws very a very subtle line for each page with a separate drawaing style for the current page.</p>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Underline Indicator</h5>
+										<p>Mimics the indicator on the Ice Cream Sandwich application launcher with a fading line the moves with each page.</p>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -203,13 +215,18 @@
 				<div class="row">
 					<div class="span12"><h2>Download</h2></div>
 					<div class="span8">
-						<p class="h1"><strong>Version 2.2.3</strong> &mdash; 2012-01-26</p>
+						<p class="h1"><strong>Version 2.3.1</strong> &mdash; 2012-05-19</p>
 						<p><a href="https://github.com/JakeWharton/Android-ViewPagerIndicator/zipball/master" class="btn small success">Download ZIP</a> <a href="https://github.com/JakeWharton/Android-ViewPagerIndicator/tarball/master" class="btn small success">Download TGZ</a></p>
 						<p class="h2">Change Log</p>
 						<ul>
-							<li>Correctly handle removing the last page when it is selected.</li>
-							<li>Use antialiased text for the title indicators.</li>
-							<li>New circle fill color for circle indicators.</li>
+							<li>New <code>LinePageIndicator</code>! Draws small indicators lines much like the circle indicator but much more subtle.</li>
+							<li>New <code>UnderlinePageIndicator</code>! Acts like the indicator on the Ice Cream Sandwich application launcher.</li>
+							<li>Circle indicator now uses <code>android:orientation</code> rather than custom attribute.</li>
+							<li>Title indicator adapter callback now uses the standard <code>getPageTitle(int)</code> method introduced in the r6 version of the support library.</li>
+							<li>Title indicator now uses <code>android:textSize</code> and <code>android:textColor</code> in its styles.</li>
+							<li>Fix: Do not create objects in drawing, layout, or measurement steps of each indicator.</li>
+							<li>Fix: Improve offset detection when page margins are in use on the pager.</li>
+							<li>Maven: The dependency on the support library is now using an artifact from central rather than requiring you to deploy your own locally</li>
 						</ul>
 						<p>Looking for an older version? Check <a href="https://github.com/JakeWharton/Android-ViewPagerIndicator/tags">here</a>.</p>
 					</div>
