@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 2.3.1 *(2012-05-19)*
+----------------------------
+
+ * Fix: Corrected filename with erroneous lowercase letter.
+
+
 Version 2.3.0 *(2012-05-19)*
 ----------------------------
 
