@@ -98,7 +98,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private ViewPager.OnPageChangeListener mListener;
     private PagerAdapter mPagerAdapter;
     private int mCurrentPage = -1;
-    private int mCurrentOffset;
+    private float mPageOffset;
     private int mScrollState;
     private final Paint mPaintText = new Paint();
     private boolean mBoldText;
@@ -350,11 +350,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         int page = mCurrentPage;
         float offsetPercent;
-        if (mCurrentOffset <= halfWidth) {
-            offsetPercent = 1.0f * mCurrentOffset / width;
+        if (mPageOffset <= 0.5) {
+            offsetPercent = mPageOffset;
         } else {
             page += 1;
-            offsetPercent = 1.0f * (width - mCurrentOffset) / width;
+            offsetPercent = 1 - mPageOffset;
         }
         final boolean currentSelected = (offsetPercent <= SELECTION_FADE_PERCENTAGE);
         final boolean currentBold = (offsetPercent <= BOLD_FADE_PERCENTAGE);
@@ -611,9 +611,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final int halfWidth = width / 2;
         for (int i = 0; i < count; i++) {
             Rect bounds = calcBounds(i, paint);
-            int w = (bounds.right - bounds.left);
-            int h = (bounds.bottom - bounds.top);
-            bounds.left = (halfWidth) - (w / 2) - mCurrentOffset + ((i - mCurrentPage) * width);
+            int w = bounds.right - bounds.left;
+            int h = bounds.bottom - bounds.top;
+            bounds.left = (int)(halfWidth - (w / 2f) + ((i - mCurrentPage - mPageOffset) * width));
             bounds.right = bounds.left + w;
             bounds.top = 0;
             bounds.bottom = h;
@@ -698,7 +698,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         mCurrentPage = position;
-        mCurrentOffset = positionOffsetPixels;
+        mPageOffset = positionOffset;
         invalidate();
 
         if (mListener != null) {

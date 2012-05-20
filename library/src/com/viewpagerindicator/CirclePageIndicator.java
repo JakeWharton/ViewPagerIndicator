@@ -51,9 +51,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private ViewPager.OnPageChangeListener mListener;
     private int mCurrentPage;
     private int mSnapPage;
-    private int mCurrentOffset;
+    private float mPageOffset;
     private int mScrollState;
-    private int mPageSize;
     private int mOrientation;
     private boolean mCentered;
     private boolean mSnap;
@@ -141,7 +140,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
             case HORIZONTAL:
             case VERTICAL:
                 mOrientation = orientation;
-                updatePageSize();
                 requestLayout();
                 break;
 
@@ -261,8 +259,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         //Draw the filled circle according to the current scroll
         float cx = (mSnap ? mSnapPage : mCurrentPage) * threeRadius;
-        if (!mSnap && (mPageSize != 0)) {
-            cx += (mCurrentOffset * 1.0f / mPageSize) * threeRadius;
+        if (!mSnap) {
+            cx += mPageOffset * threeRadius;
         }
         if (mOrientation == HORIZONTAL) {
             dX = longOffset + cx;
@@ -368,14 +366,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
         mViewPager = view;
         mViewPager.setOnPageChangeListener(this);
-        updatePageSize();
         invalidate();
-    }
-
-    private void updatePageSize() {
-        if (mViewPager != null) {
-            mPageSize = (mOrientation == HORIZONTAL) ? mViewPager.getWidth() : mViewPager.getHeight();
-        }
     }
 
     @Override
@@ -411,8 +402,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         mCurrentPage = position;
-        mCurrentOffset = positionOffsetPixels;
-        updatePageSize();
+        mPageOffset = positionOffset;
         invalidate();
 
         if (mListener != null) {
