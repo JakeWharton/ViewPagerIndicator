@@ -58,6 +58,8 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
 
     private final Runnable mFadeRunnable = new Runnable() {
       @Override public void run() {
+        if (!mFades) return;
+
         final int alpha = Math.max(mPaint.getAlpha() - mFadeBy, 0);
         mPaint.setAlpha(alpha);
         invalidate();
