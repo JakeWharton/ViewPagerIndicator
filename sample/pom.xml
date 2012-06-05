@@ -33,11 +33,6 @@
 			<version>${project.version}</version>
 			<type>apklib</type>
 		</dependency>
-		<dependency>
-			<groupId>com.directionalviewpager</groupId>
-			<artifactId>library</artifactId>
-			<version>1.2.0</version>
-		</dependency>
 	</dependencies>
 
 	<build>
