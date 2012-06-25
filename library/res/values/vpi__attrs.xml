@@ -69,6 +69,9 @@
     </declare-styleable>
 
     <declare-styleable name="TitlePageIndicator">
+        <!-- Clips titles around their center point. This is useful if you don't know in advance -->
+        <!-- how long your titles are going to be. -->
+        <attr name="clipToCenter" format="boolean" />
         <!-- Screen edge padding. -->
         <attr name="clipPadding" format="dimension" />
         <!-- Color of the footer line and indicator. -->

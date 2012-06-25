@@ -117,6 +117,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     /** Left and right side padding for not active view titles. */
     private float mClipPadding;
     private float mFooterLineHeight;
+    private boolean mClipToCenter;
 
     private static final int INVALID_POINTER = -1;
 
@@ -153,6 +154,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final int defaultTextColor = res.getColor(R.color.default_title_indicator_text_color);
         final float defaultTextSize = res.getDimension(R.dimen.default_title_indicator_text_size);
         final float defaultTitlePadding = res.getDimension(R.dimen.default_title_indicator_title_padding);
+        final boolean defaultClipToCenter = res.getBoolean(R.bool.default_title_indicator_clip_to_center);
         final float defaultClipPadding = res.getDimension(R.dimen.default_title_indicator_clip_padding);
         final float defaultTopPadding = res.getDimension(R.dimen.default_title_indicator_top_padding);
 
@@ -168,6 +170,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mTopPadding = a.getDimension(R.styleable.TitlePageIndicator_topPadding, defaultTopPadding);
         mTitlePadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
+        mClipToCenter = a.getBoolean(R.styleable.TitlePageIndicator_clipToCenter, defaultClipToCenter);
         mColorSelected = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
         mColorText = a.getColor(R.styleable.TitlePageIndicator_android_textColor, defaultTextColor);
         mBoldText = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
@@ -363,7 +366,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
         //Verify if the current view must be clipped to the screen
         Rect curPageBound = bounds.get(mCurrentPage);
         float curPageWidth = curPageBound.right - curPageBound.left;
-        if (curPageBound.left < leftClip) {
+
+        int curLeftBound = curPageBound.left;
+        if (mClipToCenter && curLeftBound < (left - curPageWidth / 2)) {
+            clipToCenter(curPageBound, left);
+        } else if (!mClipToCenter && curLeftBound < leftClip) {
             //Try to clip to the screen (left side)
             clipViewOnTheLeft(curPageBound, curPageWidth, left);
         }
@@ -377,10 +384,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
             for (int i = mCurrentPage - 1; i >= 0; i--) {
                 Rect bound = bounds.get(i);
                 //Is left side is outside the screen
-                if (bound.left < leftClip) {
-                    int w = bound.right - bound.left;
+                int w = bound.width();
+                int leftBound = mClipToCenter ? bound.left - w / 2 : bound.left;
+                if (leftBound < leftClip) {
                     //Try to clip to the screen (left side)
-                    clipViewOnTheLeft(bound, w, left);
+                    if (mClipToCenter) {
+                        clipToCenter(bound, left);
+                    } else {
+                        clipViewOnTheLeft(bound, w, left);
+                    }
                     //Except if there's an intersection with the right view
                     Rect rightBound = bounds.get(i + 1);
                     //Intersection
@@ -396,10 +408,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
             for (int i = mCurrentPage + 1 ; i < count; i++) {
                 Rect bound = bounds.get(i);
                 //If right side is outside the screen
-                if (bound.right > rightClip) {
-                    int w = bound.right - bound.left;
+                int w = bound.right - bound.left;
+                int rightBound = mClipToCenter ? bound.right - w / 2 : bound.right;
+                if (rightBound > rightClip) {
                     //Try to clip to the screen (right side)
-                    clipViewOnTheRight(bound, w, right);
+                    if (mClipToCenter) {
+                        clipToCenter(bound, right);
+                    } else {
+                        clipViewOnTheRight(bound, w, right);
+                    }
                     //Except if there's an intersection with the left view
                     Rect leftBound = bounds.get(i - 1);
                     //Intersection
@@ -595,6 +612,12 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private void clipViewOnTheLeft(Rect curViewBound, float curViewWidth, int left) {
         curViewBound.left = (int) (left + mClipPadding);
         curViewBound.right = (int) (mClipPadding + curViewWidth);
+    }
+
+    private void clipToCenter(Rect curViewBound, int edge) {
+        int width = curViewBound.width();
+        curViewBound.left = (int) (edge - (width / 2));
+        curViewBound.right = (int) (edge + (width / 2));
     }
 
     /**

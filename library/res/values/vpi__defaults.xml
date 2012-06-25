@@ -31,6 +31,7 @@
     <color name="default_line_indicator_unselected_color">#FFBBBBBB</color>
     <bool name="default_line_indicator_centered">true</bool>
 
+    <bool name="default_title_indicator_clip_to_center">false</bool>
     <dimen name="default_title_indicator_clip_padding">4dp</dimen>
     <color name="default_title_indicator_footer_color">#FF33B5E5</color>
     <dimen name="default_title_indicator_footer_line_height">2dp</dimen>
