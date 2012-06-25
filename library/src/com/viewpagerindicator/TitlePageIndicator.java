@@ -364,101 +364,29 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final float selectedPercent = (SELECTION_FADE_PERCENTAGE - offsetPercent) / SELECTION_FADE_PERCENTAGE;
 
         //Verify if the current view must be clipped to the screen
-        Rect curPageBound = bounds.get(mCurrentPage);
-        float curPageWidth = curPageBound.right - curPageBound.left;
-
-        int curLeftBound = curPageBound.left;
-        if (mClipToCenter && curLeftBound < (left - curPageWidth / 2)) {
-            clipToCenter(curPageBound, left);
-        } else if (!mClipToCenter && curLeftBound < leftClip) {
-            //Try to clip to the screen (left side)
-            clipViewOnTheLeft(curPageBound, curPageWidth, left);
-        }
-        if (curPageBound.right > rightClip) {
-            //Try to clip to the screen (right side)
-            clipViewOnTheRight(curPageBound, curPageWidth, right);
-        }
+        clipCurrentPageTitle(bounds, left, leftClip, right, rightClip);
 
         //Left views starting from the current position
         if (mCurrentPage > 0) {
-            for (int i = mCurrentPage - 1; i >= 0; i--) {
-                Rect bound = bounds.get(i);
-                //Is left side is outside the screen
-                int w = bound.width();
-                int leftBound = mClipToCenter ? bound.left - w / 2 : bound.left;
-                if (leftBound < leftClip) {
-                    //Try to clip to the screen (left side)
-                    if (mClipToCenter) {
-                        clipToCenter(bound, left);
-                    } else {
-                        clipViewOnTheLeft(bound, w, left);
-                    }
-                    //Except if there's an intersection with the right view
-                    Rect rightBound = bounds.get(i + 1);
-                    //Intersection
-                    if (bound.right + mTitlePadding > rightBound.left) {
-                        bound.left = (int) (rightBound.left - w - mTitlePadding);
-                        bound.right = bound.left + w;
-                    }
-                }
-            }
+            clipPageTitlesToLeft(bounds, left, leftClip);
         }
         //Right views starting from the current position
         if (mCurrentPage < countMinusOne) {
-            for (int i = mCurrentPage + 1 ; i < count; i++) {
-                Rect bound = bounds.get(i);
-                //If right side is outside the screen
-                int w = bound.right - bound.left;
-                int rightBound = mClipToCenter ? bound.right - w / 2 : bound.right;
-                if (rightBound > rightClip) {
-                    //Try to clip to the screen (right side)
-                    if (mClipToCenter) {
-                        clipToCenter(bound, right);
-                    } else {
-                        clipViewOnTheRight(bound, w, right);
-                    }
-                    //Except if there's an intersection with the left view
-                    Rect leftBound = bounds.get(i - 1);
-                    //Intersection
-                    if (bound.left - mTitlePadding < leftBound.right) {
-                        bound.left = (int) (leftBound.right + mTitlePadding);
-                        bound.right = bound.left + w;
-                    }
-                }
-            }
+            clipPageTitlesToRight(count, bounds, right, rightClip);
         }
 
         //Now draw views
-        int colorTextAlpha = mColorText >>> 24;
-        for (int i = 0; i < count; i++) {
-            //Get the title
-            Rect bound = bounds.get(i);
-            //Only if one side is visible
-            if ((bound.left > left && bound.left < right) || (bound.right > left && bound.right < right)) {
-                final boolean currentPage = (i == page);
-                final CharSequence pageTitle = getTitle(i);
-
-                //Only set bold if we are within bounds
-                mPaintText.setFakeBoldText(currentPage && currentBold && mBoldText);
-
-                //Draw text as unselected
-                mPaintText.setColor(mColorText);
-                if(currentPage && currentSelected) {
-                    //Fade out/in unselected text as the selected text fades in/out
-                    mPaintText.setAlpha(colorTextAlpha - (int)(colorTextAlpha * selectedPercent));
-                }
-                canvas.drawText(pageTitle, 0, pageTitle.length(), bound.left, bound.bottom + mTopPadding, mPaintText);
-
-                //If we are within the selected bounds draw the selected text
-                if (currentPage && currentSelected) {
-                    mPaintText.setColor(mColorSelected);
-                    mPaintText.setAlpha((int)((mColorSelected >>> 24) * selectedPercent));
-                    canvas.drawText(pageTitle, 0, pageTitle.length(), bound.left, bound.bottom + mTopPadding, mPaintText);
-                }
-            }
-        }
+        drawPageTitles(canvas, count, bounds, left, right, page, currentSelected, currentBold,
+                selectedPercent);
 
         //Draw the footer line
+        drawFooterLine(canvas, bounds, boundsSize, halfWidth, width, height, page, currentSelected,
+                selectedPercent);
+    }
+
+    private void drawFooterLine(Canvas canvas, ArrayList<Rect> bounds, final int boundsSize,
+            final float halfWidth, final int width, final int height, int page,
+            final boolean currentSelected, final float selectedPercent) {
         mPath.reset();
         mPath.moveTo(0, height - mFooterLineHeight / 2f);
         mPath.lineTo(width, height - mFooterLineHeight / 2f);
@@ -492,6 +420,106 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 canvas.drawPath(mPath, mPaintFooterIndicator);
                 mPaintFooterIndicator.setAlpha(0xFF);
                 break;
+        }
+    }
+
+    private void drawPageTitles(Canvas canvas, final int count, ArrayList<Rect> bounds, final int left,
+            final int right, int page, final boolean currentSelected, final boolean currentBold,
+            final float selectedPercent) {
+        int colorTextAlpha = mColorText >>> 24;
+        for (int i = 0; i < count; i++) {
+            //Get the title
+            Rect bound = bounds.get(i);
+            //Only if one side is visible
+            if ((bound.left > left && bound.left < right) || (bound.right > left && bound.right < right)) {
+                final boolean currentPage = (i == page);
+                final CharSequence pageTitle = getTitle(i);
+
+                //Only set bold if we are within bounds
+                mPaintText.setFakeBoldText(currentPage && currentBold && mBoldText);
+
+                //Draw text as unselected
+                mPaintText.setColor(mColorText);
+                if(currentPage && currentSelected) {
+                    //Fade out/in unselected text as the selected text fades in/out
+                    mPaintText.setAlpha(colorTextAlpha - (int)(colorTextAlpha * selectedPercent));
+                }
+                canvas.drawText(pageTitle, 0, pageTitle.length(), bound.left, bound.bottom + mTopPadding, mPaintText);
+
+                //If we are within the selected bounds draw the selected text
+                if (currentPage && currentSelected) {
+                    mPaintText.setColor(mColorSelected);
+                    mPaintText.setAlpha((int)((mColorSelected >>> 24) * selectedPercent));
+                    canvas.drawText(pageTitle, 0, pageTitle.length(), bound.left, bound.bottom + mTopPadding, mPaintText);
+                }
+            }
+        }
+    }
+
+    private void clipPageTitlesToRight(final int count, ArrayList<Rect> bounds, final int right,
+            final float rightClip) {
+        for (int i = mCurrentPage + 1 ; i < count; i++) {
+            Rect bound = bounds.get(i);
+            //If right side is outside the screen
+            int w = bound.right - bound.left;
+            int rightBound = mClipToCenter ? bound.right - w / 2 : bound.right;
+            if (rightBound > rightClip) {
+                //Try to clip to the screen (right side)
+                if (mClipToCenter) {
+                    clipToCenter(bound, right);
+                } else {
+                    clipViewOnTheRight(bound, w, right);
+                }
+                //Except if there's an intersection with the left view
+                Rect leftBound = bounds.get(i - 1);
+                //Intersection
+                if (bound.left - mTitlePadding < leftBound.right) {
+                    bound.left = (int) (leftBound.right + mTitlePadding);
+                    bound.right = bound.left + w;
+                }
+            }
+        }
+    }
+
+    private void clipPageTitlesToLeft(ArrayList<Rect> bounds, final int left, final float leftClip) {
+        for (int i = mCurrentPage - 1; i >= 0; i--) {
+            Rect bound = bounds.get(i);
+            //Is left side is outside the screen
+            int w = bound.width();
+            int leftBound = mClipToCenter ? bound.left - w / 2 : bound.left;
+            if (leftBound < leftClip) {
+                //Try to clip to the screen (left side)
+                if (mClipToCenter) {
+                    clipToCenter(bound, left);
+                } else {
+                    clipViewOnTheLeft(bound, w, left);
+                }
+                //Except if there's an intersection with the right view
+                Rect rightBound = bounds.get(i + 1);
+                //Intersection
+                if (bound.right + mTitlePadding > rightBound.left) {
+                    bound.left = (int) (rightBound.left - w - mTitlePadding);
+                    bound.right = bound.left + w;
+                }
+            }
+        }
+    }
+
+    private void clipCurrentPageTitle(ArrayList<Rect> bounds, final int left, final float leftClip,
+            final int right, final float rightClip) {
+        Rect curPageBound = bounds.get(mCurrentPage);
+        float curPageWidth = curPageBound.right - curPageBound.left;
+
+        int curLeftBound = curPageBound.left;
+        if (mClipToCenter && curLeftBound < (left - curPageWidth / 2)) {
+            clipToCenter(curPageBound, left);
+        } else if (!mClipToCenter && curLeftBound < leftClip) {
+            //Try to clip to the screen (left side)
+            clipViewOnTheLeft(curPageBound, curPageWidth, left);
+        }
+        if (curPageBound.right > rightClip) {
+            //Try to clip to the screen (right side)
+            clipViewOnTheRight(curPageBound, curPageWidth, right);
         }
     }
 
