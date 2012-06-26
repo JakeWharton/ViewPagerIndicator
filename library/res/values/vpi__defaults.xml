@@ -31,6 +31,7 @@
     <color name="default_line_indicator_unselected_color">#FFBBBBBB</color>
     <bool name="default_line_indicator_centered">true</bool>
 
+    <bool name="default_title_indicator_clip_to_center">false</bool>
     <dimen name="default_title_indicator_clip_padding">4dp</dimen>
     <color name="default_title_indicator_footer_color">#FF33B5E5</color>
     <dimen name="default_title_indicator_footer_line_height">2dp</dimen>
@@ -44,6 +45,7 @@
     <dimen name="default_title_indicator_text_size">15dp</dimen>
     <dimen name="default_title_indicator_title_padding">5dp</dimen>
     <dimen name="default_title_indicator_top_padding">7dp</dimen>
+    <item name="default_title_indicator_fading_edge_strength" type="attr">1.0</item>
 
     <bool name="default_underline_indicator_fades">true</bool>
     <integer name="default_underline_indicator_fade_delay">300</integer>

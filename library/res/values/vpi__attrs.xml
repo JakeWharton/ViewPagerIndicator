@@ -69,6 +69,9 @@
     </declare-styleable>
 
     <declare-styleable name="TitlePageIndicator">
+        <!-- Clips titles around their center point. This is useful if you don't know in advance -->
+        <!-- how long your titles are going to be. -->
+        <attr name="clipToCenter" format="boolean" />
         <!-- Screen edge padding. -->
         <attr name="clipPadding" format="dimension" />
         <!-- Color of the footer line and indicator. -->
@@ -99,6 +102,8 @@
         <attr name="titlePadding" format="dimension" />
         <!-- Padding between titles and the top of the View. -->
         <attr name="topPadding" format="dimension" />
+        <!-- Strength of the fading edge effect. Must be a value between 0.0 and 1.0. -->
+        <attr name="fadingEdgeStrength" format="float" />
     </declare-styleable>
 
     <declare-styleable name="UnderlinePageIndicator">
