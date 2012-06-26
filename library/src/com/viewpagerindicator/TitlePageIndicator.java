@@ -33,6 +33,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -118,6 +119,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private float mClipPadding;
     private float mFooterLineHeight;
     private boolean mClipToCenter;
+    private float mFadingEdgeStrength;
 
     private static final int INVALID_POINTER = -1;
 
@@ -157,6 +159,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final boolean defaultClipToCenter = res.getBoolean(R.bool.default_title_indicator_clip_to_center);
         final float defaultClipPadding = res.getDimension(R.dimen.default_title_indicator_clip_padding);
         final float defaultTopPadding = res.getDimension(R.dimen.default_title_indicator_top_padding);
+        TypedValue fadingEdgeStrengthTV = new TypedValue();
+        res.getValue(R.attr.default_title_indicator_fading_edge_strength, fadingEdgeStrengthTV, false);
+        final float defaultFadingEdgeStrength = fadingEdgeStrengthTV.getFloat();
 
         //Retrieve styles attributes
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TitlePageIndicator, defStyle, 0);
@@ -174,6 +179,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mColorSelected = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
         mColorText = a.getColor(R.styleable.TitlePageIndicator_android_textColor, defaultTextColor);
         mBoldText = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
+        mFadingEdgeStrength = a.getFloat(R.styleable.TitlePageIndicator_fadingEdgeStrength, defaultFadingEdgeStrength);
 
         final float textSize = a.getDimension(R.styleable.TitlePageIndicator_android_textSize, defaultTextSize);
         final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
@@ -189,6 +195,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+
+        // reset view paddings, since this can break the fading edges effect,
+        // and we don't have child views anyway
+        setPadding(0, 0, 0, 0);
     }
 
 
@@ -852,5 +862,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
             title = EMPTY_TITLE;
         }
         return title.toString();
+    }
+
+    @Override
+    protected float getLeftFadingEdgeStrength() {
+        return mFadingEdgeStrength;
+    }
+
+    @Override
+    protected float getRightFadingEdgeStrength() {
+        return mFadingEdgeStrength;
     }
 }

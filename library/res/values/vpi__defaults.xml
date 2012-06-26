@@ -45,6 +45,7 @@
     <dimen name="default_title_indicator_text_size">15dp</dimen>
     <dimen name="default_title_indicator_title_padding">5dp</dimen>
     <dimen name="default_title_indicator_top_padding">7dp</dimen>
+    <item name="default_title_indicator_fading_edge_strength" type="attr">1.0</item>
 
     <bool name="default_underline_indicator_fades">true</bool>
     <integer name="default_underline_indicator_fade_delay">300</integer>
