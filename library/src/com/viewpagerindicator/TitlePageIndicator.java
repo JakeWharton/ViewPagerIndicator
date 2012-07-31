@@ -29,7 +29,6 @@ import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -96,7 +95,6 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
-    private PagerAdapter mPagerAdapter;
     private int mCurrentPage = -1;
     private float mPageOffset;
     private int mScrollState;
@@ -647,8 +645,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         if (mViewPager != null) {
             mViewPager.setOnPageChangeListener(null);
         }
-        mPagerAdapter = view.getAdapter();
-        if (mPagerAdapter == null) {
+        if (view.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
         mViewPager = view;
@@ -796,7 +793,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     }
 
     private CharSequence getTitle(int i) {
-        CharSequence title = mPagerAdapter.getPageTitle(i);
+        CharSequence title = mViewPager.getAdapter().getPageTitle(i);
         if (title == null) {
             title = EMPTY_TITLE;
         }
