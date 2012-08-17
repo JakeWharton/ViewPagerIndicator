@@ -797,6 +797,6 @@ public class TitlePageIndicator extends View implements PageIndicator {
         if (title == null) {
             title = EMPTY_TITLE;
         }
-        return title.toString();
+        return title;
     }
 }
