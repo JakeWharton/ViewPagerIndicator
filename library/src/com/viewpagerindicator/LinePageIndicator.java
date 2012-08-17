@@ -20,6 +20,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
@@ -84,6 +85,11 @@ public class LinePageIndicator extends View implements PageIndicator {
         setStrokeWidth(a.getDimension(R.styleable.LinePageIndicator_strokeWidth, defaultStrokeWidth));
         mPaintUnselected.setColor(a.getColor(R.styleable.LinePageIndicator_unselectedColor, defaultUnselectedColor));
         mPaintSelected.setColor(a.getColor(R.styleable.LinePageIndicator_selectedColor, defaultSelectedColor));
+
+        Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
+        if (background != null) {
+          setBackgroundDrawable(background);
+        }
 
         a.recycle();
 

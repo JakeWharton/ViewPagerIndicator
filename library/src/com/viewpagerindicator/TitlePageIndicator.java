@@ -17,7 +17,6 @@
  */
 package com.viewpagerindicator;
 
-import java.util.ArrayList;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -26,6 +25,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
@@ -35,6 +35,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+
+import java.util.ArrayList;
 
 /**
  * A TitlePageIndicator is a PageIndicator which displays the title of left view
@@ -179,6 +181,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mPaintFooterLine.setColor(footerColor);
         mPaintFooterIndicator.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterIndicator.setColor(footerColor);
+
+        Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
+        if (background != null) {
+          setBackgroundDrawable(background);
+        }
 
         a.recycle();
 

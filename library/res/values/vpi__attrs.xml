@@ -51,6 +51,8 @@
         <attr name="strokeColor" format="color" />
         <!-- Width of the stroke used to draw the circles. -->
         <attr name="strokeWidth" />
+        <!-- View background -->
+        <attr name="android:background"/>
     </declare-styleable>
 
     <declare-styleable name="LinePageIndicator">
@@ -66,6 +68,8 @@
         <attr name="strokeWidth" />
         <!-- Width of the gap between each indicator line. -->
         <attr name="gapWidth" format="dimension" />
+        <!-- View background -->
+        <attr name="android:background"/>
     </declare-styleable>
 
     <declare-styleable name="TitlePageIndicator">
@@ -99,6 +103,8 @@
         <attr name="titlePadding" format="dimension" />
         <!-- Padding between titles and the top of the View. -->
         <attr name="topPadding" format="dimension" />
+        <!-- View background -->
+        <attr name="android:background"/>
     </declare-styleable>
 
     <declare-styleable name="UnderlinePageIndicator">
@@ -110,5 +116,7 @@
         <attr name="fadeLength" format="integer" />
         <!-- Color of the selected line that represents the current page. -->
         <attr name="selectedColor" />
+        <!-- View background -->
+        <attr name="android:background"/>
     </declare-styleable>
 </resources>

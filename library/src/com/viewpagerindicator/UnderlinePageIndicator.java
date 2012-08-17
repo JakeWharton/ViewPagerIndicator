@@ -20,6 +20,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
@@ -96,6 +97,11 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
         setSelectedColor(a.getColor(R.styleable.UnderlinePageIndicator_selectedColor, defaultSelectedColor));
         setFadeDelay(a.getInteger(R.styleable.UnderlinePageIndicator_fadeDelay, defaultFadeDelay));
         setFadeLength(a.getInteger(R.styleable.UnderlinePageIndicator_fadeLength, defaultFadeLength));
+
+        Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
+        if (background != null) {
+          setBackgroundDrawable(background);
+        }
 
         a.recycle();
 
