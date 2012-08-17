@@ -428,6 +428,17 @@ public class TitlePageIndicator extends View implements PageIndicator {
                     //Fade out/in unselected text as the selected text fades in/out
                     mPaintText.setAlpha(colorTextAlpha - (int)(colorTextAlpha * selectedPercent));
                 }
+
+                //Except if there's an intersection with the right view
+                if (i < boundsSize - 1)  {
+                    Rect rightBound = bounds.get(i + 1);
+                    //Intersection
+                    if (bound.right + mTitlePadding > rightBound.left) {
+                        int w = bound.right - bound.left;
+                        bound.left = (int) (rightBound.left - w - mTitlePadding);
+                        bound.right = bound.left + w;
+                    }
+                }
                 canvas.drawText(pageTitle, 0, pageTitle.length(), bound.left, bound.bottom + mTopPadding, mPaintText);
 
                 //If we are within the selected bounds draw the selected text
