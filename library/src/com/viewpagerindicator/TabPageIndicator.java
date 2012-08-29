@@ -64,7 +64,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         }
     };
 
-    private final LinearLayout mTabLayout;
+    private final IcsLinearLayout mTabLayout;
+
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
 
@@ -81,7 +82,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
 
-        mTabLayout = new LinearLayout(getContext());
+        mTabLayout = new IcsLinearLayout(context);
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, FILL_PARENT));
     }
 

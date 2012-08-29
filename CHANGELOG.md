@@ -7,6 +7,7 @@ Version 2.4 *(In Development)*
  * Support `android:background` attribute on `Canvas`-based views.
  * Title indicator allows for drawing its line, underline, and/or triangle on
    top of the titles for placement underneath a `ViewPager`.
+ * Tab indicator now supports ICS-style dividers (see styled sample).
  * Fix: Do not attempt to change the `ViewPager` page when a motion is
    cancelled.
  * Fix: Long titles no longer overlap when swiping to the right.
