@@ -10,7 +10,7 @@ public class SampleTitlesBottom extends BaseSampleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_titles_bottom);
 
-        mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager());
+        mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
 
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);

@@ -11,7 +11,7 @@ public class SampleTitlesDefault extends BaseSampleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_titles);
 
-        mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager());
+        mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
 
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);

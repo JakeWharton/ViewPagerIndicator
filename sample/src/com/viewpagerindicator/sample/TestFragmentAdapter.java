@@ -23,6 +23,11 @@ class TestFragmentAdapter extends FragmentPagerAdapter {
         return mCount;
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+      return TestFragmentAdapter.CONTENT[position % CONTENT.length];
+    }
+
     public void setCount(int count) {
         if (count > 0 && count <= 10) {
             mCount = count;
