@@ -82,7 +82,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
 
-        mTabLayout = new IcsLinearLayout(context);
+        mTabLayout = new IcsLinearLayout(context, R.attr.vpiTabPageIndicatorStyle);
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, FILL_PARENT));
     }
 

@@ -87,6 +87,19 @@
 
 
 
+        <!-- ICON INDICATOR -->
+        <activity
+            android:name=".SampleIconsDefault"
+            android:label="Icons/Default">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+
+
+
+
         <!-- LINE INDICATOR -->
         <activity
                 android:name=".SampleLinesDefault"
