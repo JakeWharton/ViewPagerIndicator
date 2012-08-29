@@ -286,9 +286,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
             return false;
         }
 
-        final int action = ev.getAction();
-
-        switch (action & MotionEventCompat.ACTION_MASK) {
+        final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
+        switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
                 mLastMotionX = ev.getX();
@@ -324,10 +323,14 @@ public class CirclePageIndicator extends View implements PageIndicator {
                     final float sixthWidth = width / 6f;
 
                     if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
-                        mViewPager.setCurrentItem(mCurrentPage - 1);
+                        if (action != MotionEvent.ACTION_CANCEL) {
+                            mViewPager.setCurrentItem(mCurrentPage - 1);
+                        }
                         return true;
                     } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
-                        mViewPager.setCurrentItem(mCurrentPage + 1);
+                        if (action != MotionEvent.ACTION_CANCEL) {
+                            mViewPager.setCurrentItem(mCurrentPage + 1);
+                        }
                         return true;
                     }
                 }
@@ -339,8 +342,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
             case MotionEventCompat.ACTION_POINTER_DOWN: {
                 final int index = MotionEventCompat.getActionIndex(ev);
-                final float x = MotionEventCompat.getX(ev, index);
-                mLastMotionX = x;
+                mLastMotionX = MotionEventCompat.getX(ev, index);
                 mActivePointerId = MotionEventCompat.getPointerId(ev, index);
                 break;
             }
@@ -357,7 +359,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         return true;
-    };
+    }
 
     @Override
     public void setViewPager(ViewPager view) {
@@ -456,7 +458,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
      * @return The width of the view, honoring constraints from measureSpec
      */
     private int measureLong(int measureSpec) {
-        int result = 0;
+        int result;
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
@@ -484,7 +486,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
      * @return The height of the view, honoring constraints from measureSpec
      */
     private int measureShort(int measureSpec) {
-        int result = 0;
+        int result;
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
@@ -537,6 +539,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             dest.writeInt(currentPage);
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel in) {

@@ -549,9 +549,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
             return false;
         }
 
-        final int action = ev.getAction();
-
-        switch (action & MotionEventCompat.ACTION_MASK) {
+        final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
+        switch (action) {
             case MotionEvent.ACTION_DOWN:
                 mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
                 mLastMotionX = ev.getX();
@@ -591,17 +590,21 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
                     if (eventX < leftThird) {
                         if (mCurrentPage > 0) {
-                            mViewPager.setCurrentItem(mCurrentPage - 1);
+                            if (action != MotionEvent.ACTION_CANCEL) {
+                                mViewPager.setCurrentItem(mCurrentPage - 1);
+                            }
                             return true;
                         }
                     } else if (eventX > rightThird) {
                         if (mCurrentPage < count - 1) {
-                            mViewPager.setCurrentItem(mCurrentPage + 1);
+                            if (action != MotionEvent.ACTION_CANCEL) {
+                                mViewPager.setCurrentItem(mCurrentPage + 1);
+                            }
                             return true;
                         }
                     } else {
                         //Middle third
-                        if (mCenterItemClickListener != null) {
+                        if (mCenterItemClickListener != null && action != MotionEvent.ACTION_CANCEL) {
                             mCenterItemClickListener.onCenterItemClick(mCurrentPage);
                         }
                     }
@@ -614,8 +617,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
             case MotionEventCompat.ACTION_POINTER_DOWN: {
                 final int index = MotionEventCompat.getActionIndex(ev);
-                final float x = MotionEventCompat.getX(ev, index);
-                mLastMotionX = x;
+                mLastMotionX = MotionEventCompat.getX(ev, index);
                 mActivePointerId = MotionEventCompat.getPointerId(ev, index);
                 break;
             }
@@ -632,7 +634,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         }
 
         return true;
-    };
+    }
 
     /**
      * Set bounds for the right textView including clip padding.
@@ -791,7 +793,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final int measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
 
         //Determine our height
-        float height = 0;
+        float height;
         final int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
         if (heightSpecMode == MeasureSpec.EXACTLY) {
             //We were told how big to be
@@ -844,6 +846,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
             dest.writeInt(currentPage);
         }
 
+        @SuppressWarnings("UnusedDeclaration")
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel in) {
