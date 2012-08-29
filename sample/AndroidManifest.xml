@@ -128,6 +128,14 @@
 
         <!-- TITLE INDICATOR -->
         <activity
+            android:name=".SampleTitlesBottom"
+            android:label="Titles/Default (Bottom)">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".SampleTitlesCenterClickListener"
             android:label="Titles/Center Click Listener">
             <intent-filter>

@@ -95,6 +95,25 @@ public class TitlePageIndicator extends View implements PageIndicator {
         }
     }
 
+    public enum LinePosition {
+        Bottom(0), Top(1);
+
+        public final int value;
+
+        private LinePosition(int value) {
+            this.value = value;
+        }
+
+        public static LinePosition fromValue(int value) {
+            for (LinePosition position : LinePosition.values()) {
+                if (position.value == value) {
+                    return position;
+                }
+            }
+            return null;
+        }
+    }
+
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
     private int mCurrentPage = -1;
@@ -108,6 +127,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private final Rect mBounds = new Rect();
     private final Paint mPaintFooterLine = new Paint();
     private IndicatorStyle mFooterIndicatorStyle;
+    private LinePosition mLinePosition;
     private final Paint mPaintFooterIndicator = new Paint();
     private float mFooterIndicatorHeight;
     private float mFooterIndicatorUnderlinePadding;
@@ -148,6 +168,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final float defaultFooterIndicatorHeight = res.getDimension(R.dimen.default_title_indicator_footer_indicator_height);
         final float defaultFooterIndicatorUnderlinePadding = res.getDimension(R.dimen.default_title_indicator_footer_indicator_underline_padding);
         final float defaultFooterPadding = res.getDimension(R.dimen.default_title_indicator_footer_padding);
+        final int defaultLinePosition = res.getInteger(R.integer.default_title_indicator_line_position);
         final int defaultSelectedColor = res.getColor(R.color.default_title_indicator_selected_color);
         final boolean defaultSelectedBold = res.getBoolean(R.bool.default_title_indicator_selected_bold);
         final int defaultTextColor = res.getColor(R.color.default_title_indicator_text_color);
@@ -165,6 +186,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mFooterIndicatorHeight = a.getDimension(R.styleable.TitlePageIndicator_footerIndicatorHeight, defaultFooterIndicatorHeight);
         mFooterIndicatorUnderlinePadding = a.getDimension(R.styleable.TitlePageIndicator_footerIndicatorUnderlinePadding, defaultFooterIndicatorUnderlinePadding);
         mFooterPadding = a.getDimension(R.styleable.TitlePageIndicator_footerPadding, defaultFooterPadding);
+        mLinePosition = LinePosition.fromValue(a.getInteger(R.styleable.TitlePageIndicator_linePosition, defaultLinePosition));
         mTopPadding = a.getDimension(R.styleable.TitlePageIndicator_topPadding, defaultTopPadding);
         mTitlePadding = a.getDimension(R.styleable.TitlePageIndicator_titlePadding, defaultTitlePadding);
         mClipPadding = a.getDimension(R.styleable.TitlePageIndicator_clipPadding, defaultClipPadding);
@@ -238,6 +260,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     public void setFooterIndicatorStyle(IndicatorStyle indicatorStyle) {
         mFooterIndicatorStyle = indicatorStyle;
+        invalidate();
+    }
+
+    public LinePosition getLinePosition() {
+        return mLinePosition;
+    }
+
+    public void setLinePosition(LinePosition linePosition) {
+        mLinePosition = linePosition;
         invalidate();
     }
 
@@ -332,7 +363,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
         }
 
         // mCurrentPage is -1 on first start and after orientation changed. If so, retrieve the correct index from viewpager.
-        if(mCurrentPage == -1 && mViewPager != null) mCurrentPage = mViewPager.getCurrentItem();
+        if (mCurrentPage == -1 && mViewPager != null) {
+            mCurrentPage = mViewPager.getCurrentItem();
+        }
 
         //Calculate views bounds
         ArrayList<Rect> bounds = calculateAllBounds(mPaintText);
@@ -349,7 +382,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final int left = getLeft();
         final float leftClip = left + mClipPadding;
         final int width = getWidth();
-        final int height = getHeight();
+        int height = getHeight();
         final int right = left + width;
         final float rightClip = right - mClipPadding;
 
@@ -457,19 +490,29 @@ public class TitlePageIndicator extends View implements PageIndicator {
             }
         }
 
+        //If we want the line on the top change height to zero and invert the line height to trick the drawing code
+        float footerLineHeight = mFooterLineHeight;
+        float footerIndicatorLineHeight = mFooterIndicatorHeight;
+        if (mLinePosition == LinePosition.Top) {
+            height = 0;
+            footerLineHeight = -footerLineHeight;
+            footerIndicatorLineHeight = -footerIndicatorLineHeight;
+        }
+
         //Draw the footer line
         mPath.reset();
-        mPath.moveTo(0, height - mFooterLineHeight / 2f);
-        mPath.lineTo(width, height - mFooterLineHeight / 2f);
+        mPath.moveTo(0, height - footerLineHeight / 2f);
+        mPath.lineTo(width, height - footerLineHeight / 2f);
         mPath.close();
         canvas.drawPath(mPath, mPaintFooterLine);
 
+        float heightMinusLine = height - footerLineHeight;
         switch (mFooterIndicatorStyle) {
             case Triangle:
                 mPath.reset();
-                mPath.moveTo(halfWidth, height - mFooterLineHeight - mFooterIndicatorHeight);
-                mPath.lineTo(halfWidth + mFooterIndicatorHeight, height - mFooterLineHeight);
-                mPath.lineTo(halfWidth - mFooterIndicatorHeight, height - mFooterLineHeight);
+                mPath.moveTo(halfWidth, heightMinusLine - footerIndicatorLineHeight);
+                mPath.lineTo(halfWidth + footerIndicatorLineHeight, heightMinusLine);
+                mPath.lineTo(halfWidth - footerIndicatorLineHeight, heightMinusLine);
                 mPath.close();
                 canvas.drawPath(mPath, mPaintFooterIndicator);
                 break;
@@ -480,11 +523,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 }
 
                 Rect underlineBounds = bounds.get(page);
+                final float rightPlusPadding = underlineBounds.right + mFooterIndicatorUnderlinePadding;
+                final float leftMinusPadding = underlineBounds.left - mFooterIndicatorUnderlinePadding;
+                final float heightMinusLineMinusIndicator = heightMinusLine - footerIndicatorLineHeight;
+
                 mPath.reset();
-                mPath.moveTo(underlineBounds.left  - mFooterIndicatorUnderlinePadding, height - mFooterLineHeight);
-                mPath.lineTo(underlineBounds.right + mFooterIndicatorUnderlinePadding, height - mFooterLineHeight);
-                mPath.lineTo(underlineBounds.right + mFooterIndicatorUnderlinePadding, height - mFooterLineHeight - mFooterIndicatorHeight);
-                mPath.lineTo(underlineBounds.left  - mFooterIndicatorUnderlinePadding, height - mFooterLineHeight - mFooterIndicatorHeight);
+                mPath.moveTo(leftMinusPadding, heightMinusLine);
+                mPath.lineTo(rightPlusPadding, heightMinusLine);
+                mPath.lineTo(rightPlusPadding, heightMinusLineMinusIndicator);
+                mPath.lineTo(leftMinusPadding, heightMinusLineMinusIndicator);
                 mPath.close();
 
                 mPaintFooterIndicator.setAlpha((int)(0xFF * selectedPercent));

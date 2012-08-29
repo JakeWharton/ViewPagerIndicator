@@ -91,6 +91,11 @@
         <attr name="footerIndicatorUnderlinePadding" format="dimension" />
         <!-- Padding between the bottom of the title and the footer. -->
         <attr name="footerPadding" format="dimension" />
+        <!-- Position of the line. -->
+        <attr name="linePosition">
+            <enum name="bottom" value="0"/>
+            <enum name="top" value="1"/>
+        </attr>
         <!-- Color of the selected title. -->
         <attr name="selectedColor" />
         <!-- Whether or not the selected item is displayed as bold. -->

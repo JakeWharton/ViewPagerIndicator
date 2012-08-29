@@ -38,6 +38,7 @@
     <dimen name="default_title_indicator_footer_indicator_height">4dp</dimen>
     <dimen name="default_title_indicator_footer_indicator_underline_padding">20dp</dimen>
     <dimen name="default_title_indicator_footer_padding">7dp</dimen>
+    <integer name="default_title_indicator_line_position">0</integer>
     <color name="default_title_indicator_selected_color">#FFFFFFFF</color>
     <bool name="default_title_indicator_selected_bold">true</bool>
     <color name="default_title_indicator_text_color">#BBFFFFFF</color>
