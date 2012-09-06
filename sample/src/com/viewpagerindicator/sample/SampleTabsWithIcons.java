@@ -6,10 +6,17 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.TabPageIndicator;
 
-public class SampleTabsDefault extends FragmentActivity {
-    private static final String[] CONTENT = new String[] { "Recent", "Artists", "Albums", "Songs", "Playlists", "Genres" };
+public class SampleTabsWithIcons extends FragmentActivity {
+    private static final String[] CONTENT = new String[] { "Calendar", "Camera", "Alarms", "Location" };
+    private static final int[] ICONS = new int[] {
+            R.drawable.perm_group_calendar,
+            R.drawable.perm_group_camera,
+            R.drawable.perm_group_device_alarms,
+            R.drawable.perm_group_location,
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +32,7 @@ public class SampleTabsDefault extends FragmentActivity {
         indicator.setViewPager(pager);
     }
 
-    class GoogleMusicAdapter extends FragmentPagerAdapter {
+    class GoogleMusicAdapter extends FragmentPagerAdapter implements IconPagerAdapter {
         public GoogleMusicAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -40,7 +47,11 @@ public class SampleTabsDefault extends FragmentActivity {
             return CONTENT[position % CONTENT.length].toUpperCase();
         }
 
-        @Override
+        @Override public int getIconResId(int index) {
+          return ICONS[index];
+        }
+
+      @Override
         public int getCount() {
           return CONTENT.length;
         }

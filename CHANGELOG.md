@@ -5,6 +5,7 @@ Version 2.4.0 *(In Development)*
 ------------------------------
 
  * New `IconPageIndicator`! Uses state-list images to represent pages.
+ * `TabPageIndicator` now supports icons via `IconPagerAdapter` interface.
  * Support `android:background` attribute on `Canvas`-based views.
  * Title indicator allows for drawing its line, underline, and/or triangle on
    top of the titles for placement underneath a `ViewPager`.

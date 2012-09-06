@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="4"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="16" />
 
     <application
         android:label="ViewPagerIndicator Sample"
@@ -237,6 +237,15 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
+      <activity
+          android:name=".SampleTabsWithIcons"
+          android:label="Tabs/With Icons"
+          android:theme="@style/StyledIndicators">
+        <intent-filter>
+          <action android:name="android.intent.action.MAIN" />
+          <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+        </intent-filter>
+      </activity>
 
 
 

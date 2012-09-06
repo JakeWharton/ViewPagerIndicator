@@ -149,12 +149,16 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         }
     }
 
-    private void addTab(CharSequence text, int index) {
+    private void addTab(int index, CharSequence text, int iconResId) {
         final TabView tabView = new TabView(getContext());
         tabView.mIndex = index;
         tabView.setFocusable(true);
         tabView.setOnClickListener(mTabClickListener);
         tabView.setText(text);
+
+        if (iconResId != 0) {
+            tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
+        }
 
         mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, FILL_PARENT, 1));
     }
@@ -201,13 +205,21 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     public void notifyDataSetChanged() {
         mTabLayout.removeAllViews();
         PagerAdapter adapter = mViewPager.getAdapter();
+        IconPagerAdapter iconAdapter = null;
+        if (adapter instanceof IconPagerAdapter) {
+            iconAdapter = (IconPagerAdapter)adapter;
+        }
         final int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
             CharSequence title = adapter.getPageTitle(i);
             if (title == null) {
                 title = EMPTY_TITLE;
             }
-            addTab(title, i);
+            int iconResId = 0;
+            if (iconAdapter != null) {
+                iconResId = iconAdapter.getIconResId(i);
+            }
+            addTab(i, title, iconResId);
         }
         if (mSelectedTabIndex > count) {
             mSelectedTabIndex = count - 1;

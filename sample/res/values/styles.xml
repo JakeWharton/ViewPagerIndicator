@@ -53,10 +53,12 @@
         <item name="android:background">@drawable/custom_tab_indicator</item>
         <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
         <item name="android:textColor">#FF555555</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:divider">@drawable/custom_tab_indicator_divider</item>
-        <item name="android:dividerPadding">8dp</item>
+        <item name="android:dividerPadding">10dp</item>
         <item name="android:showDividers">middle</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
     </style>
 
     <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
