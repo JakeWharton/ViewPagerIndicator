@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-Version 2.4.0 *(In Development)*
-------------------------------
+Version 2.4.0 *(2012-09-06)*
+----------------------------
 
  * New `IconPageIndicator`! Uses state-list images to represent pages.
  * `TabPageIndicator` now supports icons via `IconPagerAdapter` interface.
