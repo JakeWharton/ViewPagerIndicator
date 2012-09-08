@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.viewpagerindicator.sample"
-    android:versionCode="60"
+    android:versionCode="61"
     android:versionName="2.4.0">
 
     <uses-sdk
