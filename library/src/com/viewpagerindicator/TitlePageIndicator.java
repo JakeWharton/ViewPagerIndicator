@@ -204,7 +204,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mPaintFooterIndicator.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterIndicator.setColor(footerColor);
 
-        Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
+        Drawable background = a.getDrawable(R.styleable.TitlePageIndicator_android_background);
         if (background != null) {
           setBackgroundDrawable(background);
         }

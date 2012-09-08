@@ -86,7 +86,7 @@ public class LinePageIndicator extends View implements PageIndicator {
         mPaintUnselected.setColor(a.getColor(R.styleable.LinePageIndicator_unselectedColor, defaultUnselectedColor));
         mPaintSelected.setColor(a.getColor(R.styleable.LinePageIndicator_selectedColor, defaultSelectedColor));
 
-        Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
+        Drawable background = a.getDrawable(R.styleable.LinePageIndicator_android_background);
         if (background != null) {
           setBackgroundDrawable(background);
         }
