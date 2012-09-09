@@ -59,6 +59,8 @@
         <item name="android:showDividers">middle</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:fadingEdgeLength">8dp</item>
     </style>
 
     <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
