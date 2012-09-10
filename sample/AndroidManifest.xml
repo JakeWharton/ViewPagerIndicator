@@ -246,6 +246,15 @@
           <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
         </intent-filter>
       </activity>
+      <activity
+          android:name=".SampleTabsOnlyIcons"
+          android:label="Tabs/With Icons Only"
+          android:theme="@style/StyledIndicators">
+        <intent-filter>
+          <action android:name="android.intent.action.MAIN" />
+          <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+        </intent-filter>
+      </activity>
 
 
 
