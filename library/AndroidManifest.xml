@@ -2,8 +2,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.viewpagerindicator"
-    android:versionCode="60"
-    android:versionName="2.4.0">
+    android:versionCode="65"
+    android:versionName="2.4.1">
 
     <uses-sdk android:minSdkVersion="4" />
 </manifest>

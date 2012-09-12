@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-Version 2.4.1 *(In Development)*
---------------------------------
+Version 2.4.1 *(2012-09-11)*
+----------------------------
 
  * Fix: `TitlePageIndicator`, `LinePageIndicator`, and `UnderlinePageIndicator`
    support of `android:background`.

@@ -75,7 +75,7 @@ a dependency:
     <dependency>
       <groupId>com.viewpagerindicator</groupId>
       <artifactId>library</artifactId>
-      <version>2.4.0</version>
+      <version>2.4.1</version>
       <type>apklib</type>
     </dependency>
 
