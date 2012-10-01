@@ -48,16 +48,9 @@
 			.social div {
 				margin-top: 15px;
 			}
-			.app {
-				padding: 20px 0;
-				clear: left;
-			}
-			.app .icon {
+			.app-list .icon {
 				float: left;
 				padding-bottom: 20px;
-			}
-			.app .desc {
-				margin-left: 95px;
 			}
 			#missing {
 				margin: 1em 2em;
@@ -240,7 +233,7 @@ titleIndicator.setOnPageChangeListener(mPageChangeListener);</pre>
 			<section id="implementations">
 				<div class="row">
 					<div class="span12"><h2>Implementations</h2></div>
-					<div class="span8">
+					<div class="span8 app-list">
 						<!--
 
 						LOOKING TO ADD YOUR OWN APP?
@@ -253,100 +246,124 @@ titleIndicator.setOnPageChangeListener(mPageChangeListener);</pre>
 
 						2.
 
-						<div class="app">
-							<img class="icon" src="apps/YOUR.PACKAGE.NAME-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=YOUR.PACKAGE.NAME">YOUR APP NAME</a></h4>
-								<p>SHORT DESCRIPTION OF APP</p>
-							</div>
-						</div>
+						Copy the following snippet of code below with your app's info.
+
+						<a href="https://play.google.com/store/apps/details?id=com.jakewharton.coolapp">
+							<img class="icon" src="apps/com.jakewharton.coolapp-logo.png"
+								data-title="Cool App Title"
+								data-content="Cool App Description"
+								>
+						</a>
 
 						-->
-
-						<div class="app">
-							<img class="icon" src="apps/com.levelup.beautifulwidgets-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=com.levelup.beautifulwidgets">Beautiful Widgets</a></h4>
-								<p>Beautiful set of Widgets containing clock widget, clock and weather widget, weather widgets, date widgets and toggle widgets with skins/themes support! Now with more widgets and layouts!</p>
-							</div>
-						</div>
-						<div class="app">
-							<img class="icon" src="apps/uk.co.senab.blueNotifyFree-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=uk.co.senab.blueNotifyFree">FriendCaster</a></h4>
-								<p>FriendCaster for Facebook gives you the best Facebook experience on Android devices!</p>
-							</div>
-						</div>
-						<div class="app">
-							<img class="icon" src="apps/com.battlelancer.seriesguide-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide">SeriesGuide</a></h4>
-								<p>Manage the progress of (re-)watching your favorite TV shows. Keep track of which episodes you still have to watch or which ones are upcoming.</p>
-							</div>
-						</div>
-						<div class="app">
-							<img class="icon" src="apps/com.jerrellmardis.ridemetra-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=com.jerrellmardis.ridemetra">Ride Metra</a></h4>
-								<p>Ride Metra is an easy to use and beautiful transit app that provides Metra train schedules, station locations and directions, nearby stations, upcoming departures, Metra service advisory alerts and the ability to search for a Metra rail line or station.</p>
-							</div>
-						</div>
-						<div class="app">
-							<img class="icon" src="apps/com.florianmski.tracktoid-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=com.florianmski.tracktoid">Traktoid</a></h4>
-								<p>Traktoid, a trakt client.</p>
-							</div>
-						</div>
-						<div class="app">
-							<img class="icon" src="apps/com.ratebeer.android-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=com.ratebeer.android">RateBeer for Android</a></h4>
-								<p>Mobile interface to the world's largest source for information on craft beer: RateBeer.</p>
-							</div>
-						</div>
-						<div class="app">
-							<img class="icon" src="apps/com.blork.anpod-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=com.blork.anpod">Astronomy Picture of the Day</a></h4>
-								<p>Get the latest pictures from NASA's Astronomy Picture of the Day (APOD) and set them as your homescreen wallpaper.</p>
-							</div>
-						</div>
-                        <div class="app">
-							<img class="icon" src="apps/net.ricardoamaral.apps.notificationagenda-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=net.ricardoamaral.apps.notificationagenda">Notification Agenda</a></h4>
-								<p>Simple application which turns small notes into pleasing status bar notifications with fancy high quality icons. All your notes are easily accessible so you never forget all those important appointments ever again.</p>
-							</div>
-						</div>
-						<div class="app">
-							<img class="icon" src="apps/edu.bgsu.asf.news-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=edu.bgsu.asf.news">BGSU News</a></h4>
-								<p>Simplistic application that allows the user to view the most recent (university-approved) going-ons at Bowling Green State University.</p>
-							</div>
-						</div>
-						<div class="app">
-							<img class="icon" src="apps/com.joeykrim.rootcheckp-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=com.joeykrim.rootcheckp">Root Checker Pro</a></h4>
-								<p>Tool for confirming and troubleshooting root access configurations.</p>
-							</div>
-						</div>
-						<div class="app">
-							<img class="icon" src="apps/com.joeykrim.allaboutroot-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=com.joeykrim.allaboutroot">All About Root</a></h4>
-								<p>Simple educational application providing knowledge and resources around root access on Android devices.</p>
-							</div>
-						</div>
-						<div class="app">
-							<img class="icon" src="apps/com.joeykrim.buildpropeditor-logo.png">
-							<div class="desc">
-								<h4><a href="https://play.google.com/store/apps/details?id=com.joeykrim.buildpropeditor">Build Prop Editor</a></h4>
-								<p>Tool for viewing, editing, backup and restoring the system build.prop file.</p>
-							</div>
-						</div>
+						<a href="https://play.google.com/store/apps/details?id=com.levelup.beautifulwidgets">
+							<img class="icon" src="apps/com.levelup.beautifulwidgets-logo.png"
+								data-title="Beautiful Widgets"
+								data-content="Beautiful set of Widgets containing clock widget, clock and weather widget, weather widgets, date widgets and toggle widgets with skins/themes support! Now with more widgets and layouts!"
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=uk.co.senab.blueNotifyFree">
+							<img class="icon" src="apps/uk.co.senab.blueNotifyFree-logo.png"
+								data-title="FriendCaster"
+								data-content="FriendCaster for Facebook gives you the best Facebook experience on Android devices!"
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide">
+							<img class="icon" src="apps/com.battlelancer.seriesguide-logo.png"
+								data-title="SeriesGuide"
+								data-content="Manage the progress of (re-)watching your favorite TV shows. Keep track of which episodes you still have to watch or which ones are upcoming."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.jerrellmardis.ridemetra">
+							<img class="icon" src="apps/com.jerrellmardis.ridemetra-logo.png"
+								data-title="Ride Metra"
+								data-content="Ride Metra is an easy to use and beautiful transit app that provides Metra train schedules, station locations and directions, nearby stations, upcoming departures, Metra service advisory alerts and the ability to search for a Metra rail line or station."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.florianmski.tracktoid">
+							<img class="icon" src="apps/com.florianmski.tracktoid-logo.png"
+								data-title="Traktoid"
+								data-content="Traktoid, a trakt client."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.ratebeer.android">
+							<img class="icon" src="apps/com.ratebeer.android-logo.png"
+								data-title="RateBeer for Android"
+								data-content="Mobile interface to the world's largest source for information on craft beer: RateBeer."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.blork.anpod">
+							<img class="icon" src="apps/com.blork.anpod-logo.png"
+								data-title="Astronomy Picture of the Day"
+								data-content="Get the latest pictures from NASA's Astronomy Picture of the Day (APOD) and set them as your homescreen wallpaper."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=net.ricardoamaral.apps.notificationagenda">
+							<img class="icon" src="apps/net.ricardoamaral.apps.notificationagenda-logo.png"
+								data-title="Notification Agenda"
+								data-content="Simple application which turns small notes into pleasing status bar notifications with fancy high quality icons. All your notes are easily accessible so you never forget all those important appointments ever again."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=edu.bgsu.asf.news">
+							<img class="icon" src="apps/edu.bgsu.asf.news-logo.png"
+								data-title="BGSU News"
+								data-content="Simplistic application that allows the user to view the most recent (university-approved) going-ons at Bowling Green State University."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.joeykrim.rootcheckp">
+							<img class="icon" src="apps/com.joeykrim.rootcheckp-logo.png"
+								data-title="Root Checker Pro"
+								data-content="Tool for confirming and troubleshooting root access configurations."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.joeykrim.allaboutroot">
+							<img class="icon" src="apps/com.joeykrim.allaboutroot-logo.png"
+								data-title="All About Root"
+								data-content="Simple educational application providing knowledge and resources around root access on Android devices."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.joeykrim.buildpropeditor">
+							<img class="icon" src="apps/com.joeykrim.buildpropeditor-logo.png"
+								data-title="Build Prop Editor"
+								data-content="Tool for viewing, editing, backup and restoring the system build.prop file."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=simon.application.AvionsPapier">
+							<img class="icon" src="apps/simon.application.AvionsPapier-logo.png"
+								data-title="Paper Airplanes"
+								data-content="Paper Airplane is a free application that allows you to easily achieve over 20 models of paper airplanes."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=droid.pr.coolflashlightfree">
+							<img class="icon" src="apps/droid.pr.coolflashlightfree-logo.png"
+								data-title="Flashlight"
+								data-content="The Flashlight application is the most complete, intuitive, usefull and simple to use. It allows you to convert your phone/tablet into a handy flashlight either using screen or camera LED/flash as a torch."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=nl.jborsje.android.admobster">
+							<img class="icon" src="apps/nl.jborsje.android.admobster-logo.png"
+								data-title="AdMob HD"
+								data-content="AdMobster HD is the most complete client for AdMob. It is the only app that supports multiple accounts and integrates with the secure Android account manager so you don’t have to use your login repeatedly."
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.tvshowfavs">
+							<img class="icon" src="apps/com.tvshowfavs-logo.png"
+								data-title="TV Show Favs"
+								data-content="Your personal TV tracker!"
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.zappos.android">
+							<img class="icon" src="apps/com.zappos.android-logo.png"
+								data-title="Zappos"
+								data-content="Free shipping and returns on shoes, clothing, housewears and more! Zappos.com just made it possible for you to go shopping without putting your pants on!"
+								>
+						</a>
+						<a href="https://play.google.com/store/apps/details?id=com.squareup.cardcase">
+							<img class="icon" src="apps/com.squareup.cardcase-logo.png"
+								data-title="Pay with Square"
+								data-content="With Square on your phone you'll never have to swipe your credit card again. Simply walk in the door and say your name at the counter. Pay without ever touching your wallet or phone."
+								>
+						</a>
 					</div>
 					<div class="span4">
 						<div id="missing">
@@ -377,6 +394,10 @@ titleIndicator.setOnPageChangeListener(mPageChangeListener);</pre>
 		<script src="google-code-prettify/prettify.js"></script>
 		<script type="text/javascript">
 			prettyPrint();
+
+			$('.app-list a img').popover({
+				placement: 'top'
+			});
 
 			var _gauges = _gauges || [];
 			(function() {
