@@ -13,7 +13,7 @@
 		<version>2.4.1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>com.google.android</groupId>
@@ -25,7 +25,13 @@
 			<groupId>com.google.android</groupId>
 			<artifactId>support-v4</artifactId>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>annotations</artifactId>
+            <version>4.1.1.4</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>

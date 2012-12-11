@@ -1,5 +1,6 @@
 package com.viewpagerindicator;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
  * same orientation as the layout you should wrap the child in a simple
  * {@link android.widget.FrameLayout} so it can receive the margin.
  */
+@TargetApi(11)
 class IcsLinearLayout extends LinearLayout {
     private static final int[] LL = new int[] {
         /* 0 */ android.R.attr.divider,
