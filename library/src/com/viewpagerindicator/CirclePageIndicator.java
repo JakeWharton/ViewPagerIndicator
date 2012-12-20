@@ -45,7 +45,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private static final int INVALID_POINTER = -1;
 
     private float mRadius;
-    private float mGapWidth;
+    private float mGap;
     private final Paint mPaintPageFill = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintStroke = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintFill = new Paint(ANTI_ALIAS_FLAG);
@@ -102,7 +102,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mPaintFill.setStyle(Style.FILL);
         mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
         mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
-        mGapWidth = a.getDimension(R.styleable.CirclePageIndicator_gap, defaultGap);
+        mGap = a.getDimension(R.styleable.CirclePageIndicator_gap, defaultGap);
         mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
 
         Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
@@ -188,13 +188,13 @@ public class CirclePageIndicator extends View implements PageIndicator {
         return mRadius;
     }
 
-    public void setGapWidth(float gap) {
-        mGapWidth = gap;
+    public void setGap(float gap) {
+        mGap = gap;
         invalidate();
     }
 
-    public float getGapWidth() {
-        return mGapWidth;
+    public float getGapSize() {
+        return mGap;
     }
 
     public void setSnap(boolean snap) {
@@ -239,9 +239,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
             shortPaddingBefore = getPaddingLeft();
         }
 
-        final float threeRadius = mRadius * 3 + mGapWidth;
+        final float threeRadius = mRadius * 3 + mGap;
         final float shortOffset = shortPaddingBefore + mRadius;
-        float longOffset = longPaddingBefore + mRadius + mGapWidth;
+        float longOffset = longPaddingBefore + mRadius + mGap;
         if (mCentered) {
             longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
         }
