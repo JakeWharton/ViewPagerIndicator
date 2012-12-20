@@ -34,6 +34,7 @@
         android:layout_width="fill_parent"
         android:background="#FFCCCCCC"
         app:radius="10dp"
+        app:gap="15dp"
         app:fillColor="#FF888888"
         app:pageColor="#88FF0000"
         app:strokeColor="#FF000000"
