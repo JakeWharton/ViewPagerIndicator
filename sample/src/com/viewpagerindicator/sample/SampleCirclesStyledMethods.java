@@ -22,6 +22,7 @@ public class SampleCirclesStyledMethods extends BaseSampleActivity {
         final float density = getResources().getDisplayMetrics().density;
         indicator.setBackgroundColor(0xFFCCCCCC);
         indicator.setRadius(10 * density);
+        indicator.setGap(15 * density);
         indicator.setPageColor(0x880000FF);
         indicator.setFillColor(0xFF888888);
         indicator.setStrokeColor(0xFF000000);

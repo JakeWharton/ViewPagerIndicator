@@ -45,6 +45,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private static final int INVALID_POINTER = -1;
 
     private float mRadius;
+    private float mGap;
     private final Paint mPaintPageFill = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintStroke = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintFill = new Paint(ANTI_ALIAS_FLAG);
@@ -84,6 +85,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         final int defaultStrokeColor = res.getColor(R.color.default_circle_indicator_stroke_color);
         final float defaultStrokeWidth = res.getDimension(R.dimen.default_circle_indicator_stroke_width);
         final float defaultRadius = res.getDimension(R.dimen.default_circle_indicator_radius);
+        final float defaultGap = res.getDimension(R.dimen.default_circle_indicator_gap);
         final boolean defaultCentered = res.getBoolean(R.bool.default_circle_indicator_centered);
         final boolean defaultSnap = res.getBoolean(R.bool.default_circle_indicator_snap);
 
@@ -100,6 +102,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mPaintFill.setStyle(Style.FILL);
         mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
         mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
+        mGap = a.getDimension(R.styleable.CirclePageIndicator_gap, defaultGap);
         mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
 
         Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
@@ -185,6 +188,15 @@ public class CirclePageIndicator extends View implements PageIndicator {
         return mRadius;
     }
 
+    public void setGap(float gap) {
+        mGap = gap;
+        invalidate();
+    }
+
+    public float getGapSize() {
+        return mGap;
+    }
+
     public void setSnap(boolean snap) {
         mSnap = snap;
         invalidate();
@@ -227,9 +239,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
             shortPaddingBefore = getPaddingLeft();
         }
 
-        final float threeRadius = mRadius * 3;
+        final float threeRadius = mRadius * 3 + mGap;
         final float shortOffset = shortPaddingBefore + mRadius;
-        float longOffset = longPaddingBefore + mRadius;
+        float longOffset = longPaddingBefore + mRadius + mGap;
         if (mCentered) {
             longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
         }
