@@ -14,13 +14,17 @@
      limitations under the License.
 -->
 
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="StyledIndicators" parent="@android:style/Theme.Light">
         <item name="vpiCirclePageIndicatorStyle">@style/CustomCirclePageIndicator</item>
         <item name="vpiLinePageIndicatorStyle">@style/CustomLinePageIndicator</item>
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
         <item name="vpiUnderlinePageIndicatorStyle">@style/CustomUnderlinePageIndicator</item>
+    </style>
+    
+     <style name="MultilineIndicators" parent="@android:style/Theme.Light">
+        <item name="vpiTabPageIndicatorStyle">@style/MultilineTabPageIndicator</item>
     </style>
 
     <style name="CustomTitlePageIndicator">
@@ -66,7 +70,10 @@
     <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
         <item name="android:typeface">monospace</item>
     </style>
-
+    <style name="MultilineTabPageIndicator" parent="CustomTabPageIndicator">
+        <item name="android:maxLines">2</item>
+     </style>
+    
     <style name="CustomUnderlinePageIndicator">
         <item name="selectedColor">#FFCC0000</item>
         <item name="android:background">#FFCCCCCC</item>
