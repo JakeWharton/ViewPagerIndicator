@@ -237,15 +237,34 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
-      <activity
-          android:name=".SampleTabsWithIcons"
-          android:label="Tabs/With Icons"
-          android:theme="@style/StyledIndicators">
-        <intent-filter>
-          <action android:name="android.intent.action.MAIN" />
-          <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
-        </intent-filter>
-      </activity>
+        <activity
+            android:name=".SampleTabsWithIcons"
+            android:label="Tabs/With Icons"
+            android:theme="@style/StyledIndicators">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SampleTabsDynamic"
+            android:label="Tabs/Dynamic"
+            android:theme="@style/MultilineIndicators">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SampleTabsMultiline"
+            android:label="Tabs/Multiline"
+            android:theme="@style/MultilineIndicators">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        
 
 
 

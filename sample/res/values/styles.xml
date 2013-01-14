@@ -22,6 +22,10 @@
         <item name="vpiTabPageIndicatorStyle">@style/CustomTabPageIndicator</item>
         <item name="vpiUnderlinePageIndicatorStyle">@style/CustomUnderlinePageIndicator</item>
     </style>
+    
+    <style name="MultilineIndicators" parent="@android:style/Theme.Light">
+        <item name="vpiTabPageIndicatorStyle">@style/MultilineTabPageIndicator</item>
+    </style>
 
     <style name="CustomTitlePageIndicator">
         <item name="android:background">#18FF0000</item>
@@ -61,6 +65,10 @@
         <item name="android:paddingRight">8dp</item>
         <item name="android:fadingEdge">horizontal</item>
         <item name="android:fadingEdgeLength">8dp</item>
+    </style>
+
+    <style name="MultilineTabPageIndicator" parent="CustomTabPageIndicator">
+        <item name="android:maxLines">2</item>
     </style>
 
     <style name="CustomTabPageIndicator.Text" parent="android:TextAppearance.Medium">
