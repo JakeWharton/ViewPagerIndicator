@@ -253,14 +253,14 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private class TabView {
         private View mView;
-        public TabView(Context context, int index, CharSequence text, int iconResId) {        	
+        public TabView(Context context, int index, CharSequence text, int iconResId) {
             // If we have an icon and no text, use TabImageView
         	if(iconResId != 0 && (text == null || text.length() == 0)) {
         	    mView = new TabImageView(context, null, R.attr.vpiTabPageIndicatorStyle);
-        	    ((TabImageView) mView).setImageResource(iconResId);        		
+        	    ((TabImageView) mView).setImageResource(iconResId);
         	} else {
                 mView = new TabTextView(context, null, R.attr.vpiTabPageIndicatorStyle);
-                ((TabTextView) mView).setText(text);        		
+                ((TabTextView) mView).setText(text);
                 if (iconResId != 0) {
                     ((TabTextView) mView).setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
                 }
