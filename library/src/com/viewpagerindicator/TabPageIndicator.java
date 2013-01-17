@@ -16,8 +16,6 @@
  */
 package com.viewpagerindicator;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -29,6 +27,9 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * This widget implements the dynamic action bar tab behavior that can change
@@ -151,8 +152,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     }
 
     private void addTab(int index, CharSequence text, int iconResId) {
-        final TabView tabView = new TabView(getContext(), index, text, iconResId);
-
+        TabView tabView = new TabView(getContext(), index, text, iconResId);
         mTabLayout.addView(tabView.getView(), new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
     }
 
@@ -253,41 +253,37 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private class TabView {
         private View mView;
-
-        public TabView(Context context, int index, CharSequence text, int iconResId) {
-        	
-        	// If we have an icon and no text, use TabImageView
+        public TabView(Context context, int index, CharSequence text, int iconResId) {        	
+            // If we have an icon and no text, use TabImageView
         	if(iconResId != 0 && (text == null || text.length() == 0)) {
-        		mView = new TabImageView(context, null, R.attr.vpiTabPageIndicatorStyle);
-        		((TabImageView) mView).setImageResource(iconResId);        		
-        	}
-        	else {
-        		mView = new TabTextView(context, null, R.attr.vpiTabPageIndicatorStyle);
-        		((TabTextView) mView).setText(text);        		
-        		if (iconResId != 0) {
-        			((TabTextView) mView).setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
-        		}
-        	}
-        	mView.setTag(index);
-        	mView.setOnClickListener(mTabClickListener);
-        	mView.setFocusable(true);
+        	    mView = new TabImageView(context, null, R.attr.vpiTabPageIndicatorStyle);
+        	    ((TabImageView) mView).setImageResource(iconResId);        		
+        	} else {
+                mView = new TabTextView(context, null, R.attr.vpiTabPageIndicatorStyle);
+                ((TabTextView) mView).setText(text);        		
+                if (iconResId != 0) {
+                    ((TabTextView) mView).setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
+                }
+            }
+            mView.setTag(index);
+            mView.setOnClickListener(mTabClickListener);
+            mView.setFocusable(true);
         }
         
         public View getView() {
-        	return mView;
+            return mView;
         }
     }
     
     private class TabTextView extends TextView {
 
 		public TabTextView(Context context, AttributeSet attrs, int defStyle) {
-			super(context, attrs, defStyle);
+		    super(context, attrs, defStyle);
 		}
 
 		@Override
         public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
             // Re-measure if we went beyond our maximum size.
             if (mMaxTabWidth > 0 && getMeasuredWidth() > mMaxTabWidth) {
                 super.onMeasure(MeasureSpec.makeMeasureSpec(mMaxTabWidth, MeasureSpec.EXACTLY),
@@ -305,7 +301,6 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 		@Override
         public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
             // Re-measure if we went beyond our maximum size.
             if (mMaxTabWidth > 0 && getMeasuredWidth() > mMaxTabWidth) {
                 super.onMeasure(MeasureSpec.makeMeasureSpec(mMaxTabWidth, MeasureSpec.EXACTLY),
