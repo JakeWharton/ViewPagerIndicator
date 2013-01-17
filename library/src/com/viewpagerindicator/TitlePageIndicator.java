@@ -75,6 +75,33 @@ public class TitlePageIndicator extends View implements PageIndicator {
          */
         void onCenterItemClick(int position);
     }
+    
+    /**
+     * @bullda
+     */
+    private int prompt[];
+
+    /**
+     * @bullda
+     */
+    private float density;
+
+    /**
+     * @bullda
+     */
+    public void setPrompt(int[] prompt) {
+      this.prompt = prompt;
+    }
+
+    /**
+     * @bullda
+     */
+    public void setActivity(Activity activity) {
+      DisplayMetrics metrics = new DisplayMetrics();
+      activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+      density = metrics.density;
+    }
 
     public enum IndicatorStyle {
         None(0), Triangle(1), Underline(2);
@@ -486,6 +513,24 @@ public class TitlePageIndicator extends View implements PageIndicator {
                     mPaintText.setColor(mColorSelected);
                     mPaintText.setAlpha((int)((mColorSelected >>> 24) * selectedPercent));
                     canvas.drawText(pageTitle, 0, pageTitle.length(), bound.left, bound.bottom + mTopPadding, mPaintText);
+                    /**
+                     * @bullda
+                     */
+                    if (prompt != null && i < prompt.length && prompt[i] > 0) {
+                      Bitmap bm = BitmapFactory.decodeResource(
+                          getResources(), R.drawable.playplus_prompt);
+                      canvas.drawBitmap(bm, bound.right, bound.top,
+                          mPaintText);
+                      Paint paint = new Paint();
+                      paint.setAntiAlias(true);
+                      paint.setColor(Color.WHITE);
+                      paint.setTextAlign(Align.CENTER);
+                      paint.setTextSize(12 * density);
+                      String str = prompt[i] + "";
+                      canvas.drawText(str, 0, str.length(),
+                          bound.right + bm.getWidth() / 2,
+                          bound.top + bm.getHeight() - 4, paint);
+                    }
                 }
             }
         }
@@ -569,7 +614,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
                 if (mIsDragging) {
                     mLastMotionX = x;
-                    if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
+                    if (mViewPager != null && (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag())) {
                         mViewPager.fakeDragBy(deltaX);
                     }
                 }
