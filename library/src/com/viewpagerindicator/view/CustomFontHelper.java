@@ -34,25 +34,22 @@ public class CustomFontHelper {
 		mFontAssetPath = fontAssetPath;
 	}
 	
-	public void setCustomFont(View textViewOrButton, Context ctx, AttributeSet attrs, int[] attributeSet, int fontId, int typeFaceId) {
+	public void setCustomFont(CustomFontView customFontView, Context ctx, AttributeSet attrs, int[] attributeSet, int fontId, int typeFaceId) {
         TypedArray a = ctx.obtainStyledAttributes(attrs, attributeSet);
         String customFont = a.getString(fontId);
         String customTypeFace = a.getString(typeFaceId);
-        setCustomFont(textViewOrButton, ctx, customFont, customTypeFace);
+        setCustomFont(customFontView, ctx, customFont, customTypeFace);
         a.recycle();
     }
 	
-	public boolean setCustomFont(View textViewOrButton, Context ctx, String asset, String typeFace) {
+	public boolean setCustomFont(CustomFontView customFontView, Context ctx, String asset, String typeFace) {
 		if(TextUtils.isEmpty(asset))
 			return false;
 		Typeface tf = null;
 		try {
 			tf = getFont(ctx, asset);
 			String bold = ctx.getResources().getString(R.string.typeface_bold);
-			if(textViewOrButton instanceof CustomFontView) {
-				CustomFontView cfv = (CustomFontView) textViewOrButton;
-				cfv.setTypeface(tf, (typeFace != null && typeFace.equals(bold)) ? Typeface.BOLD : Typeface.NORMAL);
-			}
+			customFontView.setTypeface(tf, (typeFace != null && typeFace.equals(bold)) ? Typeface.BOLD : Typeface.NORMAL);
 		} catch (Exception e) {
 			Log.e(TAG, "Could not get typeface: " + asset, e);
 			return false;
