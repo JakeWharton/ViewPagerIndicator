@@ -1,14 +1,14 @@
 Android ViewPagerIndicator
 ==========================
 
-Port of [Patrik Åkerfeldt][1]'s paging indicators that are compatible with the
-ViewPager from the [Android Compatibility Library][2] and
-[ActionBarSherlock][3].
+Paging indicator widgets that are compatible with the `ViewPager` from the
+[Android Support Library][2] to improve discoverability of content.
 
 Try out the sample application [on the Android Market][10].
 
 ![ViewPagerIndicator Sample Screenshots][9]
 
+These widgets can also be used in conjunction with [ActionBarSherlock][3]!
 
 
 
@@ -35,9 +35,6 @@ Usage
          //Bind the title indicator to the adapter
          TitlePageIndicator titleIndicator = (TitlePageIndicator)findViewById(R.id.titles);
          titleIndicator.setViewPager(pager);
-
-     *Note*: If you are using `TitlePageIndicator` your adapter must implement
-     `TitleProvider`.
 
   3. *(Optional)* If you use an `OnPageChangeListener` with your view pager
      you should set it in the indicator rather than on the pager directly.
@@ -78,21 +75,12 @@ a dependency:
     <dependency>
       <groupId>com.viewpagerindicator</groupId>
       <artifactId>library</artifactId>
-      <version>2.2.3</version>
+      <version>2.4.1</version>
       <type>apklib</type>
     </dependency>
 
-You must also include the following repository:
-
-    <repository>
-      <id>com.jakewharton</id>
-      <url>http://r.jakewharton.com/maven/release</url>
-    </repository>
-
-
-
 This project depends on the `ViewPager` class which is available in the
-[Android Compatibility Library][2] or [ActionBarSherlock][3]. Details for
+[Android Support Library][2] or [ActionBarSherlock][3]. Details for
 including one of those libraries is available on their respecitve web sites.
 
 
@@ -119,9 +107,9 @@ Credits
 License
 =======
 
+    Copyright 2012 Jake Wharton
     Copyright 2011 Patrik Åkerfeldt
     Copyright 2011 Francisco Figueiredo Jr.
-    Copyright 2011 Jake Wharton
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -149,4 +137,4 @@ License
  [7]: http://developer.android.com/guide/developing/projects/projects-eclipse.html
  [8]: http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject
  [9]: https://raw.github.com/JakeWharton/Android-ViewPagerIndicator/master/sample/screens.png
- [10]: https://market.android.com/details?id=com.viewpagerindicator.sample
+ [10]: https://play.google.com/store/apps/details?id=com.viewpagerindicator.sample

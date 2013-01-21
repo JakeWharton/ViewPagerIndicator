@@ -16,58 +16,32 @@
 
 <resources>
     <style name="Theme.PageIndicatorDefaults" parent="android:Theme">
-        <item name="vpiCirclePageIndicatorStyle">@style/Widget.CirclePageIndicator</item>
-        <item name="vpiTitlePageIndicatorStyle">@style/Widget.TitlePageIndicator</item>
+        <item name="vpiIconPageIndicatorStyle">@style/Widget.IconPageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
-        <item name="vpiTabTextStyle">@style/Widget.TabPageIndicator.Text</item>
-    </style>
-    
-    <style name="Widget"></style>
-
-    <style name="Widget.CirclePageIndicator" parent="Widget">
-        <item name="centered">@bool/default_circle_indicator_centered</item>
-        <item name="fillColor">@color/default_circle_indicator_fill_color</item>
-        <item name="pageColor">@color/default_circle_indicator_page_color</item>
-        <item name="orientation">@integer/default_circle_indicator_orientation</item>
-        <item name="radius">@dimen/default_circle_indicator_radius</item>
-        <item name="snap">@bool/default_circle_indicator_snap</item>
-        <item name="strokeColor">@color/default_circle_indicator_stroke_color</item>
-        <item name="strokeWidth">@dimen/default_circle_indicator_stroke_width</item>
     </style>
 
-    <style name="Widget.TitlePageIndicator" parent="Widget">
-        <item name="clipPadding">@dimen/default_title_indicator_clip_padding</item>
-        <item name="footerColor">@color/default_title_indicator_footer_color</item>
-        <item name="footerLineHeight">@dimen/default_title_indicator_footer_line_height</item>
-        <item name="footerIndicatorStyle">@integer/default_title_indicator_footer_indicator_style</item>
-        <item name="footerIndicatorHeight">@dimen/default_title_indicator_footer_indicator_height</item>
-        <item name="footerIndicatorUnderlinePadding">@dimen/default_title_indicator_footer_indicator_underline_padding</item>
-        <item name="footerPadding">@dimen/default_title_indicator_footer_padding</item>
-        <item name="selectedColor">@color/default_title_indicator_selected_color</item>
-        <item name="selectedBold">@bool/default_title_indicator_selected_bold</item>
-        <item name="textColor">@color/default_title_indicator_text_color</item>
-        <item name="textSize">@dimen/default_title_indicator_text_size</item>
-        <item name="titlePadding">@dimen/default_title_indicator_title_padding</item>
-        <item name="topPadding">@dimen/default_title_indicator_top_padding</item>
+    <style name="Widget">
     </style>
-    
+
     <style name="Widget.TabPageIndicator" parent="Widget">
-        <item name="android:gravity">center_horizontal</item>
+        <item name="android:gravity">center</item>
         <item name="android:background">@drawable/vpi__tab_indicator</item>
         <item name="android:paddingLeft">22dip</item>
         <item name="android:paddingRight">22dip</item>
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
-    </style>
-    <style name="Widget.TabPageIndicator.Text" parent="Widget">
         <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
-        <item name="android:textColor">@color/vpi__dark_theme</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
     </style>
-    
+
     <style name="TextAppearance.TabPageIndicator" parent="Widget">
-        
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/vpi__dark_theme</item>
+    </style>
+
+    <style name="Widget.IconPageIndicator" parent="Widget">
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
     </style>
 </resources>

@@ -21,10 +21,10 @@ public class ListSamples extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         Intent intent = getIntent();
         String path = intent.getStringExtra("com.jakewharton.android.viewpagerindicator.sample.Path");
-        
+
         if (path == null) {
             path = "";
         }
@@ -49,16 +49,16 @@ public class ListSamples extends ListActivity {
 
         String[] prefixPath;
         String prefixWithSlash = prefix;
-        
+
         if (prefix.equals("")) {
             prefixPath = null;
         } else {
             prefixPath = prefix.split("/");
             prefixWithSlash = prefix + "/";
         }
-        
+
         int len = list.size();
-        
+
         Map<String, Boolean> entries = new HashMap<String, Boolean>();
 
         for (int i = 0; i < len; i++) {
@@ -67,9 +67,9 @@ public class ListSamples extends ListActivity {
             String label = labelSeq != null
                     ? labelSeq.toString()
                     : info.activityInfo.name;
-            
+
             if (prefixWithSlash.length() == 0 || label.startsWith(prefixWithSlash)) {
-                
+
                 String[] labelPath = label.split("/");
 
                 String nextLabel = prefixPath == null ? labelPath[0] : labelPath[prefixPath.length];
@@ -87,12 +87,12 @@ public class ListSamples extends ListActivity {
             }
         }
 
-        Collections.sort(myData, sDisplayNameComparator);
-        
+        Collections.sort(myData, NAME_COMPARATOR);
+
         return myData;
     }
 
-    private final static Comparator<Map<String, Object>> sDisplayNameComparator =
+    private final static Comparator<Map<String, Object>> NAME_COMPARATOR =
         new Comparator<Map<String, Object>>() {
         private final Collator   collator = Collator.getInstance();
 
@@ -106,7 +106,7 @@ public class ListSamples extends ListActivity {
         result.setClassName(pkg, componentName);
         return result;
     }
-    
+
     protected Intent browseIntent(String path) {
         Intent result = new Intent();
         result.setClass(this, ListSamples.class);

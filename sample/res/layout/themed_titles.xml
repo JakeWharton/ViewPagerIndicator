@@ -16,7 +16,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/com.viewpagerindicator.sample"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -27,11 +27,11 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:background="#18FF0000"
+        android:textColor="#AA000000"
         app:footerColor="#FFAA2222"
         app:footerLineHeight="1dp"
         app:footerIndicatorHeight="3dp"
         app:footerIndicatorStyle="underline"
-        app:textColor="#AA000000"
         app:selectedColor="#FF000000"
         app:selectedBold="true"
         />
