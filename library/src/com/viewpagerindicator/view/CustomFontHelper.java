@@ -16,7 +16,25 @@ import android.view.View;
 public class CustomFontHelper {
 	public static final String TAG = "CustomFontHelper";
 
-	public static void setCustomFont(View textViewOrButton, Context ctx, AttributeSet attrs, int[] attributeSet, int fontId, int typeFaceId) {
+	private static CustomFontHelper mInstance = null;
+	private static String mFontAssetPath = null;
+	
+	private CustomFontHelper() {
+		mFontAssetPath = "fonts";
+	}
+	
+	public static CustomFontHelper getInstance() {
+		if(mInstance == null) {
+			mInstance = new CustomFontHelper();
+		}
+		return mInstance;
+	}
+	
+	public void setCustomFontAssetPath(String fontAssetPath) {
+		mFontAssetPath = fontAssetPath;
+	}
+	
+	public void setCustomFont(View textViewOrButton, Context ctx, AttributeSet attrs, int[] attributeSet, int fontId, int typeFaceId) {
         TypedArray a = ctx.obtainStyledAttributes(attrs, attributeSet);
         String customFont = a.getString(fontId);
         String customTypeFace = a.getString(typeFaceId);
@@ -24,7 +42,7 @@ public class CustomFontHelper {
         a.recycle();
     }
 	
-	public static boolean setCustomFont(View textViewOrButton, Context ctx, String asset, String typeFace) {
+	public boolean setCustomFont(View textViewOrButton, Context ctx, String asset, String typeFace) {
 		if(TextUtils.isEmpty(asset))
 			return false;
 		Typeface tf = null;
@@ -45,7 +63,7 @@ public class CustomFontHelper {
 	
 	private static final Hashtable<String, SoftReference<Typeface>> fontCache = new Hashtable<String, SoftReference<Typeface>>();
 
-	public static Typeface getFont(Context c, String name) {
+	private Typeface getFont(Context c, String name) {
 		synchronized (fontCache) {
 			if(fontCache.get(name) != null) {
 				SoftReference<Typeface> ref = fontCache.get(name);
@@ -54,7 +72,7 @@ public class CustomFontHelper {
 				}
 			}
 
-			Typeface typeface = Typeface.createFromAsset(c.getAssets(), "fonts/" + name);
+			Typeface typeface = Typeface.createFromAsset(c.getAssets(), mFontAssetPath + "/" + name);
 			fontCache.put(name, new SoftReference<Typeface>(typeface));
 
 			return typeface;

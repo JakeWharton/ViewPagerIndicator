@@ -10,7 +10,7 @@ public class CustomTextView extends TextView implements CustomFontView {
 
 	public CustomTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		CustomFontHelper.setCustomFont(this, context, attrs, 
+		CustomFontHelper.getInstance().setCustomFont(this, context, attrs, 
 				R.styleable.TabPageIndicator,
 				R.styleable.TabPageIndicator_vpiFont,
 				R.styleable.TabPageIndicator_vpiTypeface);

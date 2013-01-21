@@ -274,7 +274,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
         public TabView(Context context, String fontName, String typefaceName) {
             super(context, null, R.attr.vpiTabPageIndicatorStyle);
-            CustomFontHelper.setCustomFont(this, getContext(), fontName, typefaceName);
+            CustomFontHelper.getInstance().setCustomFont(this, getContext(), fontName, typefaceName);
         }
 
         @Override
