@@ -754,6 +754,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
     public void onPageScrollStateChanged(int state) {
         mScrollState = state;
 
+        if (mPageOffset > 0 && state == ViewPager.SCROLL_STATE_IDLE) {
+            mCurrentPage = mViewPager.getCurrentItem();
+            mPageOffset = 0;
+        }
+
         if (mListener != null) {
             mListener.onPageScrollStateChanged(state);
         }
