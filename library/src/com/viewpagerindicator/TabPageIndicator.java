@@ -37,6 +37,9 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class TabPageIndicator extends HorizontalScrollView implements PageIndicator {
     /** Title text used when no title is provided by the adapter. */
     private static final CharSequence EMPTY_TITLE = "";
+    
+    /** Boolean that controls whether the selected page should be smooth scrolled to. */
+    private boolean mPagerSmoothScrollEnabled = true;
 
     /**
      * Interface for a callback when the selected tab has been reselected.
@@ -57,7 +60,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             TabView tabView = (TabView)view;
             final int oldSelected = mViewPager.getCurrentItem();
             final int newSelected = tabView.getIndex();
-            mViewPager.setCurrentItem(newSelected);
+            mViewPager.setCurrentItem(newSelected, mPagerSmoothScrollEnabled);
             if (oldSelected == newSelected && mTabReselectedListener != null) {
                 mTabReselectedListener.onTabReselected(newSelected);
             }
@@ -240,7 +243,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             throw new IllegalStateException("ViewPager has not been bound.");
         }
         mSelectedTabIndex = item;
-        mViewPager.setCurrentItem(item);
+        mViewPager.setCurrentItem(item, mPagerSmoothScrollEnabled);
 
         final int tabCount = mTabLayout.getChildCount();
         for (int i = 0; i < tabCount; i++) {
@@ -257,7 +260,15 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     public void setOnPageChangeListener(OnPageChangeListener listener) {
         mListener = listener;
     }
-
+    
+    /**
+     * Set whether selecting a tab will animate the transition to the selected tab. 
+     * @param pagerSmoothScrollEnabled whether selecting a tab will animate the transition to the selected tab.
+     */
+    public void setPagerSmoothScrollEnabled(boolean pagerSmoothScrollEnabled){
+        this.mPagerSmoothScrollEnabled = pagerSmoothScrollEnabled;
+    }
+    
     private class TabView extends TextView {
         private int mIndex;
 
