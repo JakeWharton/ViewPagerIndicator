@@ -161,6 +161,20 @@ public class CirclePageIndicator extends View implements PageIndicator {
 		return mPaintFill.getColor();
 	}
 
+	public void setPageDrawable(int drawable) {
+		Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(drawable)).getBitmap();
+		mPageBitmap = Bitmap.createScaledBitmap(bitmap, (int) mRadius * 2, (int) mRadius * 2, true);
+		mPaintPageFill.setFilterBitmap(true);
+		invalidate();
+	}
+
+	public void setFillDrawable(int drawable) {
+		Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(drawable)).getBitmap();
+		mFillBitmap = Bitmap.createScaledBitmap(bitmap, (int) mRadius * 2, (int) mRadius * 2, true);
+		mPaintFill.setFilterBitmap(true);
+		invalidate();
+	}
+
 	public void setOrientation(int orientation) {
 		switch (orientation) {
 		case HORIZONTAL:
