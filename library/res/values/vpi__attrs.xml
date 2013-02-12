@@ -35,7 +35,9 @@
     <attr name="selectedColor" format="color" />
     <attr name="strokeWidth" format="dimension" />
     <attr name="unselectedColor" format="color" />
-
+    <attr name="pageImg" format="reference" />
+    <attr name="fillImg" format="reference" />
+    
     <declare-styleable name="CirclePageIndicator">
         <!-- Whether or not the indicators should be centered. -->
         <attr name="centered" />
@@ -55,6 +57,10 @@
         <attr name="strokeWidth" />
         <!-- View background -->
         <attr name="android:background"/>
+        <!-- Page background -->
+        <attr name="pageImg" />
+        <!-- Fill background -->
+        <attr name="fillImg" />
     </declare-styleable>
 
     <declare-styleable name="LinePageIndicator">
