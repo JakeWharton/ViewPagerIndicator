@@ -24,4 +24,4 @@ proguard-project.txt
 
 
 #Support-Lib 
-libs/android-support-v4.jar
+android-support-v4.jar
