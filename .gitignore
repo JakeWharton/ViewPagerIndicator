@@ -21,3 +21,7 @@ pom.xml.*
 local.properties
 build.xml
 proguard-project.txt
+
+
+#Support-Lib 
+android-support-v4.jar
