@@ -128,4 +128,12 @@
         <!-- View background -->
         <attr name="android:background"/>
     </declare-styleable>
+        
+    <attr name="vpiFont" format="integer" />
+    <attr name="vpiTypeface" format="integer" />
+    
+    <declare-styleable name="TabPageIndicator">
+        <attr name="vpiFont" />
+        <attr name="vpiTypeface" />
+    </declare-styleable>
 </resources>

@@ -16,7 +16,11 @@
  */
 package com.viewpagerindicator;
 
+import com.viewpagerindicator.view.CustomFontHelper;
+import com.viewpagerindicator.view.CustomTextView;
+
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -25,7 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -71,6 +74,9 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private int mMaxTabWidth;
     private int mSelectedTabIndex;
+    
+    private String mTabFontName;
+    private String mTabTypefaceName;
 
     private OnTabReselectedListener mTabReselectedListener;
 
@@ -84,6 +90,11 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
         mTabLayout = new IcsLinearLayout(context, R.attr.vpiTabPageIndicatorStyle);
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
+        
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TabPageIndicator);
+        mTabFontName = a.getString(R.styleable.TabPageIndicator_vpiFont);
+        mTabTypefaceName = a.getString(R.styleable.TabPageIndicator_vpiTypeface);
+        a.recycle();
     }
 
     public void setOnTabReselectedListener(OnTabReselectedListener listener) {
@@ -150,7 +161,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     }
 
     private void addTab(int index, CharSequence text, int iconResId) {
-        final TabView tabView = new TabView(getContext());
+        final TabView tabView = new TabView(getContext(), mTabFontName, mTabTypefaceName);
         tabView.mIndex = index;
         tabView.setFocusable(true);
         tabView.setOnClickListener(mTabClickListener);
@@ -258,11 +269,12 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         mListener = listener;
     }
 
-    private class TabView extends TextView {
+    private class TabView extends CustomTextView {
         private int mIndex;
 
-        public TabView(Context context) {
+        public TabView(Context context, String fontName, String typefaceName) {
             super(context, null, R.attr.vpiTabPageIndicatorStyle);
+            CustomFontHelper.getInstance().setCustomFont(this, getContext(), fontName, typefaceName);
         }
 
         @Override
