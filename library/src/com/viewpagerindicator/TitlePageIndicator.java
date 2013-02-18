@@ -396,8 +396,13 @@ public class TitlePageIndicator extends View implements PageIndicator {
         }
         final boolean currentSelected = (offsetPercent <= SELECTION_FADE_PERCENTAGE);
         final boolean currentBold = (offsetPercent <= BOLD_FADE_PERCENTAGE);
-        final float selectedPercent = (SELECTION_FADE_PERCENTAGE - offsetPercent) / SELECTION_FADE_PERCENTAGE;
+        float selectedPercent = (SELECTION_FADE_PERCENTAGE - offsetPercent) / SELECTION_FADE_PERCENTAGE;
 
+        // Offset can be negative, causing a percent above 1f, so cap it
+        if (selectedPercent > 1f) {
+        	selectedPercent = 1f;
+        }
+        
         //Verify if the current view must be clipped to the screen
         Rect curPageBound = bounds.get(mCurrentPage);
         float curPageWidth = curPageBound.right - curPageBound.left;
