@@ -41,6 +41,14 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
     private Runnable mIconSelector;
     private int mSelectedIndex;
 
+    private final OnClickListener mIconClickListener = new OnClickListener() {
+        public void onClick(View view) {
+            ImageView iconView = (ImageView)view;
+            final int newSelected = (Integer) iconView.getTag();
+            mViewPager.setCurrentItem(newSelected);
+        }
+    };
+
     public IconPageIndicator(Context context) {
         this(context, null);
     }
@@ -131,6 +139,8 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
         for (int i = 0; i < count; i++) {
             ImageView view = new ImageView(getContext(), null, R.attr.vpiIconPageIndicatorStyle);
             view.setImageResource(iconAdapter.getIconResId(i));
+            view.setTag(i);
+            view.setOnClickListener(mIconClickListener);
             mIconsLayout.addView(view);
         }
         if (mSelectedIndex > count) {
