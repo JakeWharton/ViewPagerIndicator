@@ -24,6 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -57,18 +58,29 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
     private int mActivePointerId = INVALID_POINTER;
     private boolean mIsDragging;
 
-    private final Runnable mFadeRunnable = new Runnable() {
-      @Override public void run() {
-        if (!mFades) return;
+	private final Runnable mFadeRunnable = new Runnable() {
+		@Override
+		public void run() {
+			if (!fadeIsShownbyUser) {
+				doFade(this);
+			}
+		}
+	};
 
-        final int alpha = Math.max(mPaint.getAlpha() - mFadeBy, 0);
-        mPaint.setAlpha(alpha);
-        invalidate();
-        if (alpha > 0) {
-          postDelayed(this, FADE_FRAME_MS);
-        }
-      }
-    };
+	private final Runnable mHideRunnable = new Runnable() {
+		@Override
+		public void run() {
+			fadeIsShownbyUser = false;
+			doFade(this);
+		}
+	};
+
+    private boolean mustDetermineLineStartAndEnd;
+    private float startWidth;
+	private float endWidth;
+	private float totalWidth;
+	
+	private boolean fadeIsShownbyUser;
 
     public UnderlinePageIndicator(Context context) {
         this(context, null);
@@ -159,7 +171,8 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
         if (mViewPager == null) {
             return;
         }
-        final int count = mViewPager.getAdapter().getCount();
+        final PagerAdapter adapter = mViewPager.getAdapter();
+		final int count = adapter.getCount();
         if (count == 0) {
             return;
         }
@@ -169,10 +182,13 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
             return;
         }
 
-        final int paddingLeft = getPaddingLeft();
-        final float pageWidth = (getWidth() - paddingLeft - getPaddingRight()) / (1f * count);
-        final float left = paddingLeft + pageWidth * (mCurrentPage + mPositionOffset);
-        final float right = left + pageWidth;
+        final int   paddingLeft = getPaddingLeft();
+        final int   barWidth = (getWidth() - paddingLeft - getPaddingRight());
+        final float unitWidth = (float)barWidth / totalWidth;
+        
+        final float pageWidth = endWidth - startWidth;
+        final float left  = paddingLeft +  unitWidth * (startWidth + pageWidth*mPositionOffset);
+        final float right = left + (barWidth/count) ;// pageWidth*unitWidth;
         final float top = getPaddingTop();
         final float bottom = getHeight() - getPaddingBottom();
         canvas.drawRect(left, top, right, bottom, mPaint);
@@ -287,6 +303,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
 
     @Override
     public void setViewPager(ViewPager view, int initialPosition) {
+    	mustDetermineLineStartAndEnd = true;
         setViewPager(view);
         setCurrentItem(initialPosition);
     }
@@ -297,6 +314,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
             throw new IllegalStateException("ViewPager has not been bound.");
         }
         mViewPager.setCurrentItem(item);
+    	mustDetermineLineStartAndEnd = (mCurrentPage != item);
         mCurrentPage = item;
         invalidate();
     }
@@ -308,7 +326,13 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        mScrollState = state;
+    	if (state == ViewPager.SCROLL_STATE_IDLE && state != mScrollState) {
+    		if (mFades) {
+    			postDelayed(mFadeRunnable, mFadeDelay);
+    		}
+    	}
+
+    	mScrollState = state;
 
         if (mListener != null) {
             mListener.onPageScrollStateChanged(state);
@@ -317,16 +341,18 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        mCurrentPage = position;
+    	mustDetermineLineStartAndEnd = (mCurrentPage != position);
+    	mCurrentPage = position;
         mPositionOffset = positionOffset;
         if (mFades) {
             if (positionOffsetPixels > 0) {
                 removeCallbacks(mFadeRunnable);
                 mPaint.setAlpha(0xFF);
             } else if (mScrollState != ViewPager.SCROLL_STATE_DRAGGING) {
-                postDelayed(mFadeRunnable, mFadeDelay);
+                ; //postDelayed(mFadeRunnable, mFadeDelay);
             }
         }
+
         invalidate();
 
         if (mListener != null) {
@@ -337,6 +363,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
     @Override
     public void onPageSelected(int position) {
         if (mScrollState == ViewPager.SCROLL_STATE_IDLE) {
+        	mustDetermineLineStartAndEnd = (mCurrentPage != position);
             mCurrentPage = position;
             mPositionOffset = 0;
             invalidate();
@@ -356,6 +383,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
     public void onRestoreInstanceState(Parcelable state) {
         SavedState savedState = (SavedState)state;
         super.onRestoreInstanceState(savedState.getSuperState());
+    	mustDetermineLineStartAndEnd = (mCurrentPage != savedState.currentPage);
         mCurrentPage = savedState.currentPage;
         requestLayout();
     }
@@ -399,4 +427,72 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
             }
         };
     }
+    
+    @Override
+    public void invalidate() {
+    	if (mustDetermineLineStartAndEnd) {
+    		determineLineStartAndEnd();
+    	}
+    	super.invalidate();
+    }
+
+	private void determineLineStartAndEnd() {
+		if (mViewPager != null) {
+    		mustDetermineLineStartAndEnd = false;
+	        final PagerAdapter adapter = mViewPager.getAdapter();
+			final int          count   = adapter.getCount();
+	        if (count > 0) {
+	            startWidth = 0f;
+	            endWidth   = -1f;
+	            totalWidth = 0f;
+	            for (int i = 0; i < count; i++) {
+	            	float pw = adapter.getPageWidth(i);
+	            	if (i == mCurrentPage) {
+	            		startWidth = totalWidth;
+	            	}
+	
+	            	if (i == mCurrentPage+1) {
+	            		endWidth = totalWidth;
+	            	}
+	
+	            	totalWidth += pw;
+	            }
+	            if (endWidth < 0) {
+	            	endWidth = totalWidth;
+	            }
+	        }
+	        else {
+	        	startWidth = 0;
+	        	endWidth   = 0;
+	        	totalWidth = 0;
+	        }
+    	}
+	}
+	
+	public void show(long timeOut) {
+		if (mFades) {
+			final long delay = (timeOut > 0)? timeOut : mFadeDelay;
+			post(new Runnable() {
+				public void run() {
+					fadeIsShownbyUser = true;
+					mPaint.setAlpha(0xFF);
+					mustDetermineLineStartAndEnd = true;
+					invalidate();
+					postDelayed(mHideRunnable, delay);
+				}
+			});
+		}
+	}
+
+	private void doFade(Runnable runnable) {
+		if (!mFades)
+			return;
+
+		final int alpha = Math.max(mPaint.getAlpha() - mFadeBy, 0);
+		mPaint.setAlpha(alpha);
+		invalidate();
+		if (alpha > 0) {
+			postDelayed(runnable, FADE_FRAME_MS);
+		}
+	}
 }
