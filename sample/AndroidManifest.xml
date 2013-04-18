@@ -173,6 +173,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SampleTitlesXofY"
+            android:label="Titles/X of Y">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        
+        
+        <activity
             android:name=".SampleTitlesStyledLayout"
             android:label="Titles/Styled (via layout)"
             android:theme="@android:style/Theme.Light">

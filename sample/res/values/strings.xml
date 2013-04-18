@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="x_of_y_view_pager_prev">&lt; Newer</string>
+  <string name="x_of_y_view_pager_next">Older &gt;</string>
+  <string name="x_of_y_view_pager_title">%1$d of %2$d</string>
+</resources>
