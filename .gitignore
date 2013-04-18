@@ -21,3 +21,13 @@ pom.xml.*
 local.properties
 build.xml
 proguard-project.txt
+
+sample/proguard/seeds.txt
+
+.DS_Store
+
+sample/project.properties
+
+library/project.properties
+
+library/project.properties
