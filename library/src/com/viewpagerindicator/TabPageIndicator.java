@@ -23,6 +23,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -149,17 +150,12 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         }
     }
 
-    private void addTab(int index, CharSequence text, int iconResId) {
-        final TabView tabView = new TabView(getContext());
+    private void addTab(int index, View view) {
+    	final TabView tabView = new TabView(getContext(),view);
         tabView.mIndex = index;
         tabView.setFocusable(true);
         tabView.setOnClickListener(mTabClickListener);
-        tabView.setText(text);
-
-        if (iconResId != 0) {
-            tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
-        }
-
+        
         mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
     }
 
@@ -201,25 +197,28 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         view.setOnPageChangeListener(this);
         notifyDataSetChanged();
     }
+   
 
     public void notifyDataSetChanged() {
         mTabLayout.removeAllViews();
         PagerAdapter adapter = mViewPager.getAdapter();
-        IconPagerAdapter iconAdapter = null;
-        if (adapter instanceof IconPagerAdapter) {
-            iconAdapter = (IconPagerAdapter)adapter;
-        }
+        IconPagerAdapter iconAdapter = adapter instanceof IconPagerAdapter ? (IconPagerAdapter)adapter: null;
+        CustomTabPagerAdapter customAdapter = adapter instanceof CustomTabPagerAdapter ? (CustomTabPagerAdapter)adapter : null;
+        
         final int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
-            CharSequence title = adapter.getPageTitle(i);
-            if (title == null) {
-                title = EMPTY_TITLE;
-            }
-            int iconResId = 0;
-            if (iconAdapter != null) {
-                iconResId = iconAdapter.getIconResId(i);
-            }
-            addTab(i, title, iconResId);
+        	if(customAdapter!=null) addTab(i,customAdapter.getTabView(i));
+        	else{
+        		TextView tabView = new TextView(getContext());
+        		CharSequence title = adapter.getPageTitle(i);
+                tabView.setText(title == null ? EMPTY_TITLE : title);
+       
+                if (iconAdapter != null) {
+                	tabView.setCompoundDrawablesWithIntrinsicBounds(iconAdapter.getIconResId(i), 0, 0, 0);
+                }
+                addTab(i, tabView);
+        	}
+            
         }
         if (mSelectedTabIndex > count) {
             mSelectedTabIndex = count - 1;
@@ -258,11 +257,12 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         mListener = listener;
     }
 
-    private class TabView extends TextView {
+    private class TabView extends FrameLayout {
         private int mIndex;
 
-        public TabView(Context context) {
+        public TabView(Context context,View view) {
             super(context, null, R.attr.vpiTabPageIndicatorStyle);
+            addView(view, new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
         }
 
         @Override
