@@ -111,7 +111,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         final int newWidth = getMeasuredWidth();
 
-        if (lockedExpanded && oldWidth != newWidth) {
+        if (lockedExpanded && oldWidth != newWidth && mViewPager != null) {
             // Recenter the tab display if we're at a new (scrollable) size.
             setCurrentItem(mSelectedTabIndex);
         }
