@@ -22,5 +22,7 @@ local.properties
 build.xml
 proguard-project.txt
 
-.backups
+#Others
 *.jar
+*.swp
+.backups

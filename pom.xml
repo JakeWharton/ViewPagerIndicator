@@ -12,7 +12,7 @@
     <groupId>com.viewpagerindicator</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.4.1</version>
+    <version>2.4.2</version>
 
     <name>Android-ViewPagerIndicator (Parent)</name>
     <description>Android library for.</description>
@@ -66,25 +66,36 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <java.version>1.6</java.version>
-        <android.version>4.1.1.4</android.version>
-        <android.platform>16</android.platform>
-        <android.support.version>r7</android.support.version>
+        <android.version>4.2_r1</android.version>
+        <android.platform>17</android.platform>
+        <android.support.version>12</android.support.version>
 
         <android-maven.version>3.3.0</android-maven.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+          <!--
+          – You need Android-Deployer for this dependency to work. Don't search, there is
+          – no ready made deployment to be found. You need to download and delopy it yourself.
+          – But then is the most up-to-date android dependency.
+          –
+          – https://github.com/mosabua/maven-android-sdk-deployer.git
+          -->
             <dependency>
-                <groupId>com.google.android</groupId>
+                <groupId>android</groupId>
                 <artifactId>android</artifactId>
                 <version>${android.version}</version>
+                <scope>provided</scope>
+                 <type>jar</type>
             </dependency>
 
             <dependency>
-                <groupId>com.google.android</groupId>
-                <artifactId>support-v4</artifactId>
+                <groupId>android.support</groupId>
+                <artifactId>android.support</artifactId>
                 <version>${android.support.version}</version>
+                <scope>compile</scope>
+                <type>jar</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
