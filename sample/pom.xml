@@ -10,21 +10,31 @@
 	<parent>
 		<groupId>com.viewpagerindicator</groupId>
 		<artifactId>parent</artifactId>
-		<version>2.4.2-mk</version>
+		<version>2.4.2</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>support-v4</artifactId>
-		</dependency>
+               <!--
+              – You need Android-Deployer for this dependency to work. Don't search, there is
+              – no ready made deployment to be found. You need to download and delopy it yourself.
+              – But then is the most up-to-date android dependency.
+              –
+              – https://github.com/mosabua/maven-android-sdk-deployer.git
+              -->
+                <dependency>
+                    <groupId>android</groupId>
+                    <artifactId>android</artifactId>
+                    <version>${android.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>android.support</groupId>
+                    <artifactId>android.support</artifactId>
+                    <version>${android.support.version}</version>
+                    <scope>compile</scope>
+                    <type>jar</type>
+                </dependency>
 
 		<dependency>
 			<groupId>com.viewpagerindicator</groupId>
