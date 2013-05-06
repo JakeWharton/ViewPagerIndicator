@@ -274,7 +274,7 @@ public class LinePageIndicator extends View implements PageIndicator {
     }
 
     @Override
-    public void setViewPager(ViewPager viewPager) {
+    public void setViewPager(final ViewPager viewPager) {
         if (mViewPager == viewPager) {
             return;
         }
@@ -282,16 +282,21 @@ public class LinePageIndicator extends View implements PageIndicator {
             //Clear us from the old pager.
             mViewPager.setOnPageChangeListener(null);
         }
-        if (viewPager.getAdapter() == null) {
-            throw new IllegalStateException("ViewPager does not have adapter instance.");
-        }
+
         mViewPager = viewPager;
-        mViewPager.setOnPageChangeListener(this);
+
+        if (mViewPager != null)
+        {
+            if (mViewPager.getAdapter() == null) {
+                throw new IllegalStateException("ViewPager does not have adapter instance.");
+            }
+            mViewPager.setOnPageChangeListener(this);
+        }
         invalidate();
     }
 
     @Override
-    public void setViewPager(ViewPager view, int initialPosition) {
+    public void setViewPager(final ViewPager view, int initialPosition) {
         setViewPager(view);
         setCurrentItem(initialPosition);
     }
