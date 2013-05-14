@@ -21,6 +21,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * This widget implements the dynamic action bar tab behavior that can change
  * across different configurations or circumstances.
  */
-public class TabPageIndicator extends HorizontalScrollView implements
+public class TabPageIndicator extends LinearLayout implements
 		PageIndicator {
 	/** Title text used when no title is provided by the adapter. */
 	private static final CharSequence EMPTY_TITLE = "";
@@ -83,10 +84,14 @@ public class TabPageIndicator extends HorizontalScrollView implements
 	public TabPageIndicator(Context context) {
 		this(context, null, null);
 	}
-
+	
+	public TabPageIndicator(Context context, AttributeSet attrs) {
+		this(context, attrs, null);
+	}
+	
 	public TabPageIndicator(Context context, AttributeSet attrs,
 			indicatorInterface viewProvider) {
-		super(context, attrs);
+		super(new ContextThemeWrapper(context, R.style.Theme_VPI), attrs);
 		setHorizontalScrollBarEnabled(false);
 
 		this.viewProvider = viewProvider;
@@ -110,7 +115,6 @@ public class TabPageIndicator extends HorizontalScrollView implements
 	public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 		final boolean lockedExpanded = widthMode == MeasureSpec.EXACTLY;
-		setFillViewport(lockedExpanded);
 
 		final int childCount = mTabLayout.getChildCount();
 		if (childCount > 1
@@ -143,7 +147,6 @@ public class TabPageIndicator extends HorizontalScrollView implements
 			public void run() {
 				final int scrollPos = tabView.getLeft()
 						- (getWidth() - tabView.getWidth()) / 2;
-				smoothScrollTo(scrollPos, 0);
 				mTabSelector = null;
 			}
 		};
@@ -277,7 +280,7 @@ public class TabPageIndicator extends HorizontalScrollView implements
 		private int mIndex;
 
 		public CustomTabView(Context context, int index, View child) {
-			super(context);
+			super(context, null, com.viewpagerindicator.R.attr.vpiTabPageIndicatorStyle);
 			this.mIndex = index;
 			this.addView(child);
 		}
