@@ -17,6 +17,7 @@
 package com.viewpagerindicator;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -37,6 +38,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class TabPageIndicator extends HorizontalScrollView implements PageIndicator {
     /** Title text used when no title is provided by the adapter. */
     private static final CharSequence EMPTY_TITLE = "";
+    private Typeface tabsFont;
 
     /**
      * Interface for a callback when the selected tab has been reselected.
@@ -156,11 +158,19 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         tabView.setOnClickListener(mTabClickListener);
         tabView.setText(text);
 
+        if (tabsFont != null) {
+            tabView.setTypeface(tabsFont);
+        }
+
         if (iconResId != 0) {
             tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
         }
 
         mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
+    }
+
+    public void setTabsFont(Typeface tf) {
+        this.tabsFont = tf;
     }
 
     @Override
