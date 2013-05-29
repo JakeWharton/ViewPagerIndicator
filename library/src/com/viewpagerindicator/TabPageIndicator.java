@@ -93,6 +93,11 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     */
     private int [] drawables = new int [4];
 
+    /**
+     * Holds the value used by setCompoundDrawablesWithIntrinsicBounds used to denote no icon.
+     */
+    private static int NO_ICON = 0;
+    
     public TabPageIndicator(Context context) {
         this(context, null);
     }
@@ -169,9 +174,12 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     }
 
     public void setTabIconLocation (int newLocation){
-        this.location = newLocation;
         if (location > LOCATION_BOTTOM || location < LOCATION_LEFT)
             throw new IllegalArgumentException ("Invalid location");
+        this.location = newLocation;
+        for (int x = 0; x < drawables.length;x++){
+        	drawables [x] = NO_ICON;
+        }
     }
 
     private void addTab(int index, CharSequence text, int iconResId) {
