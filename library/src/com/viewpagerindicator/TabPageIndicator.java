@@ -74,6 +74,24 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private OnTabReselectedListener mTabReselectedListener;
 
+    /**
+    * Stores the location of the tab icon
+    */
+    private int location;
+
+    /**
+    * Constants to improve readability - no magic numbers.
+    */
+    public final static int LOCATION_LEFT =0;
+    public final static int LOCATION_UP =1;
+    public final static int LOCATION_RIGHT = 2;
+    public final static int LOCATION_BOTTOM =3;
+
+    /**
+    * Used to store the icon.
+    */
+    private int [] drawables = new int [4];
+
     public TabPageIndicator(Context context) {
         this(context, null);
     }
@@ -149,6 +167,10 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         }
     }
 
+    public void setTabIconLocation (int location){
+       this.location = location;
+    }
+
     private void addTab(int index, CharSequence text, int iconResId) {
         final TabView tabView = new TabView(getContext());
         tabView.mIndex = index;
@@ -157,7 +179,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         tabView.setText(text);
 
         if (iconResId != 0) {
-            tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
+            drawables [location] = iconResId;
+            tabView.setCompoundDrawablesWithIntrinsicBounds(drawables[0], drawables[1], drawables[2], drawables[3]);
         }
 
         mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));

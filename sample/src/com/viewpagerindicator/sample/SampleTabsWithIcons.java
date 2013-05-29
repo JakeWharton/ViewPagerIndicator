@@ -29,6 +29,7 @@ public class SampleTabsWithIcons extends FragmentActivity {
         pager.setAdapter(adapter);
 
         TabPageIndicator indicator = (TabPageIndicator)findViewById(R.id.indicator);
+        indicator.setTabIconLocation (TabPageIndicator.LOCATION_UP);
         indicator.setViewPager(pager);
     }
 
