@@ -23,6 +23,7 @@
     <bool name="default_circle_indicator_snap">false</bool>
     <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
     <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
+    <dimen name="default_circle_indicator_extra_spacing">0dp</dimen>
 
     <dimen name="default_line_indicator_line_width">12dp</dimen>
     <dimen name="default_line_indicator_gap_width">4dp</dimen>
