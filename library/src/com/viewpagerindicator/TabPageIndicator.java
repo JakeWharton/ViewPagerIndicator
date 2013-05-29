@@ -74,18 +74,19 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private OnTabReselectedListener mTabReselectedListener;
 
-    /**
-    * Stores the location of the tab icon
-    */
-    private int location;
 
     /**
     * Constants to improve readability - no magic numbers.
     */
     public final static int LOCATION_LEFT =0;
-    public final static int LOCATION_UP =1;
+    public final static int LOCATION_UP = 1;
     public final static int LOCATION_RIGHT = 2;
     public final static int LOCATION_BOTTOM =3;
+
+    /**
+    * Stores the location of the tab icon
+    */
+    private int location = LOCATION_LEFT;
 
     /**
     * Used to store the icon.
@@ -167,8 +168,10 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         }
     }
 
-    public void setTabIconLocation (int location){
-       this.location = location;
+    public void setTabIconLocation (int newLocation){
+        this.location = newLocation;
+        if (location > LOCATION_BOTTOM || location < LOCATION_LEFT)
+            throw new IllegalArgumentException ("Invalid location");
     }
 
     private void addTab(int index, CharSequence text, int iconResId) {
