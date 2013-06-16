@@ -49,6 +49,12 @@ public abstract class BaseSampleActivity extends FragmentActivity {
             case R.id.add_many_pages:
                 mAdapter.setCount(mAdapter.getCount() + 10000);
                 mIndicator.notifyDataSetChanged();
+                return true;
+
+            case R.id.remove_many_pages:
+                mAdapter.setCount(Math.max(mAdapter.getCount() - 10000, 1));
+                mIndicator.notifyDataSetChanged();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

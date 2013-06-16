@@ -41,7 +41,9 @@ class TestFragmentAdapter extends FragmentPagerAdapter implements IconPagerAdapt
     }
 
     public void setCount(int count) {
-        mCount = count;
-        notifyDataSetChanged();
+        if (count > 0) {
+            mCount = count;
+            notifyDataSetChanged();
+        }
     }
 }
