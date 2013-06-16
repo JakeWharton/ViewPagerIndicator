@@ -20,7 +20,11 @@ package com.viewpagerindicator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -28,7 +32,6 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -205,7 +208,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         Drawable background = a.getDrawable(R.styleable.TitlePageIndicator_android_background);
         if (background != null) {
-            setBackgroundDrawable(background);
+          setBackgroundDrawable(background);
         }
 
         a.recycle();
@@ -385,12 +388,12 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final int right = left + width;
         final float rightClip = right - mClipPadding;
 
-        int currentPage = mCurrentPage;
+        int page = mCurrentPage;
         float offsetPercent;
         if (mPageOffset <= 0.5) {
             offsetPercent = mPageOffset;
         } else {
-            currentPage += 1;
+            page += 1;
             offsetPercent = 1 - mPageOffset;
         }
         final boolean currentSelected = (offsetPercent <= SELECTION_FADE_PERCENTAGE);
@@ -457,7 +460,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
             //Only if one side is visible
             if ((bound.left > left && bound.left < right) || (bound.right > left && bound.right < right)) {
                 int realIndex = i + mStartIndex;
-                final boolean centerPage = (realIndex == currentPage);
+                final boolean centerPage = (realIndex == page);
                 final CharSequence pageTitle = getTitle(realIndex);
 
                 //Only set bold if we are within bounds
@@ -519,11 +522,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 break;
 
             case Underline:
-                if (!currentSelected || currentPage >= count) {
+                if (!currentSelected || page >= count) {
                     break;
                 }
 
-                Rect underlineBounds = bounds.get(currentPage - mStartIndex);
+                Rect underlineBounds = bounds.get(page - mStartIndex);
                 final float rightPlusPadding = underlineBounds.right + mFooterIndicatorUnderlinePadding;
                 final float leftMinusPadding = underlineBounds.left - mFooterIndicatorUnderlinePadding;
                 final float heightMinusLineMinusIndicator = heightMinusLine - footerIndicatorLineHeight;
@@ -677,13 +680,12 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final int halfWidth = width / 2;
 
         // Calculate the title for 2 items on both sides of the current page
-        int cacheRange = 2;
-        int startIndex = Math.max(mCurrentPage - cacheRange, 0);
-        int endIndex = Math.min(mCurrentPage + cacheRange + 1, count);
-        mCurrentPageProjection = mCurrentPage - startIndex;
-        mStartIndex = startIndex;
+        final int cacheRange = 2;
+        mStartIndex = Math.max(mCurrentPage - cacheRange, 0);
+        final int endIndex = Math.min(mCurrentPage + cacheRange + 1, count);
+        mCurrentPageProjection = mCurrentPage - mStartIndex;
 
-        for (int i = startIndex; i < endIndex; i++) {
+        for (int i = mStartIndex; i < endIndex; i++) {
             Rect bounds = calcBounds(i, paint);
             int w = bounds.right - bounds.left;
             int h = bounds.bottom - bounds.top;
@@ -856,7 +858,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         }
 
         @SuppressWarnings("UnusedDeclaration")
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
