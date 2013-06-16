@@ -4,4 +4,6 @@
     <item android:id="@+id/random" android:title="Random" />
     <item android:id="@+id/add_page" android:title="Add Page" />
     <item android:id="@+id/remove_page" android:title="Remove Page" />
+    <item android:id="@+id/add_many_pages" android:title="Add 10000 pages" />
+    <item android:id="@+id/remove_many_pages" android:title="Remove 10000 pages" />
 </menu>
