@@ -37,6 +37,8 @@
     <attr name="unselectedColor" format="color" />
 
     <declare-styleable name="CirclePageIndicator">
+        <!-- Spacing between the page indicators -->
+        <attr name="itemSpacing" format="dimension"/>
         <!-- Whether or not the indicators should be centered. -->
         <attr name="centered" />
         <!-- Color of the filled circle that represents the current page. -->
