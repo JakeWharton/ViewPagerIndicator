@@ -7,10 +7,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import com.viewpagerindicator.SlidingTabPageIndicator;
-import com.viewpagerindicator.TabPageIndicator;
 
 public class SampleTabsSliding extends FragmentActivity {
-    private static final String[] CONTENT = new String[] { "Recent", "Artists", "Albums", "Songs", "Playlists", "Genres" };
+    private static final String[] CONTENT = new String[] { "Recent Books", "Favorite Artists", "Recent Albums", "Songs", "My Playlists", "Genres" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

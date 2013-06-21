@@ -25,6 +25,7 @@ public class SlidingTabPageIndicator extends TabPageIndicator {
     public SlidingTabPageIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        mReMeasure = false;
         // load default resources
         final int defaultIndicatorColor = getResources().getColor(R.color.default_indicator_color);
         final int defaultIndicatorHeight = getResources().getDimensionPixelSize(R.dimen.default_indicator_height);

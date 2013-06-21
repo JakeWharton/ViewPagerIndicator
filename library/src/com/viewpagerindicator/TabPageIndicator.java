@@ -70,6 +70,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     private ViewPager.OnPageChangeListener mListener;
 
     private int mMaxTabWidth;
+    protected boolean mReMeasure = true; // Re-measure if we went beyond our maximum size.
     protected int mSelectedTabIndex;
 
     private OnTabReselectedListener mTabReselectedListener;
@@ -258,6 +259,10 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         mListener = listener;
     }
 
+    public void setReMeasure(boolean reMeasure) {
+        mReMeasure = reMeasure;
+    }
+
     private class TabView extends TextView {
         private int mIndex;
 
@@ -270,7 +275,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
             // Re-measure if we went beyond our maximum size.
-            if (mMaxTabWidth > 0 && getMeasuredWidth() > mMaxTabWidth) {
+            if (mMaxTabWidth > 0 && getMeasuredWidth() > mMaxTabWidth && mReMeasure) {
                 super.onMeasure(MeasureSpec.makeMeasureSpec(mMaxTabWidth, MeasureSpec.EXACTLY),
                         heightMeasureSpec);
             }
