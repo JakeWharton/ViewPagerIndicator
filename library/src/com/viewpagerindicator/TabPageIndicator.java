@@ -64,13 +64,13 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         }
     };
 
-    private final IcsLinearLayout mTabLayout;
+    protected final IcsLinearLayout mTabLayout;
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
 
     private int mMaxTabWidth;
-    private int mSelectedTabIndex;
+    protected int mSelectedTabIndex;
 
     private OnTabReselectedListener mTabReselectedListener;
 

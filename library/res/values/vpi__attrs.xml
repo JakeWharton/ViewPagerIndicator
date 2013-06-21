@@ -126,4 +126,15 @@
         <!-- View background -->
         <attr name="android:background"/>
     </declare-styleable>
+
+    <declare-styleable name="SlidingTabPageIndicator">
+        <!-- the color of indicator -->
+        <attr name="indicatorColor" format="color" />
+        <!-- the height of indicator -->
+        <attr name="indicatorHeight" format="dimension" />
+        <!-- the color of underline -->
+        <attr name="underlineColor" format="color" />
+        <!-- the height of underline, if height is less than or equal 0, underline would not be drawn -->
+        <attr name="underlineHeight" format="dimension" />
+    </declare-styleable>
 </resources>
