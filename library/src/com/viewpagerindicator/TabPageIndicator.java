@@ -24,6 +24,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -150,17 +151,27 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     }
 
     private void addTab(int index, CharSequence text, int iconResId) {
-        final TabView tabView = new TabView(getContext());
-        tabView.mIndex = index;
-        tabView.setFocusable(true);
-        tabView.setOnClickListener(mTabClickListener);
-        tabView.setText(text);
+        if(text.length() > 0 || iconResId == 0){
+            final TabView tabView = new TabView(getContext());
+            tabView.mIndex = index;
+            tabView.setFocusable(true);
+            tabView.setOnClickListener(mTabClickListener);
+            tabView.setText(text);
 
-        if (iconResId != 0) {
-            tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
+            if (iconResId != 0) {
+                tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
+            }
+
+            mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
+        } else {
+            final IconTabView tabView = new IconTabView(getContext());
+            tabView.mIndex = index;
+            tabView.setFocusable(true);
+            tabView.setOnClickListener(mTabClickListener);
+            tabView.setImageResource(iconResId);
+
+            mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
         }
-
-        mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
     }
 
     @Override
@@ -262,6 +273,29 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         private int mIndex;
 
         public TabView(Context context) {
+            super(context, null, R.attr.vpiTabPageIndicatorStyle);
+        }
+
+        @Override
+        public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+            // Re-measure if we went beyond our maximum size.
+            if (mMaxTabWidth > 0 && getMeasuredWidth() > mMaxTabWidth) {
+                super.onMeasure(MeasureSpec.makeMeasureSpec(mMaxTabWidth, MeasureSpec.EXACTLY),
+                        heightMeasureSpec);
+            }
+        }
+
+        public int getIndex() {
+            return mIndex;
+        }
+    }
+
+    private class IconTabView extends ImageView {
+        private int mIndex;
+
+        public IconTabView(Context context) {
             super(context, null, R.attr.vpiTabPageIndicatorStyle);
         }
 
