@@ -379,7 +379,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         final int countMinusOne = count - 1;
         final float halfWidth = getWidth() / 2f;
-        final int left = getLeft();
+        final int left = 0;//getLeft();
         final float leftClip = left + mClipPadding;
         final int width = getWidth();
         int height = getHeight();
@@ -404,10 +404,29 @@ public class TitlePageIndicator extends View implements PageIndicator {
         if (curPageBound.left < leftClip) {
             //Try to clip to the screen (left side)
             clipViewOnTheLeft(curPageBound, curPageWidth, left);
+
+            if (mCurrentPage + 1 < bounds.size()) {
+	            //Except if there's an intersection with the right view
+	            Rect rightBound = bounds.get(mCurrentPage + 1);
+	            //Intersection
+	            if (curPageBound.right + mTitlePadding > rightBound.left) {
+	            	curPageBound.left = (int) (rightBound.left - curPageWidth - mTitlePadding);
+	            	curPageBound.right = (int) (curPageBound.left + curPageWidth);
+	            }
+            }
         }
         if (curPageBound.right > rightClip) {
             //Try to clip to the screen (right side)
             clipViewOnTheRight(curPageBound, curPageWidth, right);
+            if (mCurrentPage > 0) {
+	            //Except if there's an intersection with the left view
+	            Rect leftBound = bounds.get(mCurrentPage - 1);
+	            //Intersection
+	            if (curPageBound.left - mTitlePadding < leftBound.right) {
+	            	curPageBound.left = (int) (leftBound.right + mTitlePadding);
+	            	curPageBound.right = (int) (curPageBound.left + curPageWidth);
+	            }
+            }
         }
 
         //Left views starting from the current position
