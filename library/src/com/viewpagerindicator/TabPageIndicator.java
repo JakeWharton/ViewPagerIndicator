@@ -74,6 +74,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private OnTabReselectedListener mTabReselectedListener;
 
+    private boolean mViewPagerHasAttached;
+
     public TabPageIndicator(Context context) {
         this(context, null);
     }
@@ -111,7 +113,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         final int newWidth = getMeasuredWidth();
 
-        if (lockedExpanded && oldWidth != newWidth) {
+        if (lockedExpanded && oldWidth != newWidth && mViewPagerHasAttached) {
             // Recenter the tab display if we're at a new (scrollable) size.
             setCurrentItem(mSelectedTabIndex);
         }
@@ -190,6 +192,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         if (mViewPager == view) {
             return;
         }
+        mViewPagerHasAttached = true;
         if (mViewPager != null) {
             mViewPager.setOnPageChangeListener(null);
         }
