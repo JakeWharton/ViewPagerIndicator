@@ -74,7 +74,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private OnTabReselectedListener mTabReselectedListener;
 
-	private boolean mViewPagerHasAttached;
+    private boolean mViewPagerHasAttached;
 
     public TabPageIndicator(Context context) {
         this(context, null);
