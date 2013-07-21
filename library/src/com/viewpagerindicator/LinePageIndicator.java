@@ -238,12 +238,12 @@ public class LinePageIndicator extends View implements PageIndicator {
                         if (action != MotionEvent.ACTION_CANCEL) {
                             mViewPager.setCurrentItem(mCurrentPage - 1);
                         }
-                        return true;
+                        return false;
                     } else if ((mCurrentPage < count - 1) && (ev.getX() > halfWidth + sixthWidth)) {
                         if (action != MotionEvent.ACTION_CANCEL) {
                             mViewPager.setCurrentItem(mCurrentPage + 1);
                         }
-                        return true;
+                        return false;
                     }
                 }
 
@@ -270,7 +270,7 @@ public class LinePageIndicator extends View implements PageIndicator {
                 break;
         }
 
-        return true;
+        return false;
     }
 
     @Override
