@@ -593,14 +593,14 @@ public class TitlePageIndicator extends View implements PageIndicator {
                             if (action != MotionEvent.ACTION_CANCEL) {
                                 mViewPager.setCurrentItem(mCurrentPage - 1);
                             }
-                            return true;
+                            return false;
                         }
                     } else if (eventX > rightThird) {
                         if (mCurrentPage < count - 1) {
                             if (action != MotionEvent.ACTION_CANCEL) {
                                 mViewPager.setCurrentItem(mCurrentPage + 1);
                             }
-                            return true;
+                            return false;
                         }
                     } else {
                         //Middle third
@@ -633,7 +633,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 break;
         }
 
-        return true;
+        return false;
     }
 
     /**
