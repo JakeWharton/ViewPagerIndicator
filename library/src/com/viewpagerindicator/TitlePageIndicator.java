@@ -77,7 +77,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     }
 
     public enum IndicatorStyle {
-        None(0), Triangle(1), Underline(2);
+        None(0), Triangle(1), Underline(2), Block(3);
 
         public final int value;
 
@@ -449,7 +449,79 @@ public class TitlePageIndicator extends View implements PageIndicator {
             }
         }
 
-        //Now draw views
+        //If we want the line on the top change height to zero and invert the line height to trick the drawing code
+        float footerLineHeight = mFooterLineHeight;
+        float footerIndicatorLineHeight = mFooterIndicatorHeight;
+        if (mLinePosition == LinePosition.Top) {
+            height = 0;
+            footerLineHeight = -footerLineHeight;
+            footerIndicatorLineHeight = -footerIndicatorLineHeight;
+        }
+
+        //Draw the footer line
+        mPath.reset();
+        mPath.moveTo(0, height - footerLineHeight / 2f);
+        mPath.lineTo(width, height - footerLineHeight / 2f);
+        mPath.close();
+        canvas.drawPath(mPath, mPaintFooterLine);
+
+        float heightMinusLine = height - footerLineHeight;
+        switch (mFooterIndicatorStyle) {
+            case Triangle:
+                mPath.reset();
+                mPath.moveTo(halfWidth, heightMinusLine - footerIndicatorLineHeight);
+                mPath.lineTo(halfWidth + footerIndicatorLineHeight, heightMinusLine);
+                mPath.lineTo(halfWidth - footerIndicatorLineHeight, heightMinusLine);
+                mPath.close();
+                canvas.drawPath(mPath, mPaintFooterIndicator);
+                break;
+
+            case Underline:
+            {
+                if (!currentSelected || page >= boundsSize) {
+                    break;
+                }
+
+                Rect underlineBounds = bounds.get(page);
+                final float rightPlusPadding = underlineBounds.right + mFooterIndicatorUnderlinePadding;
+                final float leftMinusPadding = underlineBounds.left - mFooterIndicatorUnderlinePadding;
+                final float heightMinusLineMinusIndicator = heightMinusLine - footerIndicatorLineHeight;
+
+                mPath.reset();
+                mPath.moveTo(leftMinusPadding, heightMinusLine);
+                mPath.lineTo(rightPlusPadding, heightMinusLine);
+                mPath.lineTo(rightPlusPadding, heightMinusLineMinusIndicator);
+                mPath.lineTo(leftMinusPadding, heightMinusLineMinusIndicator);
+                mPath.close();
+
+                mPaintFooterIndicator.setAlpha((int)(0xFF * selectedPercent));
+                canvas.drawPath(mPath, mPaintFooterIndicator);
+                mPaintFooterIndicator.setAlpha(0xFF);
+            }
+                break;
+            case Block:
+            {
+                if (!currentSelected || page >= boundsSize) {
+                    break;
+                }
+
+                Rect underlineBounds = bounds.get(page);
+                final float rightPlusPadding = underlineBounds.right + mFooterIndicatorUnderlinePadding;
+                final float leftMinusPadding = underlineBounds.left - mFooterIndicatorUnderlinePadding;
+
+                mPath.reset();
+                mPath.addRect(leftMinusPadding, underlineBounds.top, rightPlusPadding, heightMinusLine, Path.Direction.CCW);
+                mPath.close();
+
+                mPaintFooterIndicator.setAlpha((int)(0xFF * selectedPercent));
+                canvas.drawPath(mPath, mPaintFooterIndicator);
+                mPaintFooterIndicator.setAlpha(0xFF);
+            }
+                break;
+                
+        }
+        
+      //Now draw views
         int colorTextAlpha = mColorText >>> 24;
         for (int i = 0; i < count; i++) {
             //Get the title
@@ -488,56 +560,6 @@ public class TitlePageIndicator extends View implements PageIndicator {
                     canvas.drawText(pageTitle, 0, pageTitle.length(), bound.left, bound.bottom + mTopPadding, mPaintText);
                 }
             }
-        }
-
-        //If we want the line on the top change height to zero and invert the line height to trick the drawing code
-        float footerLineHeight = mFooterLineHeight;
-        float footerIndicatorLineHeight = mFooterIndicatorHeight;
-        if (mLinePosition == LinePosition.Top) {
-            height = 0;
-            footerLineHeight = -footerLineHeight;
-            footerIndicatorLineHeight = -footerIndicatorLineHeight;
-        }
-
-        //Draw the footer line
-        mPath.reset();
-        mPath.moveTo(0, height - footerLineHeight / 2f);
-        mPath.lineTo(width, height - footerLineHeight / 2f);
-        mPath.close();
-        canvas.drawPath(mPath, mPaintFooterLine);
-
-        float heightMinusLine = height - footerLineHeight;
-        switch (mFooterIndicatorStyle) {
-            case Triangle:
-                mPath.reset();
-                mPath.moveTo(halfWidth, heightMinusLine - footerIndicatorLineHeight);
-                mPath.lineTo(halfWidth + footerIndicatorLineHeight, heightMinusLine);
-                mPath.lineTo(halfWidth - footerIndicatorLineHeight, heightMinusLine);
-                mPath.close();
-                canvas.drawPath(mPath, mPaintFooterIndicator);
-                break;
-
-            case Underline:
-                if (!currentSelected || page >= boundsSize) {
-                    break;
-                }
-
-                Rect underlineBounds = bounds.get(page);
-                final float rightPlusPadding = underlineBounds.right + mFooterIndicatorUnderlinePadding;
-                final float leftMinusPadding = underlineBounds.left - mFooterIndicatorUnderlinePadding;
-                final float heightMinusLineMinusIndicator = heightMinusLine - footerIndicatorLineHeight;
-
-                mPath.reset();
-                mPath.moveTo(leftMinusPadding, heightMinusLine);
-                mPath.lineTo(rightPlusPadding, heightMinusLine);
-                mPath.lineTo(rightPlusPadding, heightMinusLineMinusIndicator);
-                mPath.lineTo(leftMinusPadding, heightMinusLineMinusIndicator);
-                mPath.close();
-
-                mPaintFooterIndicator.setAlpha((int)(0xFF * selectedPercent));
-                canvas.drawPath(mPath, mPaintFooterIndicator);
-                mPaintFooterIndicator.setAlpha(0xFF);
-                break;
         }
     }
 
