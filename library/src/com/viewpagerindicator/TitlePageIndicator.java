@@ -38,6 +38,7 @@ import android.view.ViewConfiguration;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A TitlePageIndicator is a PageIndicator which displays the title of left view
@@ -121,6 +122,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private float mPageOffset;
     private int mScrollState;
     private final Paint mPaintText = new Paint();
+    private boolean mTextAllCaps;
     private boolean mBoldText;
     private int mColorText;
     private int mColorSelected;
@@ -175,6 +177,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final int defaultLinePosition = res.getInteger(R.integer.default_title_indicator_line_position);
         final int defaultSelectedColor = res.getColor(R.color.default_title_indicator_selected_color);
         final boolean defaultSelectedBold = res.getBoolean(R.bool.default_title_indicator_selected_bold);
+        final boolean defaultTextAllCaps = res.getBoolean(R.bool.default_title_indicator_text_all_caps);
         final int defaultTextColor = res.getColor(R.color.default_title_indicator_text_color);
         final float defaultTextSize = res.getDimension(R.dimen.default_title_indicator_text_size);
         final float defaultTitlePadding = res.getDimension(R.dimen.default_title_indicator_title_padding);
@@ -197,6 +200,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mColorSelected = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
         mColorText = a.getColor(R.styleable.TitlePageIndicator_android_textColor, defaultTextColor);
         mBoldText = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
+        mTextAllCaps = a.getBoolean(R.styleable.TitlePageIndicator_textAllCaps, defaultTextAllCaps);
 
         final float textSize = a.getDimension(R.styleable.TitlePageIndicator_android_textSize, defaultTextSize);
         final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
@@ -291,6 +295,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     public void setSelectedBold(boolean selectedBold) {
         mBoldText = selectedBold;
+        invalidate();
+    }
+
+    public boolean isTextAllCaps() {
+        return mTextAllCaps;
+    }
+
+    public void setTextAllCaps(boolean textAllCaps) {
+        mTextAllCaps = textAllCaps;
         invalidate();
     }
 
@@ -915,6 +928,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
         if (title == null) {
             title = EMPTY_TITLE;
         }
+
+        if (mTextAllCaps)
+            return title.toString().toUpperCase(Locale.getDefault());
+
         return title;
     }
 }
