@@ -198,7 +198,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mViewPager == null) {
+        if (mViewPager == null || mViewPager.getAdapter() == null) {
             return;
         }
         final int count = mViewPager.getAdapter().getCount();
