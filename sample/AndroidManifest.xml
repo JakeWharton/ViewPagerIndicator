@@ -5,7 +5,7 @@
     android:versionName="2.4.1">
 
     <uses-sdk
-        android:minSdkVersion="4"
+        android:minSdkVersion="10"
         android:targetSdkVersion="16" />
 
     <application
@@ -246,6 +246,16 @@
           <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
         </intent-filter>
       </activity>
+
+        <activity
+            android:name=".NavigationDrawerActivity"
+            android:label="Tabs/Fragment BackStack"
+            android:theme="@style/StyledIndicatorsCustom">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
 
 
 
