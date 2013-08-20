@@ -402,7 +402,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         Rect curPageBound = bounds.get(mCurrentPage);
 
         float curPageWidth = curPageBound.right - curPageBound.left;
-        if (curPageBound.left < leftClip) {
+        if (curPageBound.left < leftClip && mCurrentPage < (bounds.size()-1)) {
         	Rect nextPageBound = bounds.get(mCurrentPage+1);
         	
         	if ((mClipPadding + curPageWidth) < nextPageBound.left) {
@@ -414,7 +414,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         	}
         }
 
-        if (curPageBound.right > rightClip) {
+        if (curPageBound.right > rightClip && mCurrentPage > 0) {
         	Rect prevPageBound = bounds.get(mCurrentPage-1);
         	
         	if ((mClipPadding - curPageWidth) > prevPageBound.right) {
