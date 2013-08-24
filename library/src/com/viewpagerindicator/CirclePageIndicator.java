@@ -265,7 +265,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         //Draw the filled circle according to the current scroll
         float cx = getFillPage() * threeRadius;
-        if (!mSnap) {
+        if (!mSnap && getFillPage() != (getPageCount() - 1)) {
             cx += mPageOffset * threeRadius;
         }
         if (mOrientation == HORIZONTAL) {
