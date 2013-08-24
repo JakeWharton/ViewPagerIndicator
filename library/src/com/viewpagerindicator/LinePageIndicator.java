@@ -171,7 +171,7 @@ public class LinePageIndicator extends View implements PageIndicator {
         }
 
         final float lineWidthAndGap = mLineWidth + mGapWidth;
-        final float indicatorWidth = (count * lineWidthAndGap) - mGapWidth;
+        final float indicatorWidth = (getPageCount() * lineWidthAndGap) - mGapWidth;
         final float paddingTop = getPaddingTop();
         final float paddingLeft = getPaddingLeft();
         final float paddingRight = getPaddingRight();
@@ -183,11 +183,23 @@ public class LinePageIndicator extends View implements PageIndicator {
         }
 
         //Draw stroked circles
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < getPageCount(); i++) {
             float dx1 = horizontalOffset + (i * lineWidthAndGap);
             float dx2 = dx1 + mLineWidth;
-            canvas.drawLine(dx1, verticalOffset, dx2, verticalOffset, (i == mCurrentPage) ? mPaintSelected : mPaintUnselected);
+            canvas.drawLine(dx1, verticalOffset, dx2, verticalOffset, (i == getFillPage()) ? mPaintSelected : mPaintUnselected);
         }
+    }
+
+    protected int getPageCount() {
+        return mViewPager != null && mViewPager.getAdapter() != null ? mViewPager.getAdapter().getCount() : 0;
+    }
+
+    protected int getFillPage() {
+        return mCurrentPage;
+    }
+
+    protected ViewPager getViewPager() {
+        return mViewPager;
     }
 
     public boolean onTouchEvent(android.view.MotionEvent ev) {
