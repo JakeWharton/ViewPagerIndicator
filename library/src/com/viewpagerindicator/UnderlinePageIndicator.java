@@ -100,7 +100,10 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
 
         Drawable background = a.getDrawable(R.styleable.UnderlinePageIndicator_android_background);
         if (background != null) {
-          setBackgroundDrawable(background);
+		  if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+          	setBackgroundDrawable(background);
+		  else
+			  setBackground(background);
         }
 
         a.recycle();
