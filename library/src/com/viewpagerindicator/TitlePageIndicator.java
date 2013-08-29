@@ -396,18 +396,34 @@ public class TitlePageIndicator extends View implements PageIndicator {
         }
         final boolean currentSelected = (offsetPercent <= SELECTION_FADE_PERCENTAGE);
         final boolean currentBold = (offsetPercent <= BOLD_FADE_PERCENTAGE);
-        final float selectedPercent = (SELECTION_FADE_PERCENTAGE - offsetPercent) / SELECTION_FADE_PERCENTAGE;
+        final float selectedPercent = Math.min(1, (SELECTION_FADE_PERCENTAGE - offsetPercent) / SELECTION_FADE_PERCENTAGE);
 
         //Verify if the current view must be clipped to the screen
         Rect curPageBound = bounds.get(mCurrentPage);
+
         float curPageWidth = curPageBound.right - curPageBound.left;
-        if (curPageBound.left < leftClip) {
-            //Try to clip to the screen (left side)
-            clipViewOnTheLeft(curPageBound, curPageWidth, left);
+        if (curPageBound.left < leftClip && mCurrentPage < (bounds.size()-1)) {
+            Rect nextPageBound = bounds.get(mCurrentPage+1);
+
+            if ((mClipPadding + curPageWidth) < nextPageBound.left) {
+                //Try to clip to the screen (left side)
+                clipViewOnTheLeft(curPageBound, curPageWidth, left);
+            } else {
+                curPageBound.right = (int) (nextPageBound.left - mTitlePadding);
+                curPageBound.left = (int) (curPageBound.right - curPageWidth);
+            }
         }
-        if (curPageBound.right > rightClip) {
-            //Try to clip to the screen (right side)
-            clipViewOnTheRight(curPageBound, curPageWidth, right);
+
+        if (curPageBound.right > rightClip && mCurrentPage > 0) {
+            Rect prevPageBound = bounds.get(mCurrentPage-1);
+
+            if ((mClipPadding - curPageWidth) > prevPageBound.right) {
+                //Try to clip to the screen (right side)
+                clipViewOnTheRight(curPageBound, curPageWidth, right);
+            } else {
+                curPageBound.left = (int) (prevPageBound.right + mTitlePadding);
+                curPageBound.right = (int) (curPageBound.left + curPageWidth);
+            }
         }
 
         //Left views starting from the current position
