@@ -170,12 +170,24 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
         }
 
         final int paddingLeft = getPaddingLeft();
-        final float pageWidth = (getWidth() - paddingLeft - getPaddingRight()) / (1f * count);
-        final float left = paddingLeft + pageWidth * (mCurrentPage + mPositionOffset);
+        final float pageWidth = (getWidth() - paddingLeft - getPaddingRight()) / (1f * getPageCount());
+        final float left = paddingLeft + pageWidth * (getFillPage() + mPositionOffset);
         final float right = left + pageWidth;
         final float top = getPaddingTop();
         final float bottom = getHeight() - getPaddingBottom();
         canvas.drawRect(left, top, right, bottom, mPaint);
+    }
+
+    protected int getPageCount() {
+        return mViewPager != null && mViewPager.getAdapter() != null ? mViewPager.getAdapter().getCount() : 0;
+    }
+
+    protected int getFillPage() {
+        return mCurrentPage;
+    }
+
+    protected ViewPager getViewPager() {
+        return mViewPager;
     }
 
     public boolean onTouchEvent(MotionEvent ev) {

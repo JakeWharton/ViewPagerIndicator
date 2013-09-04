@@ -50,4 +50,9 @@
     <integer name="default_underline_indicator_fade_delay">300</integer>
     <integer name="default_underline_indicator_fade_length">400</integer>
     <color name="default_underline_indicator_selected_color">#FF33B5E5</color>
+
+    <color name="default_indicator_color">#FF33B5E5</color>
+    <dimen name="default_indicator_height">6dp</dimen>
+    <color name="default_underline_color">#FF33B5E5</color>
+    <dimen name="default_underline_height">0dp</dimen>
 </resources>

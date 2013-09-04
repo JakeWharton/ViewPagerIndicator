@@ -231,7 +231,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         final float shortOffset = shortPaddingBefore + mRadius;
         float longOffset = longPaddingBefore + mRadius;
         if (mCentered) {
-            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
+            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((getPageCount() * threeRadius) / 2.0f);
         }
 
         float dX;
@@ -243,7 +243,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         //Draw stroked circles
-        for (int iLoop = 0; iLoop < count; iLoop++) {
+        for (int iLoop = 0; iLoop < getPageCount(); iLoop++) {
             float drawLong = longOffset + (iLoop * threeRadius);
             if (mOrientation == HORIZONTAL) {
                 dX = drawLong;
@@ -264,8 +264,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         //Draw the filled circle according to the current scroll
-        float cx = (mSnap ? mSnapPage : mCurrentPage) * threeRadius;
-        if (!mSnap) {
+        float cx = getFillPage() * threeRadius;
+        if (!mSnap && getFillPage() != (getPageCount() - 1)) {
             cx += mPageOffset * threeRadius;
         }
         if (mOrientation == HORIZONTAL) {
@@ -276,6 +276,18 @@ public class CirclePageIndicator extends View implements PageIndicator {
             dY = longOffset + cx;
         }
         canvas.drawCircle(dX, dY, mRadius, mPaintFill);
+    }
+
+    protected int getPageCount() {
+        return mViewPager != null && mViewPager.getAdapter() != null ? mViewPager.getAdapter().getCount() : 0;
+    }
+
+    protected int getFillPage() {
+        return mSnap ? mSnapPage : mCurrentPage;
+    }
+
+    protected ViewPager getViewPager() {
+        return mViewPager;
     }
 
     public boolean onTouchEvent(android.view.MotionEvent ev) {
