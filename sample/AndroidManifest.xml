@@ -255,6 +255,24 @@
             <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
         </intent-filter>
       </activity>
+      <activity
+                android:name=".SampleTabsLinear"
+                android:label="Tabs/Linear"
+                android:theme="@style/Theme.PageIndicatorDefaults">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".SampleTabsSlidingLinear"
+                android:label="Tabs/Linear Sliding"
+                android:theme="@style/Theme.SlidingPageIndicatorDefaults">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
 
 
 
