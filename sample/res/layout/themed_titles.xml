@@ -35,7 +35,7 @@
         app:selectedColor="#FF000000"
         app:selectedBold="true"
         />
-    <android.support.v4.view.ViewPager
+    <com.imbryk.viewPager.LoopViewPager
         android:id="@+id/pager"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
