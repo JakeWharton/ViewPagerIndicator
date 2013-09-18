@@ -12,6 +12,10 @@ gen
 *.iml
 classes
 
+# Gradle
+.gradle
+build
+
 #Maven
 target
 release.properties

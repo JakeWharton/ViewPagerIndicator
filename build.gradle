@@ -1,0 +1,20 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:0.5.+'
+  }
+}
+
+allprojects {
+  group = 'com.viewpagerindicator'
+  version = '2.4.2-SNAPSHOT'
+
+  repositories {
+    mavenCentral()
+  }
+}
+
+apply plugin: 'android-reporting'
