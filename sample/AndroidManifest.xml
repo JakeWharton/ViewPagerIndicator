@@ -294,5 +294,23 @@
             </intent-filter>
         </activity>
 
+        <!-- TEXTUAL INDICATOR -->
+        <activity
+            android:name=".SampleTextDefault"
+            android:label="Text/Default">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SampleTextCustomTemplate"
+            android:label="Text/Custom Template">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
+        
     </application>
 </manifest>

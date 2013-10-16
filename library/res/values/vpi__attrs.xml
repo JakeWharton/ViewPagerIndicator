@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2012 Jake Wharton
      Copyright (C) 2011 Patrik Åkerfeldt
+     Copyright (C) 2013 Steelkiwi Development, Julia Zudikova
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -125,5 +126,10 @@
         <attr name="selectedColor" />
         <!-- View background -->
         <attr name="android:background"/>
+    </declare-styleable>
+    
+    <declare-styleable name="TextPageIndicator">
+        <!-- A template of indicator text -->
+        <attr name="template" format="integer" />
     </declare-styleable>
 </resources>
