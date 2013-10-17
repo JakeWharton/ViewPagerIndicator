@@ -16,8 +16,8 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 /**
  * Created By: andrewgrosner
  * Date: 10/17/13
- * Contributors:
- * Description:
+ * Contributors: andrewgrosner
+ * Description: Provides a way for adding custom views to the pager indicator when more complex layouts are necessary.
  */
 public class CustomViewPagerIndicator extends HorizontalScrollView implements PageIndicator{
     /** Title text used when no title is provided by the adapter. */
@@ -37,8 +37,27 @@ public class CustomViewPagerIndicator extends HorizontalScrollView implements Pa
         void onTabReselected(int position);
     }
 
+    /**
+     * Interface for an adapter to return the view object for the indicator. This is required for the indicator
+     * otherwise an {@link IllegalStateException} will occur.
+     */
     public interface CustomViewPagerAdapter{
+
+        /**
+         * Implement this method to return a custom view
+         * @param position
+         * @param parent
+         * @return
+         */
         public View getIndicatorView(int position, ViewGroup parent);
+    }
+
+    /**
+     * Implement this in your custom view to be notified when it has been selected as the current item or deselected.
+     */
+    public interface CustomViewActivator{
+        public void OnSelected();
+        public void OnDeSelected();
     }
 
     private Runnable mTabSelector;
@@ -226,8 +245,19 @@ public class CustomViewPagerIndicator extends HorizontalScrollView implements Pa
             final View child = mTabLayout.getChildAt(i);
             final boolean isSelected = (i == item);
             child.setSelected(isSelected);
+
+            CustomViewActivator activator = null;
+            if(child instanceof CustomViewActivator){
+                activator = (CustomViewActivator) child;
+            }
+
             if (isSelected) {
                 animateToTab(item);
+                if(activator!=null){
+                    activator.OnSelected();
+                }
+            } else if(activator!=null){
+                activator.OnDeSelected();
             }
         }
     }
