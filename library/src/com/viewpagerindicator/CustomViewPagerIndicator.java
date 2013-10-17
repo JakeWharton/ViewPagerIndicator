@@ -1,6 +1,7 @@
 package com.viewpagerindicator;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -91,7 +92,7 @@ public class CustomViewPagerIndicator extends HorizontalScrollView implements Pa
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
 
-        mTabLayout = new IcsLinearLayout(context, R.attr.vpiTabPageIndicatorStyle);
+        mTabLayout = new IcsLinearLayout(context, R.attr.vpiCustomViewPageIndicatorStyle);
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
     }
 

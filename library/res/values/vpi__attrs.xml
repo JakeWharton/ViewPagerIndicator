@@ -29,6 +29,8 @@
         <attr name="vpiTabPageIndicatorStyle" format="reference"/>
         <!-- Style of the underline indicator. -->
         <attr name="vpiUnderlinePageIndicatorStyle" format="reference"/>
+	    <!-- Style of the custom view indicator. -->
+	    <attr name="vpiCustomViewPageIndicatorStyle" format="reference"/>
     </declare-styleable>
 
     <attr name="centered" format="boolean" />
