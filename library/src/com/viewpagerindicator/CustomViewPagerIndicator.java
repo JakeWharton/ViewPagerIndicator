@@ -197,8 +197,9 @@ public class CustomViewPagerIndicator extends HorizontalScrollView implements Pa
             mViewPager.setOnPageChangeListener(null);
         }
         final PagerAdapter adapter = view.getAdapter();
-        if (adapter == null) {
-            throw new IllegalStateException("ViewPager does not have adapter instance.");
+        if (adapter == null || !(adapter instanceof CustomViewPagerAdapter)) {
+            throw new IllegalStateException("ViewPager does not have adapter instance of type CustomViewPagerAdapter" +
+                    ".");
         }
         mViewPager = view;
         view.setOnPageChangeListener(this);
