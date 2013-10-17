@@ -38,7 +38,7 @@ public class CustomViewPagerIndicator extends HorizontalScrollView implements Pa
     }
 
     public interface CustomViewPagerAdapter{
-        public View getIndicatorView(int position);
+        public View getIndicatorView(int position, ViewGroup parent);
     }
 
     private Runnable mTabSelector;
@@ -197,7 +197,7 @@ public class CustomViewPagerIndicator extends HorizontalScrollView implements Pa
         }
         final int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
-            View view = customViewPagerAdapter.getIndicatorView(i);
+            View view = customViewPagerAdapter.getIndicatorView(i, mTabLayout);
             addTab(i, view);
         }
         if (mSelectedTabIndex > count) {
