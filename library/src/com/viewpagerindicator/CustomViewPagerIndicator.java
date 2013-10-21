@@ -96,6 +96,10 @@ public class CustomViewPagerIndicator extends HorizontalScrollView implements Pa
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
     }
 
+    public void setDividerDrawable(Drawable dividerDrawable){
+        mTabLayout.setDividerDrawable(dividerDrawable);
+    }
+
     public void setOnTabReselectedListener(OnTabReselectedListener listener) {
         mTabReselectedListener = listener;
     }

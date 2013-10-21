@@ -31,6 +31,8 @@
         <attr name="vpiUnderlinePageIndicatorStyle" format="reference"/>
 	    <!-- Style of the custom view indicator. -->
 	    <attr name="vpiCustomViewPageIndicatorStyle" format="reference"/>
+	    <attr name="vpiBannerViewStyle" format="reference"/>
+
     </declare-styleable>
 
     <attr name="centered" format="boolean" />
@@ -38,7 +40,7 @@
     <attr name="strokeWidth" format="dimension" />
     <attr name="unselectedColor" format="color" />
 
-    <declare-styleable name="CirclePageIndicator">
+	<declare-styleable name="CirclePageIndicator">
         <!-- Whether or not the indicators should be centered. -->
         <attr name="centered" />
         <!-- Color of the filled circle that represents the current page. -->

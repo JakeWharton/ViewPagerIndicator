@@ -49,4 +49,10 @@
 	<style name="Widget.CustomViewPageIndicator">
 		<item name="android:background">@android:color/transparent</item>
 	</style>
+
+	<style name="Widget.BannerPageIndicator">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">1000dp</item>
+		<item name="android:background">@android:color/black</item>
+	</style>
 </resources>
