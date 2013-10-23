@@ -1,10 +1,15 @@
 package com.viewpagerindicator;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Point;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 
 /**
@@ -22,6 +27,10 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
 
     private BannerView mBanner;
 
+    private AttributeSet mAttrs;
+
+    private int scrollOrigin = 0;
+
     public BannerPageIndicator(Context context) {
         this(context, null);
     }
@@ -29,9 +38,30 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
     public BannerPageIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
+        mAttrs = attrs;
+    }
 
-        mBanner = new BannerView(context, attrs, R.attr.vpiBannerViewStyle);
+    public void disableTouches(){
+        setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+    }
 
+    /**
+     * Allows for a custom view to be shown
+     * @param bannerView
+     */
+    public void showCustomBannerView(BannerView bannerView){
+        if(mBanner!=null){
+            scrollTo(0,0);
+            removeView(mBanner);
+            mBanner = null;
+        }
+
+        mBanner = bannerView;
         addView(mBanner);
     }
 
@@ -41,6 +71,13 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
             if(mPager!=null){
                 mPager.setOnPageChangeListener(null);
             }
+
+            if(mBanner==null){
+                mBanner = new BannerView(getContext(), mAttrs, R.attr.vpiBannerViewStyle);
+
+                addView(mBanner);
+            }
+
             final PagerAdapter adapter = view.getAdapter();
             if(adapter==null){
                 throw new IllegalStateException("View pager does not have an adapter instance.");
