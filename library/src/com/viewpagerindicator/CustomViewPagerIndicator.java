@@ -74,7 +74,7 @@ public class CustomViewPagerIndicator extends HorizontalScrollView implements Pa
         }
     };
 
-    private final IcsLinearLayout mTabLayout;
+    private final LinearLayout mTabLayout;
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
@@ -92,7 +92,7 @@ public class CustomViewPagerIndicator extends HorizontalScrollView implements Pa
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
 
-        mTabLayout = new IcsLinearLayout(context, R.attr.vpiCustomViewPageIndicatorStyle);
+        mTabLayout = new LinearLayout(context);
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
     }
 
