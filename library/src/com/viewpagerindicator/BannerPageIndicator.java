@@ -142,7 +142,7 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         }
 
         int width = mBanner.getWidth();
-        int scrollRate = width/mPager.getAdapter().getCount();
+        int scrollRate = (width/mPager.getAdapter().getCount())/2;
 
 
         smoothScrollTo((int) (scrollRate*(position +positionOffset)), getBottom());
