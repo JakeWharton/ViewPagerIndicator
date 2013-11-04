@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,7 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
     private AttributeSet mAttrs;
 
     private int scrollOrigin = 0;
+    private double bannerWidth = 0, screenWidth;
 
     public BannerPageIndicator(Context context) {
         this(context, null);
@@ -62,6 +64,15 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         }
 
         mBanner = bannerView;
+        mBanner.post(new Runnable() {
+            @Override
+            public void run() {
+                if(mBanner instanceof BannerView.IBannerView){
+                    bannerWidth = ((BannerView.IBannerView) mBanner).getBannerWidth();
+                } else bannerWidth = mBanner.getWidth();
+            }
+        });
+        screenWidth = bannerView.getContext().getResources().getDisplayMetrics().widthPixels;
         addView(mBanner);
     }
 
@@ -141,11 +152,9 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
             mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
 
-        int width = mBanner.getWidth();
-        int scrollRate = (width/mPager.getAdapter().getCount())/2;
-
-
-        smoothScrollTo((int) (scrollRate*(position +positionOffset)), getBottom());
+        double scrollRate = (bannerWidth-screenWidth)/((double)mPager.getAdapter().getCount());
+        smoothScrollTo((int) (scrollRate * (position + positionOffset)), getBottom());
+        //smoothScrollBy((int) (scrollRate*positionOffset),0);
     }
 
     @Override

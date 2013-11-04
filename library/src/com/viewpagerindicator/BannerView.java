@@ -14,6 +14,10 @@ import android.widget.TextView;
  */
 public class BannerView extends FrameLayout{
 
+    public interface IBannerView{
+        public int getBannerWidth();
+    }
+
     public BannerView(Context context) {
         super(context);
         setupUI(context);
