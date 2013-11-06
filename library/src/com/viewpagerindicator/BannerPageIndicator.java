@@ -9,10 +9,9 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 
 /**
- * Enables for custom views to move inline with a viewpager, providing a parallax effect or a fluid horizontal scroll
- * effect when a viewpager is moving.
- * Date: 10/18/13
- * Contributors: Andrew Grosner
+ * Enables custom views to move inline with a viewpager, providing either a parallax effect,
+ * where the viewpager scrolls on top of the banner moving in the background, or a fluid horizontal
+ * scroll as the viewpager scrolls.
  */
 public class BannerPageIndicator extends HorizontalScrollView implements PageIndicator{
 
