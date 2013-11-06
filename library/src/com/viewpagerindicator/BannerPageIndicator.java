@@ -1,16 +1,11 @@
 package com.viewpagerindicator;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Point;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 
 /**
@@ -25,8 +20,8 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
     private ViewPager.OnPageChangeListener mListener;
 
     private int mSelectedTabIndex;
-    private int scrollOrigin = 0;
-    private double bannerWidth = 0, screenWidth;
+    private int mScrollOrigin = 0;
+    private double mBannerWidth = 0, mScreenWidth;
     private boolean isTouchesEnabled = true;
 
     /**
@@ -48,7 +43,7 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
         mAttrs = attrs;
-        screenWidth = context.getResources().getDisplayMetrics().widthPixels;
+        mScreenWidth = context.getResources().getDisplayMetrics().widthPixels;
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -89,8 +84,8 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
             @Override
             public void run() {
                 if(mBanner instanceof BannerView.IBannerView){
-                    bannerWidth = ((BannerView.IBannerView) mBanner).getBannerWidth();
-                } else bannerWidth = mBanner.getWidth();
+                    mBannerWidth = ((BannerView.IBannerView) mBanner).getBannerWidth();
+                } else mBannerWidth = mBanner.getWidth();
             }
         });
         addView(mBanner);
@@ -108,7 +103,7 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
                 mBanner.post(new Runnable() {
                     @Override
                     public void run() {
-                        bannerWidth = mBanner.getMeasuredWidth();
+                        mBannerWidth = mBanner.getMeasuredWidth();
                     }
                 });
                 addView(mBanner);
@@ -176,7 +171,7 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
             mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
         //we scroll the banner based on how many items in the adapter in order to get an even step
-        double scrollRate = (bannerWidth-(screenWidth/2))/((double)mPager.getAdapter().getCount());
+        double scrollRate = (mBannerWidth -(mScreenWidth /2))/((double)mPager.getAdapter().getCount());
         smoothScrollTo((int) (scrollRate * (position + positionOffset)), getBottom());
     }
 
