@@ -294,5 +294,23 @@
             </intent-filter>
         </activity>
 
+	    <!-- BANNER INDICATOR -->
+	    <activity
+		    android:name=".SampleBannerDefault"
+		    android:label="Banners/Default">
+		    <intent-filter>
+			    <action android:name="android.intent.action.MAIN" />
+			    <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+		    </intent-filter>
+	    </activity>
+	    <activity
+		    android:name=".SampleBannerParallax"
+		    android:label="Banners/Parallax">
+		    <intent-filter>
+			    <action android:name="android.intent.action.MAIN" />
+			    <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+		    </intent-filter>
+	    </activity>
+
     </application>
 </manifest>

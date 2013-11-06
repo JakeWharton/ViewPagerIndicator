@@ -44,6 +44,7 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
         mAttrs = attrs;
+        screenWidth = context.getResources().getDisplayMetrics().widthPixels;
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -88,7 +89,6 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
                 } else bannerWidth = mBanner.getWidth();
             }
         });
-        screenWidth = bannerView.getContext().getResources().getDisplayMetrics().widthPixels;
         addView(mBanner);
     }
 
@@ -101,7 +101,12 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
 
             if(mBanner==null){
                 mBanner = new BannerView(getContext(), mAttrs, R.attr.vpiBannerViewStyle);
-
+                mBanner.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        bannerWidth = mBanner.getMeasuredWidth();
+                    }
+                });
                 addView(mBanner);
             }
 
@@ -166,9 +171,8 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         if(mListener!=null){
             mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
-
-        //we scroll based on a fraction at a time of the count of items in the viewpager's adapter
-        double scrollRate = (bannerWidth-screenWidth)/((double)mPager.getAdapter().getCount());
+        //we scroll based on a fraction at a time based on the count of items in the viewpager's adapter
+        double scrollRate = (bannerWidth-(screenWidth/2))/((double)mPager.getAdapter().getCount());
         smoothScrollTo((int) (scrollRate * (position + positionOffset)), getBottom());
     }
 
@@ -185,5 +189,9 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         if(mListener!=null){
             mListener.onPageScrollStateChanged(i);
         }
+    }
+
+    public BannerView getBannerView(){
+        return mBanner;
     }
 }

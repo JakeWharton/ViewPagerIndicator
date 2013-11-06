@@ -2,6 +2,7 @@ package com.viewpagerindicator;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -37,8 +38,9 @@ public class BannerView extends FrameLayout{
         TextView title = new TextView(context);
         title.setText("BannerPageIndicator");
         title.setTextSize(75);
+        title.setGravity(Gravity.CENTER);
 
-        addView(title, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        addView(title, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
 }
