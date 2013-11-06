@@ -4,9 +4,13 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.TextView;
 
 /**
  * Enables custom views to move inline with a viewpager, providing either a parallax effect,
@@ -82,8 +86,8 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         mBanner.post(new Runnable() {
             @Override
             public void run() {
-                if(mBanner instanceof BannerView.IBannerView){
-                    mBannerWidth = ((BannerView.IBannerView) mBanner).getBannerWidth();
+                if(mBanner instanceof IBannerView){
+                    mBannerWidth = ((IBannerView) mBanner).getBannerWidth();
                 } else mBannerWidth = mBanner.getWidth();
             }
         });
@@ -191,5 +195,37 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
 
     public BannerView getBannerView(){
         return mBanner;
+    }
+
+    public interface IBannerView{
+        public int getBannerWidth();
+    }
+
+    public class BannerView extends FrameLayout {
+
+        public BannerView(Context context) {
+            super(context);
+            setupUI(context);
+        }
+
+        public BannerView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+            setupUI(context);
+        }
+
+        public BannerView(Context context, AttributeSet attrs, int defStyle) {
+            super(context, attrs, defStyle);
+            setupUI(context);
+        }
+
+        protected void setupUI(Context context){
+            TextView title = new TextView(context);
+            title.setText("BannerPageIndicator");
+            title.setTextSize(75);
+            title.setGravity(Gravity.CENTER);
+
+            addView(title, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        }
+
     }
 }
