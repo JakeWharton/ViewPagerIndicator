@@ -30,9 +30,13 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
     private boolean isTouchesEnabled = true;
 
     /**
-     * The view that is placed inside the horizontalscrollview
+     * The view that is placed inside the horizontalscrollview, can be customized
      */
     private BannerView mBanner;
+
+    /**
+     * Attributes that we set on the bannerview
+     */
     private AttributeSet mAttrs;
 
 
@@ -171,7 +175,7 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         if(mListener!=null){
             mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
-        //we scroll based on a fraction at a time based on the count of items in the viewpager's adapter
+        //we scroll the banner based on how many items in the adapter in order to get an even step
         double scrollRate = (bannerWidth-(screenWidth/2))/((double)mPager.getAdapter().getCount());
         smoothScrollTo((int) (scrollRate * (position + positionOffset)), getBottom());
     }
