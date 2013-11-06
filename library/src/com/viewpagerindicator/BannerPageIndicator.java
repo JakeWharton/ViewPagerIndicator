@@ -14,24 +14,27 @@ import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 
 /**
- * Created By: andrewgrosner
+ * Enables for custom views to move inline with a viewpager, providing a parallax effect or a fluid horizontal scroll
+ * effect when a viewpager is moving.
  * Date: 10/18/13
- * Contributors:
- * Description:
+ * Contributors: Andrew Grosner
  */
 public class BannerPageIndicator extends HorizontalScrollView implements PageIndicator{
 
     private ViewPager mPager;
-    private int mSelectedTabIndex;
-
     private ViewPager.OnPageChangeListener mListener;
 
-    private BannerView mBanner;
-
-    private AttributeSet mAttrs;
-
+    private int mSelectedTabIndex;
     private int scrollOrigin = 0;
     private double bannerWidth = 0, screenWidth;
+    private boolean isTouchesEnabled = true;
+
+    /**
+     * The view that is placed inside the horizontalscrollview
+     */
+    private BannerView mBanner;
+    private AttributeSet mAttrs;
+
 
     public BannerPageIndicator(Context context) {
         this(context, null);
@@ -41,19 +44,30 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
         mAttrs = attrs;
-    }
-
-    public void disableTouches(){
         setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return true;
+                return !isTouchesEnabled;
             }
         });
     }
 
     /**
-     * Allows for a custom view to be shown
+     * Disallow user interaction on this indicator, use this to prevent unwanted touches when implementing parallax
+     */
+    public void disableTouches(){
+        isTouchesEnabled = false;
+    }
+
+    /**
+     * Allow user interaction after calling disableTouches()
+     */
+    public void enableTouches(){
+        isTouchesEnabled = true;
+    }
+
+    /**
+     * Allows for a custom view to be shown (only one at a time)
      * @param bannerView
      */
     public void showCustomBannerView(BannerView bannerView){
@@ -64,6 +78,8 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         }
 
         mBanner = bannerView;
+
+        //wait for view to be measured in order to get the bannerwidth to acheive accurate scrolling
         mBanner.post(new Runnable() {
             @Override
             public void run() {
@@ -142,7 +158,6 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
 
     @Override
     public void notifyDataSetChanged() {
-
         requestLayout();
     }
 
@@ -152,9 +167,9 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
             mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
 
+        //we scroll based on a fraction at a time of the count of items in the viewpager's adapter
         double scrollRate = (bannerWidth-screenWidth)/((double)mPager.getAdapter().getCount());
         smoothScrollTo((int) (scrollRate * (position + positionOffset)), getBottom());
-        //smoothScrollBy((int) (scrollRate*positionOffset),0);
     }
 
     @Override
@@ -167,5 +182,8 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
 
     @Override
     public void onPageScrollStateChanged(int i) {
+        if(mListener!=null){
+            mListener.onPageScrollStateChanged(i);
+        }
     }
 }
