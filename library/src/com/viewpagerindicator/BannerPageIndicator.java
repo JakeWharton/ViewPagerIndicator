@@ -197,7 +197,15 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         return mBanner;
     }
 
+    /**
+     * The interface that allows for a custom bannerview to pass in a custom width for the banner
+     */
     public interface IBannerView{
+
+        /**
+         * Returns the banner width, in pixels to compute how much the banner with scroll
+         * @return banner width, in pixels
+         */
         public int getBannerWidth();
     }
 
