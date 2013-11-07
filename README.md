@@ -42,6 +42,9 @@ Usage
          //continued from above
          titleIndicator.setOnPageChangeListener(mPageChangeListener);
 
+  4. *(Optional)* To see full lenght titles in tabs 
+      you should call `tabPageIndicator.setWrapTabTitle(true)`
+
 
 Theming
 -------

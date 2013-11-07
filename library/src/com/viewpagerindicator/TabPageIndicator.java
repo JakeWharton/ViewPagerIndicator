@@ -38,6 +38,9 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     /** Title text used when no title is provided by the adapter. */
     private static final CharSequence EMPTY_TITLE = "";
 
+    /** Option to wrap title and get full length titles */
+    private boolean wrapTitle = false;
+
     /**
      * Interface for a callback when the selected tab has been reselected.
      */
@@ -160,7 +163,11 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
         }
 
-        mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
+        if(wrapTitle){
+            mTabLayout.addView(tabView, new LinearLayout.LayoutParams(WRAP_CONTENT, MATCH_PARENT, 1));
+        }else{
+            mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
+        }
     }
 
     @Override
@@ -258,6 +265,10 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         mListener = listener;
     }
 
+    public void setWrapTabTitle(boolean option){
+        this.wrapTitle = option;
+    }
+
     private class TabView extends TextView {
         private int mIndex;
 
@@ -270,7 +281,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
             // Re-measure if we went beyond our maximum size.
-            if (mMaxTabWidth > 0 && getMeasuredWidth() > mMaxTabWidth) {
+            if (mMaxTabWidth > 0 && getMeasuredWidth() > mMaxTabWidth && !wrapTitle) {
                 super.onMeasure(MeasureSpec.makeMeasureSpec(mMaxTabWidth, MeasureSpec.EXACTLY),
                         heightMeasureSpec);
             }
@@ -279,5 +290,6 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         public int getIndex() {
             return mIndex;
         }
+
     }
 }
