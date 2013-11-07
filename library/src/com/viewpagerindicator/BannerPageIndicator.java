@@ -209,7 +209,7 @@ public class BannerPageIndicator extends HorizontalScrollView implements PageInd
         public int getBannerWidth();
     }
 
-    public class BannerView extends FrameLayout {
+    public static class BannerView extends FrameLayout {
 
         public BannerView(Context context) {
             super(context);
