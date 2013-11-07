@@ -18,6 +18,7 @@
     <style name="Theme.PageIndicatorDefaults" parent="android:Theme">
         <item name="vpiIconPageIndicatorStyle">@style/Widget.IconPageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+	    <item name="vpiCustomViewPageIndicatorStyle">@style/Widget.CustomViewPageIndicator</item>
     </style>
 
     <style name="Widget">
@@ -44,4 +45,14 @@
         <item name="android:layout_marginLeft">6dp</item>
         <item name="android:layout_marginRight">6dp</item>
     </style>
+
+	<style name="Widget.CustomViewPageIndicator">
+		<item name="android:background">@android:color/transparent</item>
+	</style>
+
+	<style name="Widget.BannerPageIndicator">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">1000dp</item>
+		<item name="android:background">@android:color/black</item>
+	</style>
 </resources>
