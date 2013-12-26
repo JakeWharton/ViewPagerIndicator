@@ -4,13 +4,13 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:0.6.+'
+    classpath 'com.android.tools.build:gradle:0.7.+'
   }
 }
 
 allprojects {
   group = 'com.viewpagerindicator'
-  version = '2.4.2-SNAPSHOT'
+  version = '2.4.2'
 
   repositories {
     mavenCentral()

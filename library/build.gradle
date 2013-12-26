@@ -1,11 +1,12 @@
 apply plugin: 'android-library'
+apply plugin: 'maven'
 
 dependencies {
   compile 'com.android.support:support-v4:19.0.0'
 }
 
 android {
-  compileSdkVersion 19
+  compileSdkVersion 16
   buildToolsVersion '19'
 
   sourceSets {
@@ -15,4 +16,16 @@ android {
       res.srcDirs = ['res']
     }
   }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: project.deploymentUrl) {
+               authentication(userName: project.deploymentUsername, password: project.deploymentPassword)
+            }
+
+            pom.artifactId = 'library'
+        }
+    }
 }
