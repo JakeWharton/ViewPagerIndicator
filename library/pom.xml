@@ -5,7 +5,7 @@
 
   <artifactId>library</artifactId>
   <name>ViewPagerIndicator</name>
-  <packaging>apklib</packaging>
+  <packaging>aar</packaging>
 
   <parent>
     <groupId>com.viewpagerindicator</groupId>
