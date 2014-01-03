@@ -50,6 +50,20 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         void onTabReselected(int position);
     }
 
+    /**
+     * Interface for a callback when tab has been selected.
+     *
+     * @author hook
+     */
+    public interface OnTabSelectedListener {
+        /**
+         * Callback when tab has been selected.
+         *
+         * @param position Position of the current selected item.
+         */
+        void onTabSelected(int position);
+    }
+
     private Runnable mTabSelector;
 
     private final OnClickListener mTabClickListener = new OnClickListener() {
@@ -60,6 +74,10 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             mViewPager.setCurrentItem(newSelected);
             if (oldSelected == newSelected && mTabReselectedListener != null) {
                 mTabReselectedListener.onTabReselected(newSelected);
+            }
+
+            if (mTabReselectedListener != null) {
+                mTabSelectedListener.onTabSelected(newSelected);
             }
         }
     };
@@ -73,6 +91,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     private int mSelectedTabIndex;
 
     private OnTabReselectedListener mTabReselectedListener;
+    private OnTabSelectedListener mTabSelectedListener;
 
     public TabPageIndicator(Context context) {
         this(context, null);
@@ -90,6 +109,9 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         mTabReselectedListener = listener;
     }
 
+    public void setOnTabSelectedListener(OnTabSelectedListener listener) {
+        mTabSelectedListener = listener;
+    }
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
