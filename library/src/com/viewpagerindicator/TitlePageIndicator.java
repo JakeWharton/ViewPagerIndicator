@@ -36,7 +36,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * A TitlePageIndicator is a PageIndicator which displays the title of left view
@@ -120,6 +122,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private float mPageOffset;
     private int mScrollState;
     private final Paint mPaintText = new Paint();
+    private boolean mTextAllCaps;
     private boolean mBoldText;
     private int mColorText;
     private int mColorSelected;
@@ -144,6 +147,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private float mLastMotionX = -1;
     private int mActivePointerId = INVALID_POINTER;
     private boolean mIsDragging;
+    
+    private boolean mSimpleMetrics = false;
+    private int mLookAhead = 3;
 
     private OnCenterItemClickListener mCenterItemClickListener;
 
@@ -171,6 +177,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         final int defaultLinePosition = res.getInteger(R.integer.default_title_indicator_line_position);
         final int defaultSelectedColor = res.getColor(R.color.default_title_indicator_selected_color);
         final boolean defaultSelectedBold = res.getBoolean(R.bool.default_title_indicator_selected_bold);
+        final boolean defaultTextAllCaps = res.getBoolean(R.bool.default_title_indicator_text_all_caps);
         final int defaultTextColor = res.getColor(R.color.default_title_indicator_text_color);
         final float defaultTextSize = res.getDimension(R.dimen.default_title_indicator_text_size);
         final float defaultTitlePadding = res.getDimension(R.dimen.default_title_indicator_title_padding);
@@ -193,6 +200,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mColorSelected = a.getColor(R.styleable.TitlePageIndicator_selectedColor, defaultSelectedColor);
         mColorText = a.getColor(R.styleable.TitlePageIndicator_android_textColor, defaultTextColor);
         mBoldText = a.getBoolean(R.styleable.TitlePageIndicator_selectedBold, defaultSelectedBold);
+        mTextAllCaps = a.getBoolean(R.styleable.TitlePageIndicator_textAllCaps, defaultTextAllCaps);
 
         final float textSize = a.getDimension(R.styleable.TitlePageIndicator_android_textSize, defaultTextSize);
         final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
@@ -290,6 +298,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
         invalidate();
     }
 
+    public boolean isTextAllCaps() {
+        return mTextAllCaps;
+    }
+
+    public void setTextAllCaps(boolean textAllCaps) {
+        mTextAllCaps = textAllCaps;
+        invalidate();
+    }
+
     public int getTextColor() {
         return mColorText;
     }
@@ -368,8 +385,8 @@ public class TitlePageIndicator extends View implements PageIndicator {
         }
 
         //Calculate views bounds
-        ArrayList<Rect> bounds = calculateAllBounds(mPaintText);
-        final int boundsSize = bounds.size();
+        List<Rect> bounds = calculateAllBounds(mPaintText);
+        final int boundsSize = mSimpleMetrics ? mViewPager.getAdapter().getCount() : bounds.size();
 
         //Make sure we're on a page that still exists
         if (mCurrentPage >= boundsSize) {
@@ -411,8 +428,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
         }
 
         //Left views starting from the current position
+        final int leftMin = mSimpleMetrics ? Math.max(0, mCurrentPage - mLookAhead) : 0;
         if (mCurrentPage > 0) {
-            for (int i = mCurrentPage - 1; i >= 0; i--) {
+            for (int i = mCurrentPage - 1; i >= leftMin; i--) {
                 Rect bound = bounds.get(i);
                 //Is left side is outside the screen
                 if (bound.left < leftClip) {
@@ -430,8 +448,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
             }
         }
         //Right views starting from the current position
+        final int rightMin = mSimpleMetrics ? Math.min(count, mCurrentPage + mLookAhead) : count;
         if (mCurrentPage < countMinusOne) {
-            for (int i = mCurrentPage + 1 ; i < count; i++) {
+            for (int i = mCurrentPage + 1 ; i < rightMin; i++) {
                 Rect bound = bounds.get(i);
                 //If right side is outside the screen
                 if (bound.right > rightClip) {
@@ -451,7 +470,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         //Now draw views
         int colorTextAlpha = mColorText >>> 24;
-        for (int i = 0; i < count; i++) {
+        
+        final int min = mSimpleMetrics ? Math.max(0, mCurrentPage - mLookAhead) : 0;
+        final int max = mSimpleMetrics ? Math.min(count, mCurrentPage + mLookAhead) : count;
+        for (int i = min; i < max; i++) {
             //Get the title
             Rect bound = bounds.get(i);
             //Only if one side is visible
@@ -569,7 +591,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
                 if (mIsDragging) {
                     mLastMotionX = x;
-                    if (mViewPager.isFakeDragging() || mViewPager.beginFakeDrag()) {
+                    if (mViewPager.beginFakeDrag()) {
                         mViewPager.fakeDragBy(deltaX);
                     }
                 }
@@ -668,13 +690,16 @@ public class TitlePageIndicator extends View implements PageIndicator {
      * @param paint
      * @return
      */
-    private ArrayList<Rect> calculateAllBounds(Paint paint) {
-        ArrayList<Rect> list = new ArrayList<Rect>();
+    private List<Rect> calculateAllBounds(Paint paint) {
         //For each views (If no values then add a fake one)
         final int count = mViewPager.getAdapter().getCount();
+        Rect[] list = new Rect[count];
         final int width = getWidth();
         final int halfWidth = width / 2;
-        for (int i = 0; i < count; i++) {
+        
+        final int min = mSimpleMetrics ? Math.max(0, mCurrentPage - (mLookAhead + 1)) : 0;
+        final int max = mSimpleMetrics ? Math.min(count, mCurrentPage + (mLookAhead + 1)) : count;
+        for (int i = min; i < max; i++) {
             Rect bounds = calcBounds(i, paint);
             int w = bounds.right - bounds.left;
             int h = bounds.bottom - bounds.top;
@@ -682,10 +707,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
             bounds.right = bounds.left + w;
             bounds.top = 0;
             bounds.bottom = h;
-            list.add(bounds);
+            list[i] = bounds;
         }
 
-        return list;
+        return Arrays.asList(list);
     }
 
     /**
@@ -703,7 +728,45 @@ public class TitlePageIndicator extends View implements PageIndicator {
         bounds.bottom = (int) (paint.descent() - paint.ascent());
         return bounds;
     }
+    
+    /**
+     * Try to speedup the metrics calculations by only calculation the bounds of the current page +- lookAhead.
+     *
+     * @param on Set the simple metrics.
+     */
+    public void setSimpleMetrics(boolean on) {
+        mSimpleMetrics = on;
+    }
+    
+    /**
+     * Get the current value of the simple metrics.
+     * <p>By default is off.
+     *
+     * @return If true, the simple metrics are on.
+     */
+    public boolean isSimpleMetrics() {
+        return mSimpleMetrics;
+    }
 
+    /**
+     * Set the look ahead value for the simple metrics optimization.
+     *
+     * @param lookAhead The new look ahead value.
+     */
+    public void setLookAhead(int lookAhead) {
+        mLookAhead = lookAhead;
+    }
+    
+    /**
+     * Get the current value of the simple metrics look ahead.
+     * <p>By default is 3.
+     *
+     * @return The current simple metrics look ahead.
+     */
+    public int getLookAhead() {
+        return mLookAhead;
+    }
+    
     @Override
     public void setViewPager(ViewPager view) {
         if (mViewPager == view) {
@@ -865,6 +928,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
         if (title == null) {
             title = EMPTY_TITLE;
         }
+
+        if (mTextAllCaps)
+            return title.toString().toUpperCase(Locale.getDefault());
+
         return title;
     }
 }

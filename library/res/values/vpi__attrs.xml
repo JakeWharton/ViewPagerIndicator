@@ -106,6 +106,8 @@
         <attr name="android:textColor" />
         <!-- Size of title text. -->
         <attr name="android:textSize" />
+        <!-- Title all in caps. -->
+        <attr name="textAllCaps" format="boolean" />
         <!-- Padding between titles when bumping into each other. -->
         <attr name="titlePadding" format="dimension" />
         <!-- Padding between titles and the top of the View. -->
