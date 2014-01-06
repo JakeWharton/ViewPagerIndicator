@@ -45,6 +45,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private static final int INVALID_POINTER = -1;
 
     private float mRadius;
+    private float mInterval;
     private final Paint mPaintPageFill = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintStroke = new Paint(ANTI_ALIAS_FLAG);
     private final Paint mPaintFill = new Paint(ANTI_ALIAS_FLAG);
@@ -83,6 +84,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         final int defaultOrientation = res.getInteger(R.integer.default_circle_indicator_orientation);
         final int defaultStrokeColor = res.getColor(R.color.default_circle_indicator_stroke_color);
         final float defaultStrokeWidth = res.getDimension(R.dimen.default_circle_indicator_stroke_width);
+        final float defaultInterval = res.getDimension(R.dimen.default_circle_indicator_interval);
         final float defaultRadius = res.getDimension(R.dimen.default_circle_indicator_radius);
         final boolean defaultCentered = res.getBoolean(R.bool.default_circle_indicator_centered);
         final boolean defaultSnap = res.getBoolean(R.bool.default_circle_indicator_snap);
@@ -100,6 +102,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         mPaintFill.setStyle(Style.FILL);
         mPaintFill.setColor(a.getColor(R.styleable.CirclePageIndicator_fillColor, defaultFillColor));
         mRadius = a.getDimension(R.styleable.CirclePageIndicator_radius, defaultRadius);
+        mInterval = a.getDimension(R.styleable.CirclePageIndicator_interval, defaultInterval);
         mSnap = a.getBoolean(R.styleable.CirclePageIndicator_snap, defaultSnap);
 
         Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
@@ -227,7 +230,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             shortPaddingBefore = getPaddingLeft();
         }
 
-        final float threeRadius = mRadius * 3;
+        final float threeRadius = mRadius + mInterval;
         final float shortOffset = shortPaddingBefore + mRadius;
         float longOffset = longPaddingBefore + mRadius;
         if (mCentered) {
