@@ -35,8 +35,6 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * across different configurations or circumstances.
  */
 public class TabPageIndicator extends HorizontalScrollView implements PageIndicator {
-    /** Title text used when no title is provided by the adapter. */
-    private static final CharSequence EMPTY_TITLE = "";
 
     /**
      * Interface for a callback when the selected tab has been reselected.
@@ -54,7 +52,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private final OnClickListener mTabClickListener = new OnClickListener() {
         public void onClick(View view) {
-            TabView tabView = (TabView)view;
+            TabView tabView = (TabView) view;
             final int oldSelected = mViewPager.getCurrentItem();
             final int newSelected = tabView.getIndex();
             mViewPager.setCurrentItem(newSelected);
@@ -63,6 +61,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             }
         }
     };
+
+    private final boolean mIsInEditMode;
 
     private final IcsLinearLayout mTabLayout;
 
@@ -84,6 +84,12 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
         mTabLayout = new IcsLinearLayout(context, R.attr.vpiTabPageIndicatorStyle);
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
+
+        mIsInEditMode = isInEditMode();
+        if (mIsInEditMode) {
+            notifyDataSetChanged();
+            setCurrentItem(EDIT_MODE_PAGE);
+        }
     }
 
     public void setOnTabReselectedListener(OnTabReselectedListener listener) {
@@ -99,7 +105,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         final int childCount = mTabLayout.getChildCount();
         if (childCount > 1 && (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST)) {
             if (childCount > 2) {
-                mMaxTabWidth = (int)(MeasureSpec.getSize(widthMeasureSpec) * 0.4f);
+                mMaxTabWidth = (int) (MeasureSpec.getSize(widthMeasureSpec) * 0.4f);
             } else {
                 mMaxTabWidth = MeasureSpec.getSize(widthMeasureSpec) / 2;
             }
@@ -154,7 +160,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         tabView.mIndex = index;
         tabView.setFocusable(true);
         tabView.setOnClickListener(mTabClickListener);
-        tabView.setText(text);
+        tabView.setText(text == null ? EMPTY_TITLE : text);
 
         if (iconResId != 0) {
             tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
@@ -164,24 +170,24 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     }
 
     @Override
-    public void onPageScrollStateChanged(int arg0) {
+    public void onPageScrollStateChanged(int state) {
         if (mListener != null) {
-            mListener.onPageScrollStateChanged(arg0);
+            mListener.onPageScrollStateChanged(state);
         }
     }
 
     @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
+    public void onPageScrolled(int position, float positionOffset, int offsetPixels) {
         if (mListener != null) {
-            mListener.onPageScrolled(arg0, arg1, arg2);
+            mListener.onPageScrolled(position, positionOffset, offsetPixels);
         }
     }
 
     @Override
-    public void onPageSelected(int arg0) {
-        setCurrentItem(arg0);
+    public void onPageSelected(int position) {
+        setCurrentItem(position);
         if (mListener != null) {
-            mListener.onPageSelected(arg0);
+            mListener.onPageSelected(position);
         }
     }
 
@@ -204,26 +210,43 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     public void notifyDataSetChanged() {
         mTabLayout.removeAllViews();
-        PagerAdapter adapter = mViewPager.getAdapter();
-        IconPagerAdapter iconAdapter = null;
-        if (adapter instanceof IconPagerAdapter) {
-            iconAdapter = (IconPagerAdapter)adapter;
+
+        final PagerAdapter adapter;
+        final int count;
+        final IconPagerAdapter iconAdapter;
+
+        if (mIsInEditMode) {
+            adapter = null;
+            count = EDIT_MODE_COUNT;
+            iconAdapter = null;
+        } else {
+            adapter = mViewPager.getAdapter();
+            count = adapter.getCount();
+            if (adapter instanceof IconPagerAdapter) {
+                iconAdapter = (IconPagerAdapter) adapter;
+            } else {
+                iconAdapter = null;
+            }
         }
-        final int count = adapter.getCount();
+
         for (int i = 0; i < count; i++) {
-            CharSequence title = adapter.getPageTitle(i);
-            if (title == null) {
-                title = EMPTY_TITLE;
+            final CharSequence title;
+            final int iconResId;
+
+            if (mIsInEditMode) {
+                title = String.format(EDIT_MODE_TITLE, i + 1);
+                iconResId = 0;
+            } else {
+                title = adapter.getPageTitle(i);
+                iconResId = iconAdapter == null ? 0 : iconAdapter.getIconResId(i);
             }
-            int iconResId = 0;
-            if (iconAdapter != null) {
-                iconResId = iconAdapter.getIconResId(i);
-            }
+
             addTab(i, title, iconResId);
         }
         if (mSelectedTabIndex > count) {
             mSelectedTabIndex = count - 1;
         }
+
         setCurrentItem(mSelectedTabIndex);
         requestLayout();
     }
@@ -236,11 +259,13 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     @Override
     public void setCurrentItem(int item) {
-        if (mViewPager == null) {
-            throw new IllegalStateException("ViewPager has not been bound.");
-        }
         mSelectedTabIndex = item;
-        mViewPager.setCurrentItem(item);
+        if (!mIsInEditMode) {
+            if (mViewPager == null) {
+                throw new IllegalStateException("ViewPager has not been bound.");
+            }
+            mViewPager.setCurrentItem(item);
+        }
 
         final int tabCount = mTabLayout.getChildCount();
         for (int i = 0; i < tabCount; i++) {

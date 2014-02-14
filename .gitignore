@@ -11,6 +11,7 @@ gen
 .idea
 *.iml
 classes
+out
 
 #Maven
 target

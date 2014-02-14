@@ -26,7 +26,7 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 
-import static android.view.ViewGroup.LayoutParams.FILL_PARENT;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
@@ -50,7 +50,7 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
         setHorizontalScrollBarEnabled(false);
 
         mIconsLayout = new IcsLinearLayout(context, R.attr.vpiIconPageIndicatorStyle);
-        addView(mIconsLayout, new LayoutParams(WRAP_CONTENT, FILL_PARENT, Gravity.CENTER));
+        addView(mIconsLayout, new LayoutParams(WRAP_CONTENT, MATCH_PARENT, Gravity.CENTER));
     }
 
     private void animateToIcon(final int position) {
@@ -86,24 +86,24 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
     }
 
     @Override
-    public void onPageScrollStateChanged(int arg0) {
+    public void onPageScrollStateChanged(int state) {
         if (mListener != null) {
-            mListener.onPageScrollStateChanged(arg0);
+            mListener.onPageScrollStateChanged(state);
         }
     }
 
     @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
+    public void onPageScrolled(int position, float positionOffset, int offsetPixels) {
         if (mListener != null) {
-            mListener.onPageScrolled(arg0, arg1, arg2);
+            mListener.onPageScrolled(position, positionOffset, offsetPixels);
         }
     }
 
     @Override
-    public void onPageSelected(int arg0) {
-        setCurrentItem(arg0);
+    public void onPageSelected(int position) {
+        setCurrentItem(position);
         if (mListener != null) {
-            mListener.onPageSelected(arg0);
+            mListener.onPageSelected(position);
         }
     }
 

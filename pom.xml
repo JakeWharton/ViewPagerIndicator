@@ -70,7 +70,7 @@
         <android.platform>16</android.platform>
         <android.support.version>r7</android.support.version>
 
-        <android-maven.version>3.3.0</android-maven.version>
+        <android-maven.version>3.8.0</android-maven.version>
     </properties>
 
     <dependencyManagement>

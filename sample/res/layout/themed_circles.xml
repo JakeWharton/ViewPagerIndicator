@@ -38,6 +38,7 @@
         app:pageColor="#88FF0000"
         app:strokeColor="#FF000000"
         app:strokeWidth="2dp"
+        app:gapWidth="30dp"
         />
 
 </LinearLayout>
