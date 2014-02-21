@@ -24,6 +24,32 @@ import android.support.v4.view.ViewPager;
  * number and the current visible view.
  */
 public interface PageIndicator extends ViewPager.OnPageChangeListener {
+
+    /**
+     * Tabs / dots / whatever to show in edit mode.
+     */
+    static final int EDIT_MODE_COUNT = 5;
+
+    /**
+     * Selected page in edit mode.
+     */
+    static final int EDIT_MODE_PAGE = EDIT_MODE_COUNT / 2;
+
+    /**
+     * Tab title in edit mode;
+     */
+    static final String EDIT_MODE_TITLE = "Page %d";
+
+    /**
+     * Title text used when no title is provided by the adapter.
+     */
+    static final CharSequence EMPTY_TITLE = "";
+
+    /**
+     * Not really part of a PageIndicator, but used everywhere.
+     */
+    static final int INVALID_POINTER = -1;
+
     /**
      * Bind the indicator to a ViewPager.
      *

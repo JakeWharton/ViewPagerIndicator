@@ -36,8 +36,10 @@ import android.view.ViewConfiguration;
  * than the unselected page lines.
  */
 public class UnderlinePageIndicator extends View implements PageIndicator {
-    private static final int INVALID_POINTER = -1;
+
     private static final int FADE_FRAME_MS = 30;
+
+    private final boolean mIsInEditMode;
 
     private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
@@ -58,16 +60,17 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
     private boolean mIsDragging;
 
     private final Runnable mFadeRunnable = new Runnable() {
-      @Override public void run() {
-        if (!mFades) return;
+        @Override
+        public void run() {
+            if (!mFades) return;
 
-        final int alpha = Math.max(mPaint.getAlpha() - mFadeBy, 0);
-        mPaint.setAlpha(alpha);
-        invalidate();
-        if (alpha > 0) {
-          postDelayed(this, FADE_FRAME_MS);
+            final int alpha = Math.max(mPaint.getAlpha() - mFadeBy, 0);
+            mPaint.setAlpha(alpha);
+            invalidate();
+            if (alpha > 0) {
+                postDelayed(this, FADE_FRAME_MS);
+            }
         }
-      }
     };
 
     public UnderlinePageIndicator(Context context) {
@@ -80,9 +83,9 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
 
     public UnderlinePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        if (isInEditMode()) return;
 
         final Resources res = getResources();
+        assert res != null;
 
         //Load defaults from resources
         final boolean defaultFades = res.getBoolean(R.bool.default_underline_indicator_fades);
@@ -91,7 +94,8 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
         final int defaultSelectedColor = res.getColor(R.color.default_underline_indicator_selected_color);
 
         //Retrieve styles attributes
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.UnderlinePageIndicator, defStyle, 0);
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.UnderlinePageIndicator, defStyle, 0);
+        assert a != null;
 
         setFades(a.getBoolean(R.styleable.UnderlinePageIndicator_fades, defaultFades));
         setSelectedColor(a.getColor(R.styleable.UnderlinePageIndicator_selectedColor, defaultSelectedColor));
@@ -100,13 +104,18 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
 
         Drawable background = a.getDrawable(R.styleable.UnderlinePageIndicator_android_background);
         if (background != null) {
-          setBackgroundDrawable(background);
+            setBackgroundDrawable(background);
         }
 
         a.recycle();
 
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+
+        mIsInEditMode = isInEditMode();
+        if (mIsInEditMode) {
+            mCurrentPage = EDIT_MODE_PAGE;
+        }
     }
 
     public boolean getFades() {
@@ -156,10 +165,13 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mViewPager == null) {
-            return;
+        final int count;
+        if (mIsInEditMode) {
+            count = EDIT_MODE_COUNT;
+        } else {
+            count = mViewPager.getAdapter().getCount();
         }
-        final int count = mViewPager.getAdapter().getCount();
+
         if (count == 0) {
             return;
         }
@@ -277,7 +289,8 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
         mViewPager.setOnPageChangeListener(this);
         invalidate();
         post(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 if (mFades) {
                     post(mFadeRunnable);
                 }
@@ -354,7 +367,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        SavedState savedState = (SavedState)state;
+        SavedState savedState = (SavedState) state;
         super.onRestoreInstanceState(savedState.getSuperState());
         mCurrentPage = savedState.currentPage;
         requestLayout();

@@ -35,6 +35,7 @@
     <attr name="selectedColor" format="color" />
     <attr name="strokeWidth" format="dimension" />
     <attr name="unselectedColor" format="color" />
+    <attr name="gapWidth" format="dimension" />
 
     <declare-styleable name="CirclePageIndicator">
         <!-- Whether or not the indicators should be centered. -->
@@ -55,6 +56,8 @@
         <attr name="strokeWidth" />
         <!-- View background -->
         <attr name="android:background"/>
+        <!-- Width of the gap between each indicator circle. -->
+        <attr name="gapWidth" />
     </declare-styleable>
 
     <declare-styleable name="LinePageIndicator">
@@ -69,7 +72,7 @@
         <!-- Width of each indicator line's stroke. -->
         <attr name="strokeWidth" />
         <!-- Width of the gap between each indicator line. -->
-        <attr name="gapWidth" format="dimension" />
+        <attr name="gapWidth" />
         <!-- View background -->
         <attr name="android:background"/>
     </declare-styleable>

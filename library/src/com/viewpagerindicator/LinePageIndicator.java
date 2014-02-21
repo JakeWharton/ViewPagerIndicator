@@ -24,6 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -37,7 +38,8 @@ import android.view.ViewConfiguration;
  * than the unselected page lines.
  */
 public class LinePageIndicator extends View implements PageIndicator {
-    private static final int INVALID_POINTER = -1;
+
+    private final boolean mIsInEditMode;
 
     private final Paint mPaintUnselected = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint mPaintSelected = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -64,9 +66,9 @@ public class LinePageIndicator extends View implements PageIndicator {
 
     public LinePageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        if (isInEditMode()) return;
 
         final Resources res = getResources();
+        assert res != null;
 
         //Load defaults from resources
         final int defaultSelectedColor = res.getColor(R.color.default_line_indicator_selected_color);
@@ -77,7 +79,8 @@ public class LinePageIndicator extends View implements PageIndicator {
         final boolean defaultCentered = res.getBoolean(R.bool.default_line_indicator_centered);
 
         //Retrieve styles attributes
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LinePageIndicator, defStyle, 0);
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LinePageIndicator, defStyle, 0);
+        assert a != null;
 
         mCentered = a.getBoolean(R.styleable.LinePageIndicator_centered, defaultCentered);
         mLineWidth = a.getDimension(R.styleable.LinePageIndicator_lineWidth, defaultLineWidth);
@@ -86,15 +89,20 @@ public class LinePageIndicator extends View implements PageIndicator {
         mPaintUnselected.setColor(a.getColor(R.styleable.LinePageIndicator_unselectedColor, defaultUnselectedColor));
         mPaintSelected.setColor(a.getColor(R.styleable.LinePageIndicator_selectedColor, defaultSelectedColor));
 
-        Drawable background = a.getDrawable(R.styleable.LinePageIndicator_android_background);
+        final Drawable background = a.getDrawable(R.styleable.LinePageIndicator_android_background);
         if (background != null) {
-          setBackgroundDrawable(background);
+            setBackgroundDrawable(background);
         }
 
         a.recycle();
 
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+
+        mIsInEditMode = isInEditMode();
+        if (mIsInEditMode) {
+            mCurrentPage = EDIT_MODE_PAGE;
+        }
     }
 
 
@@ -157,10 +165,7 @@ public class LinePageIndicator extends View implements PageIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mViewPager == null) {
-            return;
-        }
-        final int count = mViewPager.getAdapter().getCount();
+        final int count = getCount();
         if (count == 0) {
             return;
         }
@@ -273,6 +278,18 @@ public class LinePageIndicator extends View implements PageIndicator {
         return true;
     }
 
+    private int getCount() {
+        if (mIsInEditMode) {
+            return EDIT_MODE_COUNT;
+        } else if (mViewPager != null) {
+            final PagerAdapter adapter = mViewPager.getAdapter();
+            if (adapter != null) {
+                return adapter.getCount();
+            }
+        }
+        return 0;
+    }
+
     @Override
     public void setViewPager(ViewPager viewPager) {
         if (mViewPager == viewPager) {
@@ -348,8 +365,7 @@ public class LinePageIndicator extends View implements PageIndicator {
     /**
      * Determines the width of this view
      *
-     * @param measureSpec
-     *            A measureSpec packed into an int
+     * @param measureSpec A measureSpec packed into an int
      * @return The width of the view, honoring constraints from measureSpec
      */
     private int measureWidth(int measureSpec) {
@@ -357,26 +373,25 @@ public class LinePageIndicator extends View implements PageIndicator {
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
-        if ((specMode == MeasureSpec.EXACTLY) || (mViewPager == null)) {
+        if ((specMode == MeasureSpec.EXACTLY) || (mViewPager == null && !mIsInEditMode)) {
             //We were told how big to be
             result = specSize;
         } else {
             //Calculate the width according the views count
-            final int count = mViewPager.getAdapter().getCount();
+            final int count = getCount();
             result = getPaddingLeft() + getPaddingRight() + (count * mLineWidth) + ((count - 1) * mGapWidth);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
             }
         }
-        return (int)FloatMath.ceil(result);
+        return (int) FloatMath.ceil(result);
     }
 
     /**
      * Determines the height of this view
      *
-     * @param measureSpec
-     *            A measureSpec packed into an int
+     * @param measureSpec A measureSpec packed into an int
      * @return The height of the view, honoring constraints from measureSpec
      */
     private int measureHeight(int measureSpec) {
@@ -395,12 +410,12 @@ public class LinePageIndicator extends View implements PageIndicator {
                 result = Math.min(result, specSize);
             }
         }
-        return (int)FloatMath.ceil(result);
+        return (int) FloatMath.ceil(result);
     }
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        SavedState savedState = (SavedState)state;
+        SavedState savedState = (SavedState) state;
         super.onRestoreInstanceState(savedState.getSuperState());
         mCurrentPage = savedState.currentPage;
         requestLayout();
