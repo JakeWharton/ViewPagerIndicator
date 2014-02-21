@@ -20,28 +20,33 @@ Usage
   1. Include one of the widgets in your view. This should usually be placed
      adjacent to the `ViewPager` it represents.
 
-        <com.viewpagerindicator.TitlePageIndicator
-            android:id="@+id/titles"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent" />
+	```xml
+    <com.viewpagerindicator.TitlePageIndicator
+        android:id="@+id/titles"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent" />
+	```
 
   2. In your `onCreate` method (or `onCreateView` for a fragment), bind the
      indicator to the `ViewPager`.
 
-         //Set the pager with an adapter
-         ViewPager pager = (ViewPager)findViewById(R.id.pager);
-         pager.setAdapter(new TestAdapter(getSupportFragmentManager()));
+  ```java
+  //Set the pager with an adapter
+  ViewPager pager = (ViewPager)findViewById(R.id.pager);
+  pager.setAdapter(new TestAdapter(getSupportFragmentManager()));
 
-         //Bind the title indicator to the adapter
-         TitlePageIndicator titleIndicator = (TitlePageIndicator)findViewById(R.id.titles);
-         titleIndicator.setViewPager(pager);
+  //Bind the title indicator to the adapter
+  TitlePageIndicator titleIndicator = (TitlePageIndicator)findViewById(R.id.titles);
+  titleIndicator.setViewPager(pager);
+  ```
 
   3. *(Optional)* If you use an `OnPageChangeListener` with your view pager
      you should set it in the indicator rather than on the pager directly.
 
-         //continued from above
-         titleIndicator.setOnPageChangeListener(mPageChangeListener);
-
+  ```java
+  //continued from above
+  titleIndicator.setOnPageChangeListener(mPageChangeListener);
+  ```
 
 Theming
 -------
@@ -72,12 +77,14 @@ Eclipse or ant.
 If you are a Maven user you can easily include the library by specifying it as
 a dependency:
 
-    <dependency>
-      <groupId>com.viewpagerindicator</groupId>
-      <artifactId>library</artifactId>
-      <version>2.4.1</version>
-      <type>apklib</type>
-    </dependency>
+```xml
+<dependency>
+    <groupId>com.viewpagerindicator</groupId>
+    <artifactId>library</artifactId>
+    <version>2.4.1</version>
+    <type>apklib</type>
+</dependency>
+```
 
 This project depends on the `ViewPager` class which is available in the
 [Android Support Library][2] or [ActionBarSherlock][3]. Details for
