@@ -38,7 +38,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class TabPageIndicator extends HorizontalScrollView implements PageIndicator {
     /** Title text used when no title is provided by the adapter. */
     private static final CharSequence EMPTY_TITLE = "";
-    private Typeface tabsFont;
+    private Typeface mTabsFont;
 
     /**
      * Interface for a callback when the selected tab has been reselected.
@@ -158,8 +158,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         tabView.setOnClickListener(mTabClickListener);
         tabView.setText(text);
 
-        if (tabsFont != null) {
-            tabView.setTypeface(tabsFont);
+        if (mTabsFont != null) {
+            tabView.setTypeface(mTabsFont);
         }
 
         if (iconResId != 0) {
@@ -170,7 +170,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     }
 
     public void setTabsFont(Typeface tf) {
-        this.tabsFont = tf;
+        this.mTabsFont = tf;
     }
 
     @Override
