@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-
+    compile project(':library')
 }
 
 // Manifest version information!

@@ -1,1 +1,2 @@
-include ':lib'
+include ':library', ':sample'
+rootProject.name = 'parent'
