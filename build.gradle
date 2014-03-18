@@ -1,7 +1,7 @@
 ext {
     MIN_SDK_VERSION = 4
     TARGET_SDK_VERSION = 19
-    GROUP = "com.andrewreitz.viewpagerindicator"
+    GROUP = "com.viewpagerindicator.library"
     VERSION = '2.4.1'
     VERSION_CODE = 65
     SONATYPE_URL = ""
