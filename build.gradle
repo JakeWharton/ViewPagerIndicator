@@ -1,23 +1,23 @@
 ext {
     MIN_SDK_VERSION = 4
     TARGET_SDK_VERSION = 19
-    GROUP = "com.viewpagerindicator.library"
+    GROUP = "com.andrewreitz.viewpageindicator"
     VERSION = '2.4.1'
     VERSION_CODE = 65
     SONATYPE_URL = ""
     IS_DEV_BUILD = false
     IS_RELEASE_BUILD = false
+}
 
-    //set build variables based on build type (release, continuous integration, development)
-    if (hasProperty("release")) {
-        IS_RELEASE_BUILD = true
-        SONATYPE_URL = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-    } else if (hasProperty("dev")) {
-        VERSION += "-SNAPSHOT"
-        SONATYPE_URL = "https://oss.sonatype.org/content/repositories/snapshots/"
-    } else {
-        IS_DEV_BUILD = true
-    }
+//set build variables based on build type (release, continuous integration, development)
+if (hasProperty("release")) {
+    IS_RELEASE_BUILD = true
+    SONATYPE_URL = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+} else if (hasProperty("dev")) {
+    VERSION += "-SNAPSHOT"
+    SONATYPE_URL = "https://oss.sonatype.org/content/repositories/snapshots/"
+} else {
+    IS_DEV_BUILD = true
 }
 
 buildscript {
