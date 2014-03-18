@@ -1,0 +1,66 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.9.+'
+    }
+}
+
+apply plugin: 'android'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+// Manifest version information!
+def versionMajor = 2
+def versionMinor = 4
+def versionPatch = 1
+def versionBuild = 0
+
+def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
+
+def versionNum = (System.getenv("BUILD_NUMBER") ?: versionMajor * 1000 + versionMinor * 100 + versionPatch * 10 + versionBuild).toInteger()
+def versionNameString = "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.3"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 19
+
+        versionCode versionNum
+        versionName versionNameString
+
+        buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        debug {
+            packageNameSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+
+        release {
+
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
