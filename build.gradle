@@ -1,8 +1,8 @@
 ext {
     MIN_SDK_VERSION = 4
     TARGET_SDK_VERSION = 19
-    GROUP = "com.andrewreitz.viewpageindicator"
-    VERSION = '2.4.1'
+    GROUP = groupId
+    VERSION = '2.4.2'
     VERSION_CODE = 65
     SONATYPE_URL = ""
     IS_DEV_BUILD = false

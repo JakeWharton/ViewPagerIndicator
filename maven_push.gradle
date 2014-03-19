@@ -1,17 +1,6 @@
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-def sonatypeRepositoryUrl
-if (isReleaseBuild()) {
-    println 'RELEASE BUILD'
-    sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-} else if (!isDevBuild()) {
-    println 'SNAPSHOT BUILD'
-    sonatypeRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-} else {
-    println 'DEBUG BUILD'
-}
-
 afterEvaluate { project ->
     uploadArchives {
         repositories {
@@ -23,7 +12,7 @@ afterEvaluate { project ->
 
                     pom.artifactId = 'library'
 
-                    repository(url: sonatypeRepositoryUrl) {
+                    repository(url: SONATYPE_URL) {
                         authentication(userName: sonatypeUsername, password: sonatypePassword)
                     }
 
