@@ -1,6 +1,5 @@
 apply plugin: 'android-library'
-apply plugin: 'maven'
-apply plugin: 'signing'
+apply from: '../maven_push.gradle'
 
 android {
     compileSdkVersion 19
@@ -22,54 +21,4 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:19.0.+'
-}
-
-uploadArchives {
-    repositories {
-        if (IS_DEV_BUILD) {
-            mavenLocal()
-        } else {
-            mavenDeployer {
-                repository(url: SONATYPE_URL) {
-                    authentication(userName: sonatypeUsername, password: sonatypePassword)
-                }
-
-                if (IS_RELEASE_BUILD) {
-                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-                }
-
-                pom.project {
-                    name 'Android-ViewPagerIndicator'
-                    packaging 'aar'
-                    artifactId 'library'
-                    description 'Android library for.'
-                    groupId GROUP
-                    version VERSION
-                    url 'https://github.com/JakeWharton/Android-ViewPagerIndicator'
-
-                    scm {
-                        url 'scm:http://github.com/JakeWharton/Android-ViewPagerIndicator'
-                        connection 'scm:git:git://github.com/JakeWharton/Android-ViewPagerIndicator.git'
-                        developerConnection 'scm:git:git@github.com:JakeWharton/Android-ViewPagerIndicator.git'
-                    }
-
-                    licenses {
-                        license {
-                            name 'The Apache Software License, Version 2.0'
-                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                            distribution 'repo'
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            id 'jakewharton'
-                            name 'Jake Wharton'
-                            url "http://jakewharton.com"
-                        }
-                    }
-                }
-            }
-        }
-    }
 }

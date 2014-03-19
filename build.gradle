@@ -13,11 +13,19 @@ ext {
 if (hasProperty("release")) {
     IS_RELEASE_BUILD = true
     SONATYPE_URL = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-} else if (hasProperty("dev")) {
+} else if (hasProperty("snapshot")) {
     VERSION += "-SNAPSHOT"
     SONATYPE_URL = "https://oss.sonatype.org/content/repositories/snapshots/"
 } else {
     IS_DEV_BUILD = true
+}
+
+def isReleaseBuild() {
+    return IS_RELEASE_BUILD
+}
+
+def isDevBuild() {
+    return IS_DEV_BUILD
 }
 
 buildscript {
@@ -30,7 +38,12 @@ buildscript {
 }
 
 allprojects {
+    version = VERSION
+    group = GROUP
+
     repositories {
         mavenCentral()
     }
 }
+
+apply plugin: 'android-reporting'

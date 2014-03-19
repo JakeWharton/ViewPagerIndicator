@@ -1,2 +1,6 @@
+signing.keyId=xxxxxxx
+signing.password=YourPublicKeyPassword
+signing.secretKeyRingFile=~/.gnupg/secring.gpg
+
 sonatypeUsername=NotYourRealUserName
 sonatypePassword=NotARealPassword
