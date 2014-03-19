@@ -1,5 +1,6 @@
 apply plugin: 'android-library'
-apply from: '../maven_push.gradle'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 android {
     compileSdkVersion 19
@@ -21,4 +22,79 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:19.0.+'
+}
+
+
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            if (IS_DEV_BUILD) {
+                mavenLocal()
+            } else {
+                mavenDeployer {
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                    repository(url: SONATYPE_URL) {
+                        authentication(userName: sonatypeUsername, password: sonatypePassword)
+                    }
+
+                    pom.project {
+                        name 'Android-ViewPagerIndicator'
+                        packaging 'aar'
+                        description 'Android library for.'
+                        artifactId = 'library'
+                        groupId GROUP
+                        version VERSION
+                        url 'https://github.com/JakeWharton/Android-ViewPagerIndicator'
+
+                        scm {
+                            url 'scm:http://github.com/JakeWharton/Android-ViewPagerIndicator'
+                            connection 'scm:git:git://github.com/JakeWharton/Android-ViewPagerIndicator.git'
+                            developerConnection 'scm:git:git@github.com:JakeWharton/Android-ViewPagerIndicator.git'
+                        }
+
+                        licenses {
+                            license {
+                                name 'The Apache Software License, Version 2.0'
+                                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                                distribution 'repo'
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id 'jakewharton'
+                                name 'Jake Wharton'
+                                url "http://jakewharton.com"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        required { IS_RELEASE_BUILD && gradle.taskGraph.hasTask("uploadArchives") }
+        sign configurations.archives
+    }
+
+    task androidJavadocs(type: Javadoc) {
+        source = android.sourceSets.main.allJava
+    }
+
+    task androidJavadocsJar(type: Jar) {
+        classifier = 'javadoc'
+        from androidJavadocs.destinationDir
+    }
+
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives androidSourcesJar
+        archives androidJavadocsJar
+    }
 }
