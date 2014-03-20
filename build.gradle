@@ -1,0 +1,38 @@
+ext {
+    MIN_SDK_VERSION = 4
+    TARGET_SDK_VERSION = 19
+    GROUP = groupId
+    VERSION = '2.4.2'
+    VERSION_CODE = 65
+    SONATYPE_URL = ""
+    IS_DEV_BUILD = false
+    IS_RELEASE_BUILD = false
+}
+
+//set build variables based on build type (release, continuous integration, development)
+if (hasProperty("release")) {
+    IS_RELEASE_BUILD = true
+    SONATYPE_URL = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+} else if (hasProperty("snapshot")) {
+    VERSION += "-SNAPSHOT"
+    SONATYPE_URL = "https://oss.sonatype.org/content/repositories/snapshots/"
+} else {
+    IS_DEV_BUILD = true
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.9.+'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'android-reporting'

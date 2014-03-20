@@ -1,0 +1,38 @@
+apply plugin: 'android'
+
+dependencies {
+    compile project(':library')
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.3"
+
+    defaultConfig {
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+
+        versionCode VERSION_CODE
+        versionName VERSION
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        debug {
+            packageNameSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+
+        release {
+
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
