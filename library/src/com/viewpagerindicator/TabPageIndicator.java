@@ -16,7 +16,10 @@
  */
 package com.viewpagerindicator;
 
+import com.viewpagerindicator.TitlePageIndicator.LinePosition;
+
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -26,7 +29,6 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -37,6 +39,9 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class TabPageIndicator extends HorizontalScrollView implements PageIndicator {
     /** Title text used when no title is provided by the adapter. */
     private static final CharSequence EMPTY_TITLE = "";
+    
+    private static final int LEFT_POSITION = 1, RIGHT_POSITION=2, TOP_POSITION = 3, BOTTOM_POSITION = 4;
+    private int mIconPosition = LEFT_POSITION;
 
     /**
      * Interface for a callback when the selected tab has been reselected.
@@ -79,12 +84,23 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     }
 
     public TabPageIndicator(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, R.attr.vpiTabPageIndicatorStyle);
+    }
+    
+    public TabPageIndicator(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        
         setHorizontalScrollBarEnabled(false);
 
-        mTabLayout = new IcsLinearLayout(context, R.attr.vpiTabPageIndicatorStyle);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TabPageIndicator, defStyle, 0);
+        mIconPosition = a.getInteger(R.styleable.TabPageIndicator_iconPosition, LEFT_POSITION);
+        
+        a.recycle();
+        
+        mTabLayout = new IcsLinearLayout(context, defStyle);
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
     }
+
 
     public void setOnTabReselectedListener(OnTabReselectedListener listener) {
         mTabReselectedListener = listener;
@@ -147,9 +163,9 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         if (mTabSelector != null) {
             removeCallbacks(mTabSelector);
         }
-    }
-
-    private void addTab(int index, CharSequence text, int iconResId) {
+    }    
+    
+    private void addTab(int index, CharSequence text, int iconResId, int position) {
         final TabView tabView = new TabView(getContext());
         tabView.mIndex = index;
         tabView.setFocusable(true);
@@ -157,11 +173,26 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         tabView.setText(text);
 
         if (iconResId != 0) {
-            tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
+        	switch(position) {
+        	case LEFT_POSITION:
+        		tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
+        		break;
+        	case TOP_POSITION:
+        		tabView.setCompoundDrawablesWithIntrinsicBounds(0, iconResId, 0, 0);
+        		break;
+        	case RIGHT_POSITION:
+        		tabView.setCompoundDrawablesWithIntrinsicBounds(0, 0, iconResId, 0);
+        		break;
+        	case BOTTOM_POSITION:
+        		tabView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, iconResId);
+        		break;
+        	}
+            
         }
 
         mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
     }
+
 
     @Override
     public void onPageScrollStateChanged(int arg0) {
@@ -219,7 +250,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             if (iconAdapter != null) {
                 iconResId = iconAdapter.getIconResId(i);
             }
-            addTab(i, title, iconResId);
+            addTab(i, title, iconResId, mIconPosition);
         }
         if (mSelectedTabIndex > count) {
             mSelectedTabIndex = count - 1;
