@@ -14,7 +14,7 @@ class TestFragmentAdapter extends FragmentPagerAdapter implements IconPagerAdapt
             R.drawable.perm_group_location
     };
 
-    private int mCount = CONTENT.length;
+    private int mCount = 5 * CONTENT.length;
 
     public TestFragmentAdapter(FragmentManager fm) {
         super(fm);
@@ -41,7 +41,7 @@ class TestFragmentAdapter extends FragmentPagerAdapter implements IconPagerAdapt
     }
 
     public void setCount(int count) {
-        if (count > 0 && count <= 10) {
+        if (count > 0 && count <= 20) {
             mCount = count;
             notifyDataSetChanged();
         }
