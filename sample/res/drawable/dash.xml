@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:shape="line"
+        >
+
+    <stroke
+        android:color="#ff888888"
+        android:width="2dp"
+        />
+    <size android:width="48dp"
+          android:height="10dp"
+        />
+
+    <padding
+        android:left="5dp"
+        android:right="5dp"
+        />
+</shape>
