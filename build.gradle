@@ -1,0 +1,13 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+}
+
+allprojects {
+  apply plugin: 'maven'
+
+  group 'com.viewpagerindicator'
+  version '2.4.1'
+}
+
