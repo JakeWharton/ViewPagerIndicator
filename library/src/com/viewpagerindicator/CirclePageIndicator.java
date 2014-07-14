@@ -228,8 +228,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         final float threeRadius = mRadius * 3;
-        final float shortOffset = shortPaddingBefore + mRadius;
-        float longOffset = longPaddingBefore + mRadius;
+        final float shortOffset = shortPaddingBefore + mRadius + 1;
+        float longOffset = longPaddingBefore + mRadius + 1;
         if (mCentered) {
             longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
         }
@@ -469,7 +469,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             //Calculate the width according the views count
             final int count = mViewPager.getAdapter().getCount();
             result = (int)(getPaddingLeft() + getPaddingRight()
-                    + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
+                    + (count * 2 * mRadius) + (count - 1) * mRadius + 2);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
@@ -495,7 +495,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             result = specSize;
         } else {
             //Measure the height
-            result = (int)(2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
+            result = (int)(2 * mRadius + getPaddingTop() + getPaddingBottom() + 2);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
