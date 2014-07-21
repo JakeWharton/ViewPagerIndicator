@@ -1,0 +1,115 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.12.+'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.12'
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+dependencies {
+    // GRADLE DEPENDENCIES
+    // SUPPORT
+    compile project.ANDROID_SUPPORT_V4
+}
+
+android {
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion = project.ANDROID_BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+    }
+
+    buildTypes {
+        debug {
+        }
+
+        release {
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+group = 'fr.baloomba'
+version = '2.4.2'
+
+signing {
+    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: sonatypeRepo) {
+            authentication(userName: sonatypeUsername,
+                    password: sonatypePassword)
+        }
+
+        pom.project {
+            name 'Android-ViewPagerIndicator'
+            packaging 'aar'
+            description 'Android library for ViewPagerIndicator'
+            url 'https://github.com/baloomba/Android-ViewPagerIndicator'
+
+            scm {
+                url 'scm:git@github.com:baloomba/Android-ViewPagerIndicator.git'
+                connection 'scm:git@github.com:baloomba/Android-ViewPagerIndicator.git'
+                developerConnection 'scm:git@github.com:baloomba/Android-ViewPagerIndicator.git'
+            }
+
+            licenses {
+                license {
+                    name 'Apache License Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'baloo'
+                    name 'Clement BOULY'
+                    email 'bouly.clement@gmail.com'
+                }
+                developer {
+                    id 'jakewharton'
+                    name 'Jake Wharton'
+                    email 'jakewharton@gmail.com'
+                    url 'http://jakewharton.com'
+                    timezone '-5'
+                    roles {
+                        role 'developer'
+                    }
+                }
+            }
+        }
+    }
+}
+

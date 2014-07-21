@@ -20,8 +20,6 @@
     <inceptionYear>2011</inceptionYear>
 
     <modules>
-        <module>library</module>
-        <module>sample</module>
     </modules>
 
     <scm>
