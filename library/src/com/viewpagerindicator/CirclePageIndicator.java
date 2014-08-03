@@ -231,7 +231,15 @@ public class CirclePageIndicator extends View implements PageIndicator {
         final float shortOffset = shortPaddingBefore + mRadius;
         float longOffset = longPaddingBefore + mRadius;
         if (mCentered) {
-            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
+            float width = mRadius * 2.0f; //one circle width
+            if(count > 1)
+                width += (count - 1) * threeRadius; //each additional circle needs 2r, plus 1r of padding.
+            longOffset = ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - (width / 2.0f);
+            //we need to add one radius if we have more then one circle, because the draw takes hte center point.
+            //for one circle, we don't, because the midpoint (which is what longOffset is right now) is already
+            //the centerpoint of the circle.
+            if(count > 1) 
+            	longOffset += mRadius;
         }
 
         float dX;
