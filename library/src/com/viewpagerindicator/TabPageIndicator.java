@@ -169,8 +169,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
     }
 
-    public void setTabsFont(Typeface tf) {
-        this.mTabsFont = tf;
+    public void setTabsFont(Typeface tabsFont) {
+        this.mTabsFont = tabsFont;
     }
 
     @Override
