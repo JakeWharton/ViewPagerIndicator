@@ -229,9 +229,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         final float threeRadius = mRadius * 3;
         final float shortOffset = shortPaddingBefore + mRadius;
-        float longOffset = longPaddingBefore + mRadius;
+        float longOffset = longPaddingBefore;
         if (mCentered) {
-            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
+            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - (((count - 1) * threeRadius) / 2.0f);
         }
 
         float dX;
