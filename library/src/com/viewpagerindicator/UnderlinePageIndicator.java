@@ -45,6 +45,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
     private int mFadeDelay;
     private int mFadeLength;
     private int mFadeBy;
+    private int mDefaultColor;
 
     private ViewPager mViewPager;
     private ViewPager.OnPageChangeListener mListener;
@@ -120,7 +121,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
                 post(mFadeRunnable);
             } else {
                 removeCallbacks(mFadeRunnable);
-                mPaint.setAlpha(0xFF);
+                mPaint.setAlpha(Color.alpha(mDefaultColor));
                 invalidate();
             }
         }
@@ -140,14 +141,15 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
 
     public void setFadeLength(int fadeLength) {
         mFadeLength = fadeLength;
-        mFadeBy = 0xFF / (mFadeLength / FADE_FRAME_MS);
+        mFadeBy = Color.alpha(mDefaultColor) / (mFadeLength / FADE_FRAME_MS);
     }
 
     public int getSelectedColor() {
-        return mPaint.getColor();
+        return mDefaultColor;
     }
 
     public void setSelectedColor(int selectedColor) {
+        mDefaultColor = selectedColor;
         mPaint.setColor(selectedColor);
         invalidate();
     }
@@ -322,7 +324,7 @@ public class UnderlinePageIndicator extends View implements PageIndicator {
         if (mFades) {
             if (positionOffsetPixels > 0) {
                 removeCallbacks(mFadeRunnable);
-                mPaint.setAlpha(0xFF);
+                mPaint.setAlpha(Color.alpha(mDefaultColor));
             } else if (mScrollState != ViewPager.SCROLL_STATE_DRAGGING) {
                 postDelayed(mFadeRunnable, mFadeDelay);
             }
