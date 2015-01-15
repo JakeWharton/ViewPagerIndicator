@@ -230,8 +230,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     @Override
     public void setViewPager(ViewPager view, int initialPosition) {
+        mSelectedTabIndex = initialPosition;
         setViewPager(view);
-        setCurrentItem(initialPosition);
     }
 
     @Override
