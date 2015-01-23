@@ -79,6 +79,17 @@ a dependency:
       <type>apklib</type>
     </dependency>
 
+If you are a Gradle user you can easily include the library by specifying it in your gradle file:
+
+    repositories {
+      mavenCentral()
+      maven { url "http://dl.bintray.com/populov/maven" }
+    }
+    
+    dependencies {
+      compile 'com.viewpagerindicator:library:2.4.1'
+    }
+
 This project depends on the `ViewPager` class which is available in the
 [Android Support Library][2] or [ActionBarSherlock][3]. Details for
 including one of those libraries is available on their respecitve web sites.
