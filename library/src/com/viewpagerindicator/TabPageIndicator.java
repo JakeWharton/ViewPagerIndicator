@@ -98,11 +98,12 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
         final int childCount = mTabLayout.getChildCount();
         if (childCount > 1 && (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST)) {
-            if (childCount > 2) {
+            /*if (childCount > 2) {
                 mMaxTabWidth = (int)(MeasureSpec.getSize(widthMeasureSpec) * 0.4f);
             } else {
                 mMaxTabWidth = MeasureSpec.getSize(widthMeasureSpec) / 2;
-            }
+            }*/
+            mMaxTabWidth = MeasureSpec.getSize(widthMeasureSpec);
         } else {
             mMaxTabWidth = -1;
         }
@@ -160,7 +161,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
             tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
         }
 
-        mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
+        //mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
+        mTabLayout.addView(tabView, new LinearLayout.LayoutParams(WRAP_CONTENT, MATCH_PARENT, 1));
     }
 
     @Override
