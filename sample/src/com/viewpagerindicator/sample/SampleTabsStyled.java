@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
+import com.imbryk.viewPager.LoopViewPager;
 import com.viewpagerindicator.TabPageIndicator;
 
 public class SampleTabsStyled extends FragmentActivity {
@@ -32,6 +34,7 @@ public class SampleTabsStyled extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
+            position = LoopViewPager.toRealPosition(position, getCount());
             return TestFragment.newInstance(CONTENT[position % CONTENT.length]);
         }
 
