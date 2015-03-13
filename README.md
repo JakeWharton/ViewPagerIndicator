@@ -4,8 +4,6 @@ Android ViewPagerIndicator
 Paging indicator widgets that are compatible with the `ViewPager` from the
 [Android Support Library][2] to improve discoverability of content.
 
-Try out the sample application [on the Android Market][10].
-
 ![ViewPagerIndicator Sample Screenshots][9]
 
 These widgets can also be used in conjunction with [ActionBarSherlock][3]!
@@ -137,4 +135,3 @@ License
  [7]: http://developer.android.com/guide/developing/projects/projects-eclipse.html
  [8]: http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject
  [9]: https://raw.github.com/JakeWharton/Android-ViewPagerIndicator/master/sample/screens.png
- [10]: https://play.google.com/store/apps/details?id=com.viewpagerindicator.sample
