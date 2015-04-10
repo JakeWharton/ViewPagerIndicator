@@ -21,3 +21,14 @@ pom.xml.*
 local.properties
 build.xml
 proguard-project.txt
+
+# Mac OS files
+.DS_Store
+
+#Gradle files
+.gradle/
+.gradle
+.gradle/*
+
+#Build
+build/
