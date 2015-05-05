@@ -81,7 +81,7 @@ a dependency:
 
 This project depends on the `ViewPager` class which is available in the
 [Android Support Library][2] or [ActionBarSherlock][3]. Details for
-including one of those libraries is available on their respecitve web sites.
+including one of those libraries is available on their respective web sites.
 
 
 
