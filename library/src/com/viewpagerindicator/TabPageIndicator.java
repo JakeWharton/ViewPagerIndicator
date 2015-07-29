@@ -17,6 +17,7 @@
 package com.viewpagerindicator;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -51,6 +52,17 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     }
 
     private Runnable mTabSelector;
+    
+    private int mPaddingLeft;
+    private int mPaddingRight;
+    
+    private static final int[] ATTRS = new int[]{
+        android.R.attr.paddingLeft,
+        android.R.attr.paddingRight
+    };
+    
+    private static final int ATTR_PADDING_LEFT = 0;
+    private static final int ATTR_PADDING_RIGHT = 1;
 
     private final OnClickListener mTabClickListener = new OnClickListener() {
         public void onClick(View view) {
@@ -82,6 +94,11 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
 
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, ATTRS, R.attr.vpiTabPageIndicatorStyle, 0);
+        mPaddingLeft = typedArray.getDimensionPixelSize(ATTR_PADDING_LEFT, 0);
+        mPaddingRight = typedArray.getDimensionPixelSize(ATTR_PADDING_RIGHT, 0);
+        typedArray.recycle();
+
         mTabLayout = new IcsLinearLayout(context, R.attr.vpiTabPageIndicatorStyle);
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
     }
@@ -99,7 +116,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         final int childCount = mTabLayout.getChildCount();
         if (childCount > 1 && (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST)) {
             if (childCount > 2) {
-                mMaxTabWidth = (int)(MeasureSpec.getSize(widthMeasureSpec) * 0.4f);
+                mMaxTabWidth = (int)(mPaddingLeft + mPaddingRight + MeasureSpec.getSize(widthMeasureSpec) * 0.4f);
             } else {
                 mMaxTabWidth = MeasureSpec.getSize(widthMeasureSpec) / 2;
             }
