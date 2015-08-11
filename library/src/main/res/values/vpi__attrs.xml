@@ -128,4 +128,15 @@
         <!-- View background -->
         <attr name="android:background"/>
     </declare-styleable>
+    
+    <declare-styleable name="TabPageIndicator">
+        <attr name="vpi_iconWidth" format="dimension"/>
+        <attr name="vpi_iconHeight" format="dimension"/>
+        <attr name="vpi_iconDirection" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="top" value="2"/>
+            <enum name="bottom" value="3"/>
+        </attr>
+    </declare-styleable>
 </resources>

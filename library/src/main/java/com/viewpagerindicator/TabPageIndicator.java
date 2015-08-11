@@ -17,6 +17,8 @@
 package com.viewpagerindicator;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -35,8 +37,15 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * across different configurations or circumstances.
  */
 public class TabPageIndicator extends HorizontalScrollView implements PageIndicator {
-    /** Title text used when no title is provided by the adapter. */
+    /**
+     * Title text used when no title is provided by the adapter.
+     */
     private static final CharSequence EMPTY_TITLE = "";
+
+    private static final int ICON_LEFT = 0;
+    private static final int ICON_RIGHT = 1;
+    private static final int ICON_TOP = 2;
+    private static final int ICON_BOTTOM = 3;
 
     /**
      * Interface for a callback when the selected tab has been reselected.
@@ -54,7 +63,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private final OnClickListener mTabClickListener = new OnClickListener() {
         public void onClick(View view) {
-            TabView tabView = (TabView)view;
+            TabView tabView = (TabView) view;
             final int oldSelected = mViewPager.getCurrentItem();
             final int newSelected = tabView.getIndex();
             mViewPager.setCurrentItem(newSelected);
@@ -72,6 +81,10 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     private int mMaxTabWidth;
     private int mSelectedTabIndex;
 
+    private int mIconDirection;
+    private int mIconWidth;
+    private int mIconHeight;
+
     private OnTabReselectedListener mTabReselectedListener;
 
     public TabPageIndicator(Context context) {
@@ -81,6 +94,12 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     public TabPageIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
+
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TabPageIndicator);
+        mIconDirection = a.getInteger(R.styleable.TabPageIndicator_vpi_iconDirection, ICON_LEFT);
+        mIconWidth = a.getDimensionPixelSize(R.styleable.TabPageIndicator_vpi_iconWidth, 0);
+        mIconHeight = a.getDimensionPixelSize(R.styleable.TabPageIndicator_vpi_iconHeight, 0);
+        a.recycle();
 
         mTabLayout = new IcsLinearLayout(context, R.attr.vpiTabPageIndicatorStyle);
         addView(mTabLayout, new ViewGroup.LayoutParams(WRAP_CONTENT, MATCH_PARENT));
@@ -99,7 +118,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         final int childCount = mTabLayout.getChildCount();
         if (childCount > 1 && (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST)) {
             if (childCount > 2) {
-                mMaxTabWidth = (int)(MeasureSpec.getSize(widthMeasureSpec) * 0.4f);
+                mMaxTabWidth = (int) (MeasureSpec.getSize(widthMeasureSpec) * 0.4f);
             } else {
                 mMaxTabWidth = MeasureSpec.getSize(widthMeasureSpec) / 2;
             }
@@ -157,7 +176,35 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         tabView.setText(text);
 
         if (iconResId != 0) {
-            tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
+            Drawable icon = getResources().getDrawable(iconResId);
+            if (mIconWidth != 0) {
+                if (mIconHeight != 0) {// if icon width and height has be set
+                    icon.setBounds(0, 0, mIconWidth, mIconHeight);
+                } else {// if only set the icon width, then scale the icon
+                    icon.setBounds(0, 0, mIconWidth, mIconWidth * icon.getIntrinsicHeight() / icon.getIntrinsicWidth());
+                }
+            } else {
+                if (mIconHeight != 0) {
+                    icon.setBounds(0, 0, mIconHeight * icon.getIntrinsicWidth() / icon.getIntrinsicHeight(), mIconHeight);
+                } else {
+                    icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
+                }
+            }
+            switch (mIconDirection) {
+                case ICON_LEFT:
+                    tabView.setCompoundDrawables(icon, null, null, null);
+                    break;
+                case ICON_RIGHT:
+                    tabView.setCompoundDrawables(null, null, icon, null);
+                    break;
+                case ICON_TOP:
+                    tabView.setCompoundDrawables(null, icon, null, null);
+                    break;
+                case ICON_BOTTOM:
+                default:
+                    tabView.setCompoundDrawables(null, null, null, icon);
+            }
+
         }
 
         mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, MATCH_PARENT, 1));
@@ -207,7 +254,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         PagerAdapter adapter = mViewPager.getAdapter();
         IconPagerAdapter iconAdapter = null;
         if (adapter instanceof IconPagerAdapter) {
-            iconAdapter = (IconPagerAdapter)adapter;
+            iconAdapter = (IconPagerAdapter) adapter;
         }
         final int count = adapter.getCount();
         for (int i = 0; i < count; i++) {

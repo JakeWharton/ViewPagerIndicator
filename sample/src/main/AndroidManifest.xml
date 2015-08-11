@@ -239,6 +239,15 @@
                 <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SampleTabsWithTopIcons"
+            android:label="Tabs/With Top Icons"
+            android:theme="@style/StyleTopIconTabIndicator">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+            </intent-filter>
+        </activity>
 
 
 
