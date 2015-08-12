@@ -1,0 +1,71 @@
+group = PROJ_GROUP
+version = PROJ_VERSION
+project.archivesBaseName = PROJ_ARTIFACTID
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += configurations.compile
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/7/docs/api"
+        title PROJ_ARTIFACTID
+    }
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId PROJ_ARTIFACTID
+            pom {
+                packaging 'aar'
+            }
+            pom.withXml {
+                def root = asNode()
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+bintray {
+    user = hasProperty("bintrayUser")?getProperty("bintrayUser"):getProperty("BINTRAY_USER")
+    key = hasProperty("bintrayKey")?getProperty("bintrayKey"):getProperty("BINTRAY_KEY")
+    configurations = ['archives']
+    publications = ['mavenJava']
+    publish = true
+    pkg {
+        repo = 'maven'
+        name = PROJ_NAME
+        websiteUrl = PROJ_WEBSITEURL
+        issueTrackerUrl = PROJ_ISSUETRACKERURL
+        vcsUrl = PROJ_VCSURL
+        licenses = ['Apache-2.0']
+        publicDownloadNumbers = true
+    }
+}

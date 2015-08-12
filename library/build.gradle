@@ -1,3 +1,11 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
+    }
+}
 apply plugin: 'com.android.library'
 
 android {
@@ -22,4 +30,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     compile 'com.android.support:support-v4:22.+'
+}
+
+if ((hasProperty('bintrayUser') || hasProperty('BINTRAY_USER')) && (hasProperty('bintrayKey') || hasProperty('BINTRAY_KEY'))) {
+    apply from: 'bintray.gradle'
 }
