@@ -1,6 +1,8 @@
 Android ViewPagerIndicator
 ==========================
 
+[ ![Download](https://api.bintray.com/packages/msdx/maven/ViewPagerIndicator/images/download.svg) ][12]
+
 Paging indicator widgets that are compatible with the `ViewPager` from the
 [Android Support Library][2] to improve discoverability of content.
 
@@ -62,22 +64,16 @@ methods.
 Including In Your Project
 -------------------------
 
-Android-ViewPagerIndicator is presented as an [Android library project][7]. A
+The new version of Android-ViewPagerIndicator in [my branch][11] is presented as an [Android library project][7]. A
 standalone JAR is not possible due to the theming capabilities offered by the
 indicator widgets.
 
-You can include this project by [referencing it as a library project][8] in
-Eclipse or ant.
+You can include this project by [referencing it as a aar file][7] in gradle.
 
-If you are a Maven user you can easily include the library by specifying it as
+If you are a Gradle user you can easily include the library by specifying it as
 a dependency:
 
-    <dependency>
-      <groupId>com.viewpagerindicator</groupId>
-      <artifactId>library</artifactId>
-      <version>2.4.1</version>
-      <type>apklib</type>
-    </dependency>
+    compile 'com.githang:viewpagerindicator:2.4.2@aar'
 
 This project depends on the `ViewPager` class which is available in the
 [Android Support Library][2] or [ActionBarSherlock][3]. Details for
@@ -134,7 +130,8 @@ License
  [4]: https://github.com/pakerfeldt/android-viewflow
  [5]: https://github.com/franciscojunior
  [6]: https://gist.github.com/1122947
- [7]: http://developer.android.com/guide/developing/projects/projects-eclipse.html
- [8]: http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject
+ [7]: http://tools.android.com/tech-docs/new-build-system/aar-format
  [9]: https://raw.github.com/JakeWharton/Android-ViewPagerIndicator/master/sample/screens.png
  [10]: https://play.google.com/store/apps/details?id=com.viewpagerindicator.sample
+ [11]: https://github.com/msdx/ViewPagerIndicator/tree/msdx
+ [12]: https://bintray.com/msdx/maven/ViewPagerIndicator/_latestVersion
