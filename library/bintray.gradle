@@ -1,8 +1,11 @@
 group = PROJ_GROUP
 version = PROJ_VERSION
 project.archivesBaseName = PROJ_ARTIFACTID
+
 apply plugin: 'com.jfrog.bintray'
+apply plugin: "com.jfrog.artifactory"
 apply plugin: 'maven-publish'
+
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
@@ -43,6 +46,8 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId PROJ_ARTIFACTID
+            artifact javadocJar
+            artifact sourcesJar
             pom {
                 packaging 'aar'
             }
@@ -53,10 +58,12 @@ publishing {
         }
     }
 }
+afterEvaluate {
+    publishing.publications.mavenJava.artifact(bundleRelease)
+}
 bintray {
     user = hasProperty("bintrayUser")?getProperty("bintrayUser"):getProperty("BINTRAY_USER")
     key = hasProperty("bintrayKey")?getProperty("bintrayKey"):getProperty("BINTRAY_KEY")
-    configurations = ['archives']
     publications = ['mavenJava']
     publish = true
     pkg {
@@ -67,5 +74,27 @@ bintray {
         vcsUrl = PROJ_VCSURL
         licenses = ['Apache-2.0']
         publicDownloadNumbers = true
+    }
+}
+
+artifactory {
+    contextUrl = 'http://oss.jfrog.org/artifactory'
+    resolve {
+        repository {
+            repoKey = 'libs-release'
+        }
+    }
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local' //The Artifactory repository key to publish to
+            username = bintray.user
+            password = bintray.key
+            maven = true
+        }
+        defaults {
+//这里的名字和上面红色的名字一致即可，会将其包含的输出上传到jfrog上去
+            publications('mavenJava')
+            publishArtifacts = true
+        }
     }
 }

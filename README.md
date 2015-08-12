@@ -75,6 +75,17 @@ a dependency:
 
     compile 'com.githang:viewpagerindicator:2.4.2@aar'
 
+
+For SNAPSHOT version, you need to declare oss-snapshot-local repository at first:
+
+        maven { url "http://oss.jfrog.org/oss-snapshot-local/" }
+
+Then include it into your build.gradle:
+
+    compile 'com.githang:viewpagerindicator:2.5-SNAPSHOT@aar'
+
+
+
 This project depends on the `ViewPager` class which is available in the
 [Android Support Library][2] or [ActionBarSherlock][3]. Details for
 including one of those libraries is available on their respecitve web sites.

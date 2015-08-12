@@ -24,7 +24,6 @@ public class SampleStripsStyledLayout extends FragmentActivity {
 
         StripPageIndicator indicator = (StripPageIndicator)findViewById(R.id.indicator);
         indicator.setViewPager(pager);
-        indicator.setTextColorResource(R.color.tab_text);
     }
 
     class GoogleMusicAdapter extends FragmentPagerAdapter {
