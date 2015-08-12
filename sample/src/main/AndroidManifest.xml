@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.viewpagerindicator.sample">
+          package="com.viewpagerindicator.sample">
 
-    <application android:allowBackup="true"
+    <application
+        android:allowBackup="true"
         android:label="ViewPagerIndicator Sample"
         android:icon="@mipmap/icon">
 
@@ -10,11 +11,10 @@
             android:label="ViewPager Indicator">
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
 
 
         <!-- CIRCLE INDICATOR -->
@@ -22,24 +22,24 @@
             android:name=".SampleCirclesDefault"
             android:label="Circles/Default">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".SampleCirclesInitialPage"
             android:label="Circles/Initial Page">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".SampleCirclesSnap"
             android:label="Circles/Snap">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -47,8 +47,8 @@
             android:label="Circles/Styled (via layout)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -56,8 +56,8 @@
             android:label="Circles/Styled (via methods)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -65,19 +65,18 @@
             android:label="Circles/Styled (via theme)"
             android:theme="@style/StyledIndicators">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".SampleCirclesWithListener"
             android:label="Circles/With Listener">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
-
 
 
         <!-- ICON INDICATOR -->
@@ -85,12 +84,10 @@
             android:name=".SampleIconsDefault"
             android:label="Icons/Default">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
-
-
 
 
         <!-- LINE INDICATOR -->
@@ -98,8 +95,8 @@
             android:name=".SampleLinesDefault"
             android:label="Lines/Default">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -107,8 +104,8 @@
             android:label="Lines/Styled (via layout)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -116,8 +113,8 @@
             android:label="Lines/Styled (via methods)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -125,11 +122,10 @@
             android:label="Lines/Styled (via theme)"
             android:theme="@style/StyledIndicators">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
-
 
 
         <!-- TITLE INDICATOR -->
@@ -137,32 +133,32 @@
             android:name=".SampleTitlesBottom"
             android:label="Titles/Default (Bottom)">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".SampleTitlesCenterClickListener"
             android:label="Titles/Center Click Listener">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".SampleTitlesDefault"
             android:label="Titles/Default">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".SampleTitlesInitialPage"
             android:label="Titles/Initial Page">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -170,8 +166,8 @@
             android:label="Titles/Styled (via layout)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -179,8 +175,8 @@
             android:label="Titles/Styled (via methods)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -188,27 +184,26 @@
             android:label="Titles/Styled (via theme)"
             android:theme="@style/StyledIndicators">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".SampleTitlesTriangle"
             android:label="Titles/Triangle Style">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".SampleTitlesWithListener"
             android:label="Titles/With Listener">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
-
 
 
         <!-- TAB INDICATOR -->
@@ -217,8 +212,8 @@
             android:label="Tabs/Default"
             android:theme="@style/Theme.PageIndicatorDefaults">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -226,8 +221,8 @@
             android:label="Tabs/Styled"
             android:theme="@style/StyledIndicators">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -235,8 +230,8 @@
             android:label="Tabs/With Icons"
             android:theme="@style/StyledIndicators">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -244,11 +239,10 @@
             android:label="Tabs/With Top Icons"
             android:theme="@style/StyleTopIconTabIndicator">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
-
 
 
         <!-- UNDERLINE INDICATOR -->
@@ -256,16 +250,16 @@
             android:name=".SampleUnderlinesDefault"
             android:label="Underlines/Default">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".SampleUnderlinesNoFade"
             android:label="Underlines/No Fade">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -273,8 +267,8 @@
             android:label="Underlines/Styled (via layout)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -282,8 +276,8 @@
             android:label="Underlines/Styled (via methods)"
             android:theme="@android:style/Theme.Light">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -291,11 +285,30 @@
             android:label="Underlines/Styled (via theme)"
             android:theme="@style/StyledIndicators">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
             </intent-filter>
         </activity>
 
+        <!-- STRIP INDICATOR -->
+        <activity
+            android:name=".SampleStripsDefault"
+            android:label="Strips/Default"
+            android:theme="@android:style/Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SampleStripsStyledLayout"
+            android:label="Strips/StyledLayout"
+            android:theme="@android:style/Theme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="com.jakewharton.android.viewpagerindicator.sample.SAMPLE"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

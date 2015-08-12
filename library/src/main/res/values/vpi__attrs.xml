@@ -139,4 +139,20 @@
             <enum name="bottom" value="3"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="StripPageIndicator">
+        <attr name="vpiIndicatorColor" format="color" />
+        <attr name="vpiUnderlineColor" format="color" />
+        <attr name="vpiDividerColor" format="color" />
+        <attr name="vpiIndicatorHeight" format="dimension" />
+        <attr name="vpiUnderlineHeight" format="dimension" />
+        <attr name="vpiDividerPadding" format="dimension" />
+        <attr name="vpiTabPaddingLeftRight" format="dimension" />
+        <attr name="vpiScrollOffset" format="dimension" />
+        <attr name="vpiTabBackground" format="reference" />
+        <attr name="vpiShouldExpand" format="boolean" />
+        <attr name="vpiTextAllCaps" format="boolean" />
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+    </declare-styleable>
 </resources>

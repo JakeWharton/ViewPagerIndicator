@@ -51,4 +51,18 @@
     <integer name="default_underline_indicator_fade_delay">300</integer>
     <integer name="default_underline_indicator_fade_length">400</integer>
     <color name="default_underline_indicator_selected_color">#FF33B5E5</color>
+    
+    <color name="default_strip_indicator_indicator_color">#FF666666</color>
+    <color name="default_strip_indicator_underline_color">#1A000000</color>
+    <color name="default_strip_indicator_divider_color">#1A000000</color>
+    <bool name="default_strip_indicator_should_expand">false</bool>
+    <bool name="default_strip_indicator_text_all_caps">true</bool>
+    <dimen name="default_strip_indicator_scroll_offset">52dp</dimen>
+    <dimen name="default_strip_indicator_indicator_height">8dp</dimen>
+    <dimen name="default_strip_indicator_underline_height">2dp</dimen>
+    <dimen name="default_strip_indicator_divider_padding">12dp</dimen>
+    <dimen name="default_strip_indicator_divider_width">1dp</dimen>
+    <dimen name="default_strip_indicator_tab_padding">16dp</dimen>
+    <dimen name="default_strip_indicator_text_size">12sp</dimen>
+    <color name="default_strip_indicator_text_color">#FF666666</color>
 </resources>
