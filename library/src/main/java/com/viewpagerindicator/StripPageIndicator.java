@@ -32,6 +32,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -52,13 +53,13 @@ public class StripPageIndicator extends HorizontalScrollView implements PageIndi
     // @formatter:on
     private LinearLayout.LayoutParams mDefaultTabLayoutParams;
     private LinearLayout.LayoutParams mExpandedTabLayoutParams;
-    private final PageListener pageListener = new PageListener();
     public OnPageChangeListener mListener;
     private LinearLayout mTabsContainer;
     private ViewPager mViewPager;
     private int mTabCount;
     private int mCurrentPage;
-    private float currentPositionOffset;
+    private int mLinePosition;
+    private float mCurrentPositionOffset;
     private Paint mRectPaint;
     private Paint mDividerPaint;
     private int mIndicatorColor;
@@ -151,15 +152,15 @@ public class StripPageIndicator extends HorizontalScrollView implements PageIndi
         }
     }
 
-    public void setViewPager(ViewPager pager) {
-        if (mViewPager == pager) {
+    public void setViewPager(ViewPager view) {
+        if (mViewPager == view) {
             return;
         }
-        if (pager.getAdapter() == null) {
+        if (view.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
-        this.mViewPager = pager;
-        pager.setOnPageChangeListener(pageListener);
+        this.mViewPager = view;
+        view.setOnPageChangeListener(this);
         notifyDataSetChanged();
     }
 
@@ -176,7 +177,15 @@ public class StripPageIndicator extends HorizontalScrollView implements PageIndi
         }
         mViewPager.setCurrentItem(item);
         mCurrentPage = item;
+        setTabSelected();
         invalidate();
+    }
+
+    private void setTabSelected() {
+        for (int i = 0; i < mTabCount; i++) {
+            final View child = mTabsContainer.getChildAt(i);
+            child.setSelected(i == mCurrentPage);
+        }
     }
 
     public void setOnPageChangeListener(OnPageChangeListener listener) {
@@ -185,22 +194,33 @@ public class StripPageIndicator extends HorizontalScrollView implements PageIndi
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Log.d("OnPageScrolled", position + ":" + positionOffset +":" + positionOffsetPixels);
+        mLinePosition = position;
+        mCurrentPositionOffset = positionOffset;
+        scrollToChild(position, (int) (positionOffset * mTabsContainer.getChildAt(position).getWidth()));
+        invalidate();
         if (mListener != null) {
             mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
     }
 
     @Override
-    public void onPageSelected(int position) {
+    public void onPageScrollStateChanged(int state) {
+        if (state == ViewPager.SCROLL_STATE_IDLE) {
+            scrollToChild(mViewPager.getCurrentItem(), 0);
+        }
         if (mListener != null) {
-            mListener.onPageSelected(position);
+            mListener.onPageScrollStateChanged(state);
         }
     }
 
     @Override
-    public void onPageScrollStateChanged(int state) {
+    public void onPageSelected(int position) {
+        mCurrentPage = position;
+        // select the selected tab
+        setTabSelected();
         if (mListener != null) {
-            mListener.onPageScrollStateChanged(state);
+            mListener.onPageSelected(position);
         }
     }
 
@@ -230,6 +250,7 @@ public class StripPageIndicator extends HorizontalScrollView implements PageIndi
                 }
                 mCurrentPage = mViewPager.getCurrentItem();
                 scrollToChild(mCurrentPage, 0);
+                setTabSelected();
             }
         });
     }
@@ -310,23 +331,17 @@ public class StripPageIndicator extends HorizontalScrollView implements PageIndi
         mRectPaint.setColor(mIndicatorColor);
 
         // default: line below current tab
-        View currentTab = mTabsContainer.getChildAt(mCurrentPage);
+        View currentTab = mTabsContainer.getChildAt(mLinePosition);
         float lineLeft = currentTab.getLeft();
         float lineRight = currentTab.getRight();
 
-        // select the selected tab
-        for (int i = 0; i < mTabCount; i++) {
-            View tab = mTabsContainer.getChildAt(i);
-            tab.setSelected(tab == currentTab);
-        }
-
         // if there is an offset, start interpolating left and right coordinates between current and next tab
-        if (currentPositionOffset > 0f && mCurrentPage < mTabCount - 1) {
-            View nextTab = mTabsContainer.getChildAt(mCurrentPage + 1);
+        if (mCurrentPositionOffset > 0f && mLinePosition < mTabCount - 1) {
+            View nextTab = mTabsContainer.getChildAt(mLinePosition + 1);
             final float nextTabLeft = nextTab.getLeft();
             final float nextTabRight = nextTab.getRight();
-            lineLeft = (currentPositionOffset * nextTabLeft + (1f - currentPositionOffset) * lineLeft);
-            lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
+            lineLeft += (nextTabLeft - lineLeft) * mCurrentPositionOffset;
+            lineRight += (nextTabRight - lineRight) * mCurrentPositionOffset;
         }
 
         canvas.drawRect(lineLeft, height - mIndicatorHeight, lineRight, height, mRectPaint);
@@ -338,36 +353,6 @@ public class StripPageIndicator extends HorizontalScrollView implements PageIndi
         for (int i = 0; i < mTabCount - 1; i++) {
             View tab = mTabsContainer.getChildAt(i);
             canvas.drawLine(tab.getRight(), mDividerPadding, tab.getRight(), height - mDividerPadding, mDividerPaint);
-        }
-    }
-
-    private class PageListener implements OnPageChangeListener {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            mCurrentPage = position;
-            currentPositionOffset = positionOffset;
-            scrollToChild(position, (int) (positionOffset * mTabsContainer.getChildAt(position).getWidth()));
-            invalidate();
-            if (mListener != null) {
-                mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-            if (state == ViewPager.SCROLL_STATE_IDLE) {
-                scrollToChild(mViewPager.getCurrentItem(), 0);
-            }
-            if (mListener != null) {
-                mListener.onPageScrollStateChanged(state);
-            }
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            if (mListener != null) {
-                mListener.onPageSelected(position);
-            }
         }
     }
 
