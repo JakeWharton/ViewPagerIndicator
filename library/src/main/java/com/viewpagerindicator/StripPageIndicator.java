@@ -113,13 +113,16 @@ public class StripPageIndicator extends HorizontalScrollView implements PageIndi
         mTabPadding = res.getDimensionPixelSize(R.dimen.default_strip_indicator_tab_padding);
         mDividerWidth = res.getDimensionPixelSize(R.dimen.default_strip_indicator_divider_width);
         mTabTextSize = res.getDimensionPixelSize(R.dimen.default_strip_indicator_text_size);
-        mTabTextColor = res.getColorStateList(R.color.default_strip_indicator_text_color);
 
         // get system attrs (android:textSize and android:textColor)
         TypedArray a = context.obtainStyledAttributes(attrs, ATTRS, defStyle, 0);
         mTabTextSize = a.getDimensionPixelSize(0, mTabTextSize);
         mTabTextColor = a.getColorStateList(1);
         a.recycle();
+
+        if(mTabTextColor == null) {
+            mTabTextColor = res.getColorStateList(R.color.default_strip_indicator_text_color);
+        }
 
         // get custom attrs
         a = context.obtainStyledAttributes(attrs, R.styleable.StripPageIndicator);
