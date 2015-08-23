@@ -187,6 +187,15 @@ public class CirclePageIndicator extends View implements PageIndicator {
         return mRadius;
     }
 
+    public void setSpacing(float spacing) {
+        mSpacing = spacing;
+        invalidate();
+    }
+
+    public float getSpacing() {
+        return mSpacing;
+    }
+
     public void setSnap(boolean snap) {
         mSnap = snap;
         invalidate();
