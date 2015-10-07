@@ -17,6 +17,7 @@
 package com.viewpagerindicator;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -25,6 +26,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import static android.view.ViewGroup.LayoutParams.FILL_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -40,6 +42,11 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
     private OnPageChangeListener mListener;
     private Runnable mIconSelector;
     private int mSelectedIndex;
+    private int mLeftMargin;
+    private int mTopMargin;
+    private int mRightMargin;
+    private int mBottomMargin;
+
 
     public IconPageIndicator(Context context) {
         this(context, null);
@@ -51,6 +58,17 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
 
         mIconsLayout = new IcsLinearLayout(context, R.attr.vpiIconPageIndicatorStyle);
         addView(mIconsLayout, new LayoutParams(WRAP_CONTENT, FILL_PARENT, Gravity.CENTER));
+        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs,
+                R.styleable.IconPageIndicator, 0, 0);
+        try {
+            mLeftMargin = typedArray.getDimensionPixelSize(R.styleable.IconPageIndicator_leftMargin, 0);
+            mTopMargin = typedArray.getDimensionPixelSize(R.styleable.IconPageIndicator_topMargin, 0);
+            mRightMargin = typedArray.getDimensionPixelSize(R.styleable.IconPageIndicator_rightMargin, 0);
+            mBottomMargin = typedArray.getDimensionPixelSize(R.styleable.IconPageIndicator_bottomMargin, 0);
+        } finally {
+            typedArray.recycle();
+        }
+
     }
 
     private void animateToIcon(final int position) {
@@ -131,7 +149,10 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
         for (int i = 0; i < count; i++) {
             ImageView view = new ImageView(getContext(), null, R.attr.vpiIconPageIndicatorStyle);
             view.setImageResource(iconAdapter.getIconResId(i));
-            mIconsLayout.addView(view);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
+            layoutParams.setMargins(mLeftMargin, mTopMargin, mRightMargin, mBottomMargin);
+            mIconsLayout.addView(view, layoutParams);
+
         }
         if (mSelectedIndex > count) {
             mSelectedIndex = count - 1;
