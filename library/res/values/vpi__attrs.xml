@@ -126,4 +126,13 @@
         <!-- View background -->
         <attr name="android:background"/>
     </declare-styleable>
+
+    <declare-styleable name="IconPageIndicator">
+        <!-- Margin for icons. -->
+        <attr name="leftMargin" format="dimension" />
+        <attr name="rightMargin" format="dimension" />
+        <attr name="topMargin" format="dimension" />
+        <attr name="bottomMargin" format="dimension" />
+    </declare-styleable>
+
 </resources>
