@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 16
+    buildToolsVersion '19.1.0'
+
+    defaultConfig {
+        minSdkVersion 4
+        targetSdkVersion 4
+    }
+
+    sourceSets {
+        main {
+            manifest {
+                srcFile 'AndroidManifest.xml'
+            }
+            java {
+                srcDir 'src'
+            }
+            res {
+                srcDir 'res'
+            }
+            assets {
+                srcDir 'assets'
+            }
+            resources {
+                srcDir 'src'
+            }
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:18.+'
+}
