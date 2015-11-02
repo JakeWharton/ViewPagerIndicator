@@ -73,7 +73,7 @@ You can include this project by [referencing it as a aar file][7] in gradle.
 If you are a Gradle user you can easily include the library by specifying it as
 a dependency:
 
-    compile 'com.githang:viewpagerindicator:2.4.2@aar'
+    compile 'com.githang:viewpagerindicator:2.5@aar'
 
 
 For SNAPSHOT version, you need to declare oss-snapshot-local repository at first:
@@ -84,6 +84,7 @@ Then include it into your build.gradle:
 
     compile 'com.githang:viewpagerindicator:2.5-SNAPSHOT@aar'
 
+Note: Use snapshot repository may slow down the speed of gradle resolving dependencies if you use android support library.
 
 
 This project depends on the `ViewPager` class which is available in the
