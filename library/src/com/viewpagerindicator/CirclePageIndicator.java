@@ -57,6 +57,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     private int mOrientation;
     private boolean mCentered;
     private boolean mSnap;
+    private int mSpacing;
 
     private int mTouchSlop;
     private float mLastMotionX = -1;
@@ -227,11 +228,14 @@ public class CirclePageIndicator extends View implements PageIndicator {
             shortPaddingBefore = getPaddingLeft();
         }
 
-        final float threeRadius = mRadius * 3;
-        final float shortOffset = shortPaddingBefore + mRadius;
+        final float threeRadius = mRadius * 2 + mSpacing;
+        float shortOffset = shortPaddingBefore + mRadius;
         float longOffset = longPaddingBefore + mRadius;
         if (mCentered) {
-            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
+            //the length of content view
+            float contentLongCount = count * (mRadius*2) + (count-1)*mSpacing;
+            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f)
+                    - (contentLongCount / 2.0f);
         }
 
         float dX;
@@ -254,12 +258,12 @@ public class CirclePageIndicator extends View implements PageIndicator {
             }
             // Only paint fill if not completely transparent
             if (mPaintPageFill.getAlpha() > 0) {
-                canvas.drawCircle(dX, dY, pageFillRadius, mPaintPageFill);
+                canvas.drawCircle(dX, dY, mRadius-mPaintStroke.getStrokeWidth(), mPaintPageFill);
             }
 
             // Only paint stroke if a stroke width was non-zero
             if (pageFillRadius != mRadius) {
-                canvas.drawCircle(dX, dY, mRadius, mPaintStroke);
+                canvas.drawCircle(dX, dY, pageFillRadius, mPaintStroke);
             }
         }
 
@@ -275,7 +279,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             dX = shortOffset;
             dY = longOffset + cx;
         }
-        canvas.drawCircle(dX, dY, mRadius, mPaintFill);
+        canvas.drawCircle(dX, dY, mRadius-mPaintStroke.getStrokeWidth(), mPaintFill);
     }
 
     public boolean onTouchEvent(android.view.MotionEvent ev) {
@@ -468,8 +472,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         } else {
             //Calculate the width according the views count
             final int count = mViewPager.getAdapter().getCount();
-            result = (int)(getPaddingLeft() + getPaddingRight()
-                    + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
+            result = (int) (getPaddingLeft() + getPaddingRight()
+                    + (count * 2 * mRadius) + (count - 1) * mSpacing);
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
@@ -495,7 +499,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
             result = specSize;
         } else {
             //Measure the height
-            result = (int)(2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
+            result = (int) (2 * mRadius + getPaddingTop() + getPaddingBottom());
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
