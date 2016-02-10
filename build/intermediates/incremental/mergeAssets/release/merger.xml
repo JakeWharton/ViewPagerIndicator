@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="/Users/baloo/Work/Perso/Libs/git/Android-ViewPagerIndicator/src/main/assets" />
+    </dataSet>
+    <dataSet config="release" >
+        <source path="/Users/baloo/Work/Perso/Libs/git/Android-ViewPagerIndicator/src/release/assets" />
+    </dataSet>
+
+</merger>
