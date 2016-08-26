@@ -1,10 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-
-final String VERSION_NAME = "2.4.1"
-
-group = 'com.skedgo.viewpagerindicator'
-version = VERSION_NAME
 
 android {
     compileSdkVersion 22
@@ -27,15 +21,4 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:22.2.1'
-}
-
-/**
- * Run with 'gradlew clean test assemble uploadArchives'
- */
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "file://${CustomLocalMaven}")
-        }
-    }
 }
