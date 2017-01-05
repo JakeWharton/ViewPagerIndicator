@@ -3,82 +3,104 @@ version = PROJ_VERSION
 project.archivesBaseName = PROJ_ARTIFACTID
 
 apply plugin: 'com.jfrog.bintray'
-apply plugin: "com.jfrog.artifactory"
-apply plugin: 'maven-publish'
+apply plugin: 'com.github.dcendents.android-maven'
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
+
 task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += configurations.compile
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+
 javadoc {
-    options {
+    options{
         encoding "UTF-8"
         charSet 'UTF-8'
         author true
         version true
         links "http://docs.oracle.com/javase/7/docs/api"
-        title PROJ_ARTIFACTID
-    }
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-def pomConfig = {
-    licenses {
-        license {
-            name "The Apache Software License, Version 2.0"
-            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-            distribution "repo"
-        }
-    }
-}
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId PROJ_ARTIFACTID
-            artifact javadocJar
-            artifact sourcesJar
-            pom {
-                packaging 'aar'
-            }
-            pom.withXml {
-                def root = asNode()
-                root.children().last() + pomConfig
-            }
-        }
-    }
-}
-afterEvaluate {
-    publishing.publications.mavenJava.artifact(bundleRelease)
-}
-bintray {
-    user = hasProperty("bintrayUser")?getProperty("bintrayUser"):getProperty("BINTRAY_USER")
-    key = hasProperty("bintrayKey")?getProperty("bintrayKey"):getProperty("BINTRAY_KEY")
-    publications = ['mavenJava']
-    publish = true
-    pkg {
-        repo = 'maven'
-        name = PROJ_NAME
-        websiteUrl = PROJ_WEBSITEURL
-        issueTrackerUrl = PROJ_ISSUETRACKERURL
-        vcsUrl = PROJ_VCSURL
-        licenses = ['Apache-2.0']
-        publicDownloadNumbers = true
+        title "$PROJ_NAME $PROJ_VERSION"
     }
 }
 
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name PROJ_NAME
+            description PROJ_DESCRIPTION
+            url PROJ_WEBSITEURL
+            inceptionYear '2016'
+
+            packaging 'aar'
+            groupId PROJ_GROUP
+            artifactId PROJ_ARTIFACTID
+            version PROJ_VERSION
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection PROJ_VCSURL
+                url PROJ_WEBSITEURL
+
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : project.property('BINTRAY_USER')
+    key = project.hasProperty('bintrayKey') ? project.property('bintrayKey') : project.property('BINTRAY_KEY')
+
+    configurations = ['archives']
+
+    dryRun = false
+    publish = true
+
+    pkg {
+        repo = 'maven'
+        name = PROJ_NAME
+        licenses = ['Apache-2.0']
+        vcsUrl = PROJ_VCSURL
+        websiteUrl = PROJ_WEBSITEURL
+        issueTrackerUrl = PROJ_ISSUETRACKERURL
+        publicDownloadNumbers = true
+        version {
+            name = PROJ_VERSION
+            desc = PROJ_DESCRIPTION
+            vcsTag = PROJ_VERSION
+
+            gpg {
+                sign = true
+            }
+        }
+    }
+}
+
+//以下内容用于发布SNAPSHOT版本，如果不需要可以移除。
+//参考自：https://www.jfrog.com/confluence/display/RTF/Gradle+Artifactory+Plugin
+
+apply plugin: "com.jfrog.artifactory"
 artifactory {
-    contextUrl = 'http://oss.jfrog.org/artifactory'
+    contextUrl = 'http://oss.jfrog.org/artifactory' //The base Artifactory URL if not overridden by the publisher/resolver
     resolve {
         repository {
             repoKey = 'libs-release'
@@ -92,9 +114,8 @@ artifactory {
             maven = true
         }
         defaults {
-//这里的名字和上面红色的名字一致即可，会将其包含的输出上传到jfrog上去
-            publications('mavenJava')
-            publishArtifacts = true
+            //这里的名字和前面bintray.configurations的值一致即可，会将其包含的输出上传到jfrog上去
+            publishConfigs('archives')
         }
     }
 }
