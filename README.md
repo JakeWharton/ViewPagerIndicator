@@ -73,7 +73,7 @@ You can include this project by [referencing it as a aar file][7] in gradle.
 If you are a Gradle user you can easily include the library by specifying it as
 a dependency:
 
-    compile 'com.githang:viewpagerindicator:2.5@aar'
+    compile 'com.githang:viewpagerindicator:2.5.1'
 
 
 For SNAPSHOT version, you need to declare oss-snapshot-local repository at first:

@@ -43,7 +43,7 @@ install {
             name PROJ_NAME
             description PROJ_DESCRIPTION
             url PROJ_WEBSITEURL
-            inceptionYear '2016'
+            inceptionYear '2017'
 
             packaging 'aar'
             groupId PROJ_GROUP
