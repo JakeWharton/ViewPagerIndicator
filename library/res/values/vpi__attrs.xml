@@ -53,6 +53,8 @@
         <attr name="strokeColor" format="color" />
         <!-- Width of the stroke used to draw the circles. -->
         <attr name="strokeWidth" />
+        <!-- Extra space between the circles. -->
+        <attr name="extraSpacing" format="dimension" />
         <!-- View background -->
         <attr name="android:background"/>
     </declare-styleable>
